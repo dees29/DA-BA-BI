@@ -1,0 +1,7 @@
+--------------------------------------------------------
+- Course: MongoDB Complete Guide
+- Author: Ahmed Ibrahem
+- Script: Sharding
+--------------------------------------------------------
+Please refer to the following official documentation of MongoDB to understand in deep details sharding 
+https://docs.mongodb.com/manual/sharding/

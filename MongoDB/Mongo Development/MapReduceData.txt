@@ -1,0 +1,115 @@
+db.Purchases.insert([{
+     cust_id: "C1",
+     ord_date: new Date("Oct 04, 2012"),
+     status: 'A',
+     price: 25,
+     items: [ { sku: "Product1", qty: 5, price: 2.5 },
+              { sku: "Product2", qty: 5, price: 2.5 } ]
+},
+{
+     cust_id: "C1",
+     ord_date: new Date("Oct 06, 2012"),
+     status: 'A',
+     price: 12.5,
+     items: [ { sku: "Product2", qty: 5, price: 2.5 }]
+},
+{
+     cust_id: "C2",
+     ord_date: new Date("Sep 10, 2012"),
+     status: 'A',
+     price: 12.5,
+     items: [{ sku: "Product2", qty: 5, price: 2.5 } ]
+},
+{
+     cust_id: "C2",
+     ord_date: new Date("Nov 04, 2012"),
+     status: 'A',
+     price: 10,
+     items: [{ sku: "Product1", qty: 4, price: 2.5 } ]
+},
+{
+     cust_id: "C2",
+     ord_date: new Date("Nov 15, 2012"),
+     status: 'A',
+     price: 30,
+     items: [{ sku: "Product3", qty: 2, price: 15 } ]
+},
+{
+     cust_id: "C3",
+     ord_date: new Date("Jan 04, 2012"),
+     status: 'A',
+     price: 10,
+     items: [{ sku: "Product6", qty: 4, price: 2.5 } ]
+},
+{
+     cust_id: "C3",
+     ord_date: new Date("Feb 22, 2012"),
+     status: 'A',
+     price: 15,
+     items: [{ sku: "Product9", qty: 1, price: 15 } ]
+},
+{
+    "_id" : ObjectId("5909d15d9cb60ea1db267981"),
+    "cust_id" : "C3",
+    "ord_date" : ISODate("2012-01-03T22:00:00.000Z"),
+    "status" : "A",
+    "price" : 10.0,
+    "items" : [ 
+        {
+            "sku" : "Product6",
+            "qty" : 4.0,
+            "price" : 2.5
+        }
+    ]
+},
+{
+    "_id" : ObjectId("5909d15d9cb60ea1db267982"),
+    "cust_id" : "C3",
+    "ord_date" : ISODate("2012-02-21T22:00:00.000Z"),
+    "status" : "A",
+    "price" : 15.0,
+    "items" : [ 
+        {
+            "sku" : "Product9",
+            "qty" : 1.0,
+            "price" : 15.0
+        }
+    ]
+},
+{
+    "_id" : ObjectId("5909d1659cb60ea1db267983"),
+    "cust_id" : "C1",
+    "ord_date" : ISODate("2012-10-03T22:00:00.000Z"),
+    "status" : "A",
+    "price" : 25.0,
+    "items" : [ 
+        {
+            "sku" : "Product1",
+            "qty" : 5.0,
+            "price" : 2.5
+        }, 
+        {
+            "sku" : "Product2",
+            "qty" : 5.0,
+            "price" : 2.5
+        }
+    ]
+},
+{
+    "_id" : ObjectId("5909d1659cb60ea1db267984"),
+    "cust_id" : "C1",
+    "ord_date" : ISODate("2012-10-05T22:00:00.000Z"),
+    "status" : "A",
+    "price" : 12.5,
+    "items" : [ 
+        {
+            "sku" : "Product2",
+            "qty" : 5.0,
+            "price" : 2.5
+        }
+    ]
+}]
+)
+
+
+

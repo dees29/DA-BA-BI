@@ -1,0 +1,2241 @@
+# Create a list of arrival times
+arrival_times = [*range(10,60,10)]
+
+# Convert arrival_times to an array and update the times
+arrival_times_np = np.array(arrival_times)
+new_times = arrival_times_np - 3
+
+# Use list comprehension and enumerate to pair guests to new times
+guest_arrivals = [(names[i],time) for i,time in enumerate(new_times)]
+
+# Map the welcome_guest function to each (guest,time) pair
+welcome_map = map(welcome_guest, guest_arrivals)
+
+guest_welcomes = [*welcome_map]
+print(*guest_welcomes, sep='\n')
+
+
+
+
+
+
+
+
+
+win_perc_preds_loop = []
+
+# Use a loop and .itertuples() to collect each row's predicted win percentage
+for row in baseball_df.itertuples():
+    runs_scored = row.RS
+    runs_allowed = row.RA
+    win_perc_pred = predict_win_perc(runs_scored, runs_allowed)
+    win_perc_preds_loop.append(win_perc_pred)
+
+# Apply predict_win_perc to each row of the DataFrame
+win_perc_preds_apply = baseball_df.apply(lambda row: predict_win_perc(row['RS'], row['RA']), axis=1)
+
+# Calculate the win percentage predictions using NumPy arrays
+win_perc_preds_np = predict_win_perc(baseball_df['RS'].values, baseball_df['RA'].values)
+baseball_df['WP_preds'] = win_perc_preds_np
+print(baseball_df.head())
+
+
+
+# Import datetime 
+from datetime import datetime
+
+# Assign date to get_date
+get_date = datetime.now()
+
+# Add named placeholders with format specifiers
+message = "Good morning. Today is {today:%B %d, %Y}. It's {today:%H:%M} ... time to work!"
+
+# Format date
+print(message.format(today=get_date))
+
+
+
+
+
+
+# Write a regex to match pattern separating sentences
+regex_sentence = r"\W\dbreak\W"
+
+# Replace the regex_sentence with a space
+sentiment_sub = re.sub(regex_sentence, " ", sentiment_analysis)
+
+# Write a regex to match pattern separating words
+regex_words = r"\Wnew\w"
+
+# Replace the regex_words and print the result
+sentiment_final = re.sub(regex_words, " ", sentiment_sub)
+print(sentiment_final)
+
+
+
+
+
+
+
+# Import re module
+import re
+
+for tweet in sentiment_analysis:
+	# Write regex to match http links and print out result
+	print(re.findall(r"http\S+", tweet))
+
+	# Write regex to match user mentions and print out result
+	print(re.findall(r"@\w+", tweet))
+
+
+
+
+
+
+
+
+#1st september 2019 17:25
+# Complete the for loop with a regex to find dates
+for date in sentiment_analysis:
+	print(re.findall(r"\d{1,2}\w{2}\s\w+\s\d{4}\s\d{1,2}:\d{2}", date))
+
+
+
+
+
+
+
+# Write a regex matching the hashtag pattern
+regex = r"#\w+"
+
+# Replace the regex by an empty string
+no_hashtag = re.sub(regex, "", sentiment_analysis)
+
+# Get tokens by splitting text
+print(re.split(r"\s+", no_hashtag))
+
+
+
+
+# Write a regex to match a valid email address
+regex = r"[A-Za-z0-9!#%&*\$\.]+@\w+\.com"
+
+for example in emails:
+  	# Match the regex to the string
+    if re.match(regex, example):
+        # Complete the format method to print out the result
+      	print("The email {email_example} is a valid email".format(email_example=example))
+    else:
+      	print("The email {email_example} is invalid".format(email_example=example))   
+
+
+
+
+
+
+# Import re
+import re
+
+# Write a regex to eliminate tags
+string_notags = re.sub(r"<.+?>", "", string)
+
+# Print out the result
+print(string_notags)
+
+
+
+# Write a greedy regex expression 
+numbers_found_greedy = re.findall(r"\d+", sentiment_analysis)
+
+# Print out the result
+print(numbers_found_greedy)
+
+
+
+# Write a greedy regex expression 
+numbers_found_greedy = re.findall(r"\d+?
+
+", sentiment_analysis)
+
+# Print out the result
+print(numbers_found_greedy)
+
+
+
+
+# Write a greedy regex expression to match 
+sentences_found_greedy = re.findall(r"\(.*\)", sentiment_analysis)
+
+# Print out the result
+print(sentences_found_greedy)
+
+
+
+
+
+# Import re
+import re
+
+# Write regex to capture information of the flight
+regex = r"([A-Z]{2})(\d{4})\s([A-Z]{3})-([A-Z]{3})\s(\d{2}[A-Z]{3})"
+
+# Find all matches of the flight information
+flight_matches = re.findall(regex, flight)
+    
+#Print the matches
+print("Airline: {} Flight number: {}".format(flight_matches[0][0], flight_matches[0][1]))
+print("Departure: {} Destination: {}".format(flight_matches[0][2], flight_matches[0][3]))
+print("Date: {}".format(flight_matches[0][4]))
+
+
+
+
+
+
+# Write a regex that matches sentences with the optional words
+regex_positive = r"(love|like|enjoy).+?(movie|concert)\s(.+?)\."
+
+for tweet in sentiment_analysis:
+	# Find all matches of regex in tweet
+    positive_matches = re.findall(regex_positive, tweet)
+    
+    # Complete format to print out the results
+    print("Positive comments found {}".format(positive_matches))
+
+
+
+# Write a regex that matches sentences with the optional words
+regex_negative = r"(hate|dislike|disapprove).+?(?:movie|concert)\s(.+?)\."
+
+for tweet in sentiment_analysis:
+	# Find all matches of regex in tweet
+    negative_matches = re.findall(regex_negative, tweet)
+    
+    # Complete format to print out the results
+    print("Negative comments found {}".format(negative_matches))
+
+
+
+
+
+# Write regex and scan contract to capture the dates described
+regex_dates = r"Signed\son\s(\d{2})/(\d{2})/(\d{4})"
+dates = re.search(regex_dates, contract)
+
+# Assign to each key the corresponding match
+signature = {
+	"day": dates.group(2),
+	"month": dates.group(1),
+	"year": dates.group(3)
+}
+# Complete the format method to print-out
+print("Our first contract is dated back to {data[year]}. Particularly, the day {data[day]} of the month {data[month]}.".format(data=signature))
+
+
+
+
+
+
+
+for string in html_tags:
+    # Complete the regex and find if it matches a closed HTML tags
+    match_tag =  re.match(r"<(\w+)>.*?</\1>", string)
+ 
+    if match_tag:
+        # If it matches print the first group capture
+        print("Your tag {} is closed".format(match_tag.group(1))) 
+    else:
+        # If it doesn't match capture only the tag 
+        notmatch_tag = re.match(r"<(\w+)>", string)
+        # Print the first group capture
+        print("Close your {} tag!".format(notmatch_tag.group(1)))
+        
+        
+
+
+#Awesoooome
+# Complete the regex to match an elongated word
+regex_elongated = r"\w*(\w)\1\w*"
+
+for tweet in sentiment_analysis:
+	# Find if there is a match in each tweet 
+	match_elongated = re.search(regex_elongated, tweet)
+    
+	if match_elongated:
+		# Assign the captured group zero 
+		elongated_word = match_elongated.group(0)
+        
+		# Complete the format method to print the word
+		print("Elongated word found: {word}".format(word=elongated_word))
+	else:
+		print("No elongated word found") 
+
+
+
+
+# Positive lookahead
+look_ahead = re.findall(r"\w+\.txt(?=\spython)", sentiment_analysis)
+
+# Print out
+print(look_ahead)
+
+
+
+
+
+
+# Positive lookbehind
+look_behind = re.findall(r"(?<=[Pp]ython\s)\w+", sentiment_analysis)
+
+# Print out
+print(look_behind)
+
+
+
+
+for phone in cellphones:
+	# Get all phone numbers not preceded by area code
+	number = re.findall(r"(?<!\d{3}-)\d{4}-\d{6}-\d{2}", phone)
+	print(number)
+
+
+
+for phone in cellphones:
+	# Get all phone numbers not followed by optional extension
+	number = re.findall(r"\d{3}-\d{4}-\d{6}(?!-\d{2})", phone)
+	print(number)
+
+
+
+
+# Fill in the blank
+xpath = '//span[@class="span-class"]'
+
+
+
+
+
+# Create the XPath string equivalent to the CSS Locator 
+xpath = '//div[@id="uid"]/span//h4'
+
+# Create the CSS Locator string equivalent to the XPath
+css_locator = 'div#uid > span h4'
+
+
+
+
+from scrapy import Selector
+
+# Create a selector from the html (of a secret website)
+sel = Selector( text = html )
+
+# Fill in the blank
+css_locator = 'div.course-block > a'
+
+# Print the number of selected elements.
+how_many_elements( css_locator )
+
+
+
+
+
+from scrapy import Selector
+
+# Create a selector object from a secret website
+sel = Selector( text=html )
+
+# Select all hyperlinks of div elements belonging to class "course-block"
+course_as = sel.css( 'div.course-block > a' )
+
+# Selecting all href attributes chaining with css
+hrefs_from_css = course_as.css( '::attr(href)' )
+
+# Selecting all href attributes chaining with xpath
+hrefs_from_xpath = course_as.xpath( './@href' )
+
+
+
+
+#Without future generations
+# Create an XPath string to the desired text.
+xpath = '//p[@id="p3"]/text()'
+
+# Create a CSS Locator string to the desired text.
+css_locator = 'p#p3::text'
+
+# Print the text from our selections
+print_results( xpath, css_locator )
+
+
+
+
+
+
+#With future generations	
+# Create an XPath string to the desired text.
+xpath = '//p[@id="p3"]//text()'
+
+# Create a CSS Locator string to the desired text.
+css_locator = 'p#p3 ::text'
+
+# Print the text from our selections
+print_results( xpath, css_locator )
+
+
+
+
+
+
+# Get the URL to the website loaded in response
+this_url = response.url
+
+# Get the title of the website loaded in response
+this_title = response.xpath('/html/head/title/text()').extract_first()
+
+# Print out our findings
+print_url_title( this_url, this_title )
+
+
+
+
+
+
+# Create a CSS Locator string to the desired hyperlink elements
+css_locator = 'a.course-block__link'
+
+# Select the hyperlink elements from response and sel
+response_as = response.css(css_locator)
+sel_as = sel.css(css_locator)
+
+# Examine similarity
+nr = len( response_as )
+ns = len( sel_as )
+for i in range( min(nr, ns, 2) ):
+  print( "Element %d from response: %s" % (i+1, response_as[i]) )
+  print( "Element %d from sel: %s" % (i+1, sel_as[i]) )
+  print( "" )
+
+
+
+
+# Select all desired div elements
+divs = response.css( 'div.course-block' )
+
+# Take the first div element
+first_div = divs[0]
+
+# Extract the text from the h4 element in first_div
+h4_text = first_div.css('h4::text').extract_first()
+
+# Print out the text
+print( "The text from the h4 element is:", h4_text )
+
+
+
+
+
+#titles are text from all h4 elements within the HTML document.
+# Create a SelectorList of the course titles
+crs_title_els = response.css('h4::text')
+
+# Extract the course titles 
+crs_titles = crs_title_els.extract()
+
+# Print out the course titles 
+for el in crs_titles:
+  print( ">>", el )
+
+
+
+
+# Calculate the number of children of the mystery element
+how_many_kids = len( mystery.xpath( './*' ) )
+
+# Print out the number
+print( "The number of elements you selected was:", how_many_kids )
+
+
+
+
+
+
+
+# Import scrapy library
+import scrapy
+
+# Create the spider class
+class YourSpider(scrapy.Spider):
+  name = "your_spider"
+  # start_requests method
+  def start_requests(self):
+    pass
+  # parse method
+  def parse(self, response):
+    pass
+  
+# Inspect Your Class
+inspect_class(YourSpider)
+
+
+
+
+
+
+
+# Import scrapy library
+import scrapy
+
+# Create the spider class
+class YourSpider( scrapy.Spider ):
+  name = "your_spider"
+  # start_requests method
+  def start_requests( self ):
+    urls = ["https://www.datacamp.com", "https://scrapy.org"]
+    for url in urls:
+      yield url
+  # parse method
+  def parse( self, response ):
+    pass
+  
+# Inspect Your Class
+inspect_class( YourSpider )
+
+
+
+
+
+
+# Import scrapy library
+import scrapy
+
+# Create the spider class
+class YourSpider( scrapy.Spider ):
+  name = "your_spider"
+  # start_requests method
+  def start_requests( self ):
+    self.print_msg( "Hello World!" )
+  # parse method
+  def parse( self, response ):
+    pass
+  # print_msg method
+  def print_msg( self, msg ):
+    print( "Calling start_requests in YourSpider prints out:", msg )
+  
+# Inspect Your Class
+inspect_class( YourSpider )
+
+
+
+
+
+
+
+# Import scrapy library
+import scrapy
+
+# Create the spider class
+class YourSpider( scrapy.Spider ):
+  name = "your_spider"
+  # start_requests method
+  def start_requests( self ):
+    yield scrapy.Request( url="https://www.datacamp.com", callback = self.parse )
+  # parse method
+  def parse( self, response ):
+    pass
+  
+# Inspect Your Class
+inspect_class( YourSpider )
+
+
+
+
+
+
+
+
+
+# Import the scrapy library
+import scrapy
+
+# Create the Spider class
+class DCspider( scrapy.Spider ):
+  name = 'dcspider'
+  # start_requests method
+  def start_requests( self ):
+    yield scrapy.Request( url = url_short, callback = self.parse )
+  # parse method
+  def parse( self, response ):
+    # Create an extracted list of course author names
+    author_names = response.css( 'p.course-block__author-name::text' ).extract()
+    # Here we will just return the list of Authors
+    return author_names
+  
+# Inspect the spider
+inspect_spider( DCspider )
+
+
+
+
+
+
+
+
+# Import the scrapy library
+import scrapy
+
+# Create the Spider class
+class DCdescr( scrapy.Spider ):
+  name = 'dcdescr'
+  # start_requests method
+  def start_requests( self ):
+    yield scrapy.Request( url = url_short, callback = self.parse )
+  
+  # First parse method
+  def parse( self, response ):
+    links = response.css( 'div.course-block > a::attr(href)' ).extract()
+    # Follow each of the extracted links
+    for link in links:
+      yield response.follow(url=link, callback=self.parse_descr)
+      
+  # Second parsing method
+  def parse_descr( self, response ):
+    # Extract course description
+    course_descr = response.css( 'p.course__description::text' ).extract_first()
+    # For now, just yield the course description
+    yield course_descr
+
+
+# Inspect the spider
+inspect_spider( DCdescr )
+
+
+
+
+
+
+
+
+# Import scrapy
+import scrapy
+
+# Import the CrawlerProcess: for running the spider
+from scrapy.crawler import CrawlerProcess
+
+# Create the Spider class
+class DC_Chapter_Spider(scrapy.Spider):
+  name = "dc_chapter_spider"
+  # start_requests method
+  def start_requests(self):
+    yield scrapy.Request(url = url_short,
+                         callback = self.parse_front)
+  # First parsing method
+  def parse_front(self, response):
+    course_blocks = response.css('div.course-block')
+    course_links = course_blocks.xpath('./a/@href')
+    links_to_follow = course_links.extract()
+    for url in links_to_follow:
+      yield response.follow(url = url,
+                            callback = self.parse_pages)
+  # Second parsing method
+  def parse_pages(self, response):
+    crs_title = response.xpath('//h1[contains(@class,"title")]/text()')
+    crs_title_ext = crs_title.extract_first().strip()
+    ch_titles = response.css('h4.chapter__title::text')
+    ch_titles_ext = [t.strip() for t in ch_titles.extract()]
+    dc_dict[ crs_title_ext ] = ch_titles_ext
+
+# Initialize the dictionary **outside** of the Spider class
+dc_dict = dict()
+
+# Run the Spider
+process = CrawlerProcess()
+process.crawl(DC_Chapter_Spider)
+process.start()
+
+# Print a preview of courses
+previewCourses(dc_dict)
+
+
+
+
+
+
+# Import scrapy
+import scrapy
+
+# Import the CrawlerProcess: for running the spider
+from scrapy.crawler import CrawlerProcess
+
+# Create the Spider class
+class DC_Description_Spider(scrapy.Spider):
+  name = "dc_chapter_spider"
+  # start_requests method
+  def start_requests(self):
+    yield scrapy.Request(url = url_short,
+                         callback = self.parse_front)
+  # First parsing method
+  def parse_front(self, response):
+    course_blocks = response.css('div.course-block')
+    course_links = course_blocks.xpath('./a/@href')
+    links_to_follow = course_links.extract()
+    for url in links_to_follow:
+      yield response.follow(url = url,
+                            callback = self.parse_pages)
+  # Second parsing method
+  def parse_pages(self, response):
+    # Create a SelectorList of the course titles text
+    crs_title = response.xpath('//h1[contains(@class,"title")]/text()')
+    # Extract the text and strip it clean
+    crs_title_ext = crs_title.extract_first().strip()
+    # Create a SelectorList of course descriptions text
+    crs_descr = response.css('p.course__description::text')
+    # Extract the text and strip it clean
+    crs_descr_ext = crs_descr.extract_first().strip()
+    # Fill in the dictionary
+    dc_dict[crs_title_ext] = crs_descr_ext
+
+# Initialize the dictionary **outside** of the Spider class
+dc_dict = dict()
+
+# Run the Spider
+process = CrawlerProcess()
+process.crawl(DC_Description_Spider)
+process.start()
+
+# Print a preview of courses
+previewCourses(dc_dict)
+
+
+
+
+
+
+
+# Import scrapy
+import scrapy
+
+# Import the CrawlerProcess
+from scrapy.crawler import CrawlerProcess
+
+# Create the Spider class
+class YourSpider(scrapy.Spider):
+  name = 'yourspider'
+  # start_requests method
+  def start_requests(self):
+    yield scrapy.Request(url = url_short, callback = self.parse)
+      
+  def parse(self, response):
+    # My version of the parser you wrote in the previous part
+    crs_titles = response.xpath('//h4[contains(@class,"block__title")]/text()').extract()
+    crs_descrs = response.xpath('//p[contains(@class,"block__description")]/text()').extract()
+    for crs_title, crs_descr in zip(crs_titles, crs_descrs):
+      dc_dict[crs_title] = crs_descr
+    
+# Initialize the dictionary **outside** of the Spider class
+dc_dict = dict()
+
+# Run the Spider
+process = CrawlerProcess()
+process.crawl(YourSpider)
+process.start()
+
+# Print a preview of courses
+previewCourses(dc_dict)
+
+
+
+
+
+
+def count_letter(content, letter):
+  """Count the number of times `letter` appears in `content`.
+
+  # Add a Google-style arguments section
+  Args:
+    content (str): The string to search.
+    letter (str): The letter to search for.
+  """
+  if (not isinstance(letter, str)) or len(letter) != 1:
+    raise ValueError('`letter` must be a single character string.')
+  return len([char for char in content if char == letter])
+
+
+
+
+
+
+def count_letter(content, letter):
+  """Count the number of times `letter` appears in `content`.
+
+  Args:
+    content (str): The string to search.
+    letter (str): The letter to search for.
+
+  # Add a returns section
+  int:
+    Returns:
+  """
+  if (not isinstance(letter, str)) or len(letter) != 1:
+    raise ValueError('"letter" must be a single character string.')
+  return len([char for char in content if char == letter])
+
+
+
+
+def count_letter(content, letter):
+  """Count the number of times `letter` appears in `content`.
+
+  Args:
+    content (str): The string to search.
+    letter (str): The letter to search for.
+
+  Returns:
+    int
+
+  # Add a section detailing what errors might be raised
+  Raises:
+    ValueError: If `letter` is not a one-character string.
+  """
+  if (not isinstance(letter, str)) or len(letter) != 1:
+    raise ValueError('`letter` must be a single character string.')
+  return len([char for char in content if char == letter])
+
+
+
+
+
+
+
+# Get the docstring with an attribute of count_letter()
+docstring = count_letter.__doc__
+
+border = '#' * 28
+print('{}\n{}\n{}'.format(border, docstring, border))
+
+
+
+
+import inspect
+
+# Get the docstring with a function from the inspect module
+docstring = inspect.getdoc(count_letter)
+
+border = '#' * 28
+print('{}\n{}\n{}'.format(border, docstring, border))
+
+
+
+
+
+def build_tooltip(function):
+  """Create a tooltip for any function that shows the 
+  function's docstring.
+  
+  Args:
+    function (callable): The function we want a tooltip for.
+    
+  Returns:
+    str
+  """
+  # Use 'inspect' to get the docstring
+  docstring = inspect.getdoc(function)
+  border = '#' * 28
+  return '{}\n{}\n{}'.format(border, docstring, border)
+
+print(build_tooltip(count_letter))
+print(build_tooltip(range))
+print(build_tooltip(print))
+
+
+
+
+
+def standardize(column):
+  """Standardize the values in a column.
+
+  Args:
+    column (pandas Series): The data to standardize.
+
+  Returns:
+    pandas Series: the values as z-scores
+  """
+  # Finish the function so that it returns the z-scores
+  z_score = (column - column.mean()) / column.std()
+  return z_score
+
+# Use the standardize() function to calculate the z-scores
+df['y1_z'] = standardize(df.y1_gpa)
+df['y2_z'] = standardize(df.y2_gpa)
+df['y3_z'] = standardize(df.y3_gpa)
+df['y4_z'] = standardize(df.y4_gpa)
+
+
+
+
+
+
+# Use an immutable variable for the default argument 
+def better_add_column(values, df=None):
+  """Add a column of `values` to a DataFrame `df`.
+  The column will be named "col_<n>" where "n" is
+  the numerical index of the column.
+
+  Args:
+    values (iterable): The values of the new column
+    df (DataFrame, optional): The DataFrame to update.
+      If no DataFrame is passed, one is created by default.
+
+  Returns:
+    DataFrame
+  """
+  # Update the function to create a default DataFrame
+  if df is None:
+    df = pandas.DataFrame()
+  df['col_{}'.format(len(df.columns))] = values
+  return df
+
+
+
+
+
+
+# Use the "stock('NVDA')" context manager
+# and assign the result to the variable "nvda"
+with stock('NVDA') as nvda:
+  # Open "NVDA.txt" for writing as f_out
+  with open('NVDA.txt', 'w') as f_out:
+    for _ in range(10):
+      value = nvda.price()
+      print('Logging ${:.2f} for NVDA'.format(value))
+      f_out.write('{:.2f}\n'.format(value))
+
+
+
+
+
+def wait_until_done():
+  def check_is_done():
+    # Add a keyword so that wait_until_done() 
+    # doesn't run forever
+    global done
+    if random.random() < 0.1:
+      done = True
+      
+  while not done:
+    check_is_done()
+
+done = False
+wait_until_done()
+
+print('Work done? {}'.format(done))
+
+
+
+
+
+
+
+def return_a_func(arg1, arg2):
+  def new_func():
+    print('arg1 was {}'.format(arg1))
+    print('arg2 was {}'.format(arg2))
+  return new_func
+    
+my_func = return_a_func(2, 17)
+
+print(my_func.__closure__ is not None)
+print(len(my_func.__closure__) == 2)
+
+# Get the values of the variables in the closure
+closure_values = [
+  my_func.__closure__[i].cell_contents for i in range(2)
+]
+print(closure_values == [2, 17])
+
+
+
+
+
+
+def print_before_and_after(func):
+  def wrapper(*args):
+    print('Before {}'.format(func.__name__))
+    # Call the function being decorated with *args
+    func(*args)
+    print('After {}'.format(func.__name__))
+  # Return the nested function
+  return wrapper
+
+@print_before_and_after
+def multiply(a, b):
+  print(a * b)
+
+multiply(5, 10)
+
+
+
+
+
+def print_return_type(func):
+  # Define wrapper(), the decorated function
+  def wrapper(*ars, **kwargs):
+    # Call the function being decorated
+    result = func(*ars, **kwargs)
+    print('{}() returned type {}'.format(
+      func.__name__, type(result)
+    ))
+    return result
+  # Return the decorated function
+  return wrapper
+  
+@print_return_type
+def foo(value):
+  return value
+  
+print(foo(42))
+print(foo([1, 2, 3]))
+print(foo({'a': 42}))
+
+
+
+
+
+def counter(func):
+  def wrapper(*args, **kwargs):
+    wrapper.count += 1
+    # Call the function being decorated and return the result
+    return func(*args, **kwargs)
+  wrapper.count = 0
+  # Return the new decorated function
+  return wrapper
+
+# Decorate foo() with the counter() decorator
+@counter
+def foo():
+  print('calling foo()')
+  
+foo()
+foo()
+
+print('foo() was called {} times.'.format(foo.count))
+
+
+
+
+
+def add_hello(func):
+  def wrapper(*args, **kwargs):
+    print('Hello')
+    return func(*args, **kwargs)
+  return wrapper
+
+# Decorate print_sum() with the add_hello() decorator
+@add_hello
+def print_sum(a, b):
+  """Adds two numbers and prints the sum"""
+  print(a + b)
+  
+print_sum(10, 20)
+print(print_sum.__doc__)
+
+
+
+
+
+from functools import wraps
+
+def add_hello(func):
+  # Decorate wrapper() so that it keeps func()'s metadata
+  @wraps(func)
+  def wrapper(*args, **kwargs):
+    """Print 'hello' and then call the decorated function."""
+    print('Hello')
+    return func(*args, **kwargs)
+  return wrapper
+  
+@add_hello
+def print_sum(a, b):
+  """Adds two numbers and prints the sum"""
+  print(a + b)
+  
+print_sum(10, 20)
+print(print_sum.__doc__)
+
+
+
+
+
+
+
+@check_everything
+def duplicate(my_list):
+  """Return a new list that repeats the input twice"""
+  return my_list + my_list
+
+t_start = time.time()
+duplicated_list = duplicate(list(range(50)))
+t_end = time.time()
+decorated_time = t_end - t_start
+
+t_start = time.time()
+# Call the original function instead of the decorated one
+duplicated_list = duplicate.__wrapped__(list(range(50)))
+t_end = time.time()
+undecorated_time = t_end - t_start
+
+print('Decorated time: {:.5f}s'.format(decorated_time))
+print('Undecorated time: {:.5f}s'.format(undecorated_time))
+
+
+
+
+
+
+# Modify the print() function to always run 20 times
+print = run_n_times(20)(print)
+
+print('What is happening?!?!')
+
+
+
+
+
+
+# Make hello() return bolded text
+@html('<b>', '</b>')
+def hello(name):
+  return 'Hello {}!'.format(name)
+
+print(hello('Alice'))
+
+
+
+
+
+
+
+# Wrap the result of hello_goodbye() in <div> and </div>
+@html('<div>', '</div>')
+def hello_goodbye(name):
+  return '\n{}\n{}\n'.format(hello(name), goodbye(name))
+  
+print(hello_goodbye('Alice'))
+
+
+
+
+
+
+
+def tag(*tags):
+  # Define a new decorator, named "decorator", to return
+  def decorator(func):
+    # Ensure the decorated function keeps its metadata
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+      # Call the function being decorated and return the result
+      return func(*args, **kwargs)
+    wrapper.tags = tags
+    return wrapper
+  # Return the new decorator
+  return decorator
+
+@tag('test', 'this is a tag')
+def foo():
+  pass
+
+print(foo.tags)
+
+
+
+
+
+
+
+
+def tag(*tags):
+  # Define a new decorator, named "decorator", to return
+  def decorator(func):
+    # Ensure the decorated function keeps its metadata
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+      # Call the function being decorated and return the result
+      return func(*args, **kwargs)
+    wrapper.tags = tags
+    return wrapper
+  # Return the new decorator
+  return decorator
+
+@tag('test', 'this is a tag')
+def foo():
+  pass
+
+print(foo.tags)
+
+
+
+
+
+
+
+# Call da.from_array():  energy_dask
+energy_dask = da.from_array(energy, chunks=energy.shape[0]/4)
+
+# Print energy_dask.chunks
+print(energy_dask.chunks)
+
+# Print Dask array average and then NumPy array average
+print(energy_dask.mean().compute())
+print(energy.mean())
+
+
+
+
+
+
+
+
+# Import time
+import time
+
+# Call da.from_array() with arr: energy_dask8
+energy_dask8 = da.from_array(energy, chunks=energy.shape[0]//8)
+
+# Print the time to compute standard deviation
+t_start = time.time()
+std_8 = energy_dask8.std().compute()
+t_end = time.time()
+print((t_end - t_start) * 1.0e3)
+
+
+
+
+
+
+
+# Reshape load_recent to three dimensions: load_recent_3d
+load_recent_3d = load_recent.reshape((3,365,96))
+
+# Reshape load_2001 to three dimensions: load_2001_3d
+load_2001_3d = load_2001.reshape((1,365,96))
+
+# Subtract the load in 2001 from the load in 2013 - 2015: diff_3d
+diff_3d = load_recent_3d - load_2001_3d
+
+# Print the difference each year on March 2 at noon
+print(diff_3d[:, 61, 48])
+
+
+
+
+
+
+
+# Print mean value of load_recent_3d
+print(load_recent_3d.mean())
+
+# Print maximum of load_recent_3d across 2nd & 3rd dimensions
+print(load_recent_3d.max(axis=(1,2)))
+
+# Compute sum along last dimension of load_recent_3d: daily_consumption
+daily_consumption = load_recent_3d.sum(axis=-1)
+
+# Print mean of 62nd row of daily_consumption
+print(daily_consumption[:,61].mean())
+
+
+
+
+
+
+# Import h5py and dask.array
+import h5py
+import dask.array as da
+
+# List comprehension to read each file: dsets
+dsets = [h5py.File(f)['/tmax'] for f in filenames]
+
+# List comprehension to make dask arrays: monthly
+monthly = [da.from_array(d, chunks=(1,444, 922)) for d in dsets]
+
+
+
+
+
+# Stack with the list of dask arrays: by_year
+by_year = da.stack(monthly, axis=0)
+
+# Print the shape of the stacked arrays
+print(by_year.shape)
+
+# Read the climatology data: climatology
+dset = h5py.File('tmax.climate.hdf5')
+climatology = da.from_array(dset['/tmax'], chunks=(1,444,922))
+
+# Reshape the climatology data to be compatible with months
+climatology.reshape((1,12,444,922))
+
+
+
+
+
+
+# Compute the difference: diff
+diff = (by_year - climatology)*9/5
+# Compute the average over last two axes: avg
+avg = da.nanmean(diff, axis=(-1,-2)).compute()
+# Plot the slices [:,0], [:,7], and [:11] against the x values
+x = range(2008,2012)
+f, ax = plt.subplots()
+ax.plot(x,avg[:,0], label='Jan')
+ax.plot(x,avg[:,7], label='Aug')
+ax.plot(x,avg[:,11], label='Dec')
+ax.axhline(0, color='red')
+ax.set_xlabel('Year')
+ax.set_ylabel('Difference (degrees Fahrenheit)')
+ax.legend(loc=0)
+plt.show()
+
+
+
+
+
+
+# Read from 'WDI.csv': df
+df = dd.read_csv('WDI.csv')
+
+# Boolean series where 'Indicator Code' is 'EN.ATM.PM25.MC.ZS': toxins
+toxins = df['Indicator Code'] == 'EN.ATM.PM25.MC.ZS'
+# Boolean series where 'Region' is 'East Asia & Pacific': region
+region = df['Region'] == 'East Asia & Pacific'
+
+# Filter the DataFrame using toxins & region: filtered
+filtered = df.loc[toxins & region]
+
+
+
+
+
+
+
+# Define a function with df as input: by_region
+def by_region(df):
+
+    # Create the toxins array
+    toxins = df['Indicator Code'] == 'EN.ATM.PM25.MC.ZS'
+
+    # Create the y2015 array
+    y2015 = df['Year'] == 2015
+
+
+    # Filter the DataFrame and group by the 'Region' column
+    regions = df[toxins & y2015].groupby('Region')
+
+    # Return the mean of the 'value' column of regions
+    return regions['value'].mean()
+
+
+
+
+
+
+# Time the execution of dd.read_csv and by_region together with 'WDI.csv' and print in milliseconds
+t0 = time.time()
+df = dd.read_csv('WDI.csv')
+result = by_region(df)
+t1 = time.time()
+print((t1-t0)*1000)
+
+
+
+
+
+
+# Read all .csv files: df
+df = dd.read_csv('taxi/*.csv', assume_missing=True)
+
+# Make column 'tip_fraction'
+df['tip_fraction'] = df['tip_amount'] / (df['total_amount'] - df['tip_amount'])
+
+# Convert 'tpep_dropoff_datetime' column to datetime objects
+df['tpep_dropoff_datetime'] = dd.to_datetime(df['tpep_dropoff_datetime'])
+
+# Construct column 'hour'
+df['hour'] = df['tpep_dropoff_datetime'].dt.hour
+
+
+
+
+
+
+
+# Filter rows where payment_type == 1: credit
+credit = df.loc[df['payment_type']==1]
+
+# Group by 'hour' column: hourly
+hourly = credit.groupby('hour')
+
+# Aggregate mean 'tip_fraction' and print its data type
+result = hourly['tip_fraction'].mean()
+print(type(result))
+
+
+
+
+
+
+# Perform the computation
+tip_frac = result.compute()
+
+# Print the type of tip_frac
+print(type(tip_frac))
+
+# Generate a line plot using .plot.line()
+tip_frac.plot.line()
+plt.ylabel('Tip fraction')
+plt.show()
+
+
+
+
+
+# Glob filenames matching 'sotu/*.txt' and sort
+filenames = glob.glob('sotu/*.txt')
+filenames = sorted(filenames)
+
+# Load filenames as Dask bag with db.read_text(): speeches
+speeches = db.read_text(filenames)
+
+# Print number of speeches with .count()
+print(speeches.count().compute())
+
+
+
+
+
+# Call .take(1): one_element
+one_element = speeches.take(1)
+
+# Extract first element of one_element: first_speech
+first_speech = one_element[0]
+
+# Print type of first_speech and first 60 characters
+print(type(first_speech))
+print(first_speech[:60])
+
+
+
+
+
+# Call .str.split(' ') from speeches and assign it to by_word
+by_word = speeches.str.split(' ')
+
+# Map the len function over by_word and compute its mean
+n_words = by_word.map(len)
+avg_words = n_words.mean()
+
+# Print the type of avg_words and value of avg_words.compute()
+print(type(avg_words))
+print(avg_words.compute())
+
+
+
+
+
+
+# Convert speeches to lower case: lower
+lower = speeches.str.lower()
+
+# Filter lower for the presence of 'health care': health
+health = lower.filter(lambda s:'health care' in s)
+
+# Count the number of entries : n_health
+n_health = health.count()
+
+# Compute and print the value of n_health
+print(n_health.compute())
+
+
+
+
+
+
+# Call db.read_text with congress/bills*.json: bills_text
+bills_text = db.read_text('congress/bills*.json')
+
+# Map the json.loads function over all elements: bills_dicts
+bills_dicts = bills_text.map(json.loads)
+
+# Extract the first element with .take(1) and index to the first position: first_bill
+first_bill = bills_dicts.take(1)[0]
+
+# Print the keys of first_bill
+print(first_bill.keys())
+
+
+
+
+
+
+
+# Filter the bills: overridden
+overridden = bills_dicts.filter(veto_override)
+
+# Print the number of bills retained
+print(overridden.count().compute())
+
+# Get the value of the 'title' key
+titles = overridden.pluck('title')
+
+# Compute and print the titles
+print(titles.compute())
+
+
+
+
+
+
+# Define @delayed-function read_flights
+@delayed
+def read_flights(filename):
+
+    # Read in the DataFrame: df
+    df = pd.read_csv(filename, parse_dates=['FL_DATE'])
+
+    # Replace 0s in df['WEATHER_DELAY'] with np.nan
+    df['WEATHER_DELAY'] = df['WEATHER_DELAY'].replace(0, np.nan)
+
+    # Return df
+    return df
+
+
+
+
+
+# Loop over filenames with index filename
+for filename in filenames:
+    # Apply read_flights to filename; append to dataframes
+    dataframes.append(read_flights(filename))
+
+# Compute flight delays: flight_delays
+flight_delays = dd.from_delayed(dataframes)
+
+# Print average of 'WEATHER_DELAY' column of flight_delays
+print(flight_delays['WEATHER_DELAY'].mean().compute())
+
+
+
+
+
+
+
+
+# Define @delayed-function read_weather with input filename
+@delayed
+def read_weather(filename):
+    # Read in filename: df
+    df = pd.read_csv(filename, parse_dates=['Date'])
+
+    # Clean 'PrecipitationIn'
+    df['PrecipitationIn'] = pd.to_numeric(df['PrecipitationIn'], errors = 'coerce')
+
+    # Create the 'Airport' column
+    df['Airport'] = filename.split('.')[0]
+
+    # Return df
+    return df
+
+
+
+
+
+
+
+# Loop over filenames with filename
+for filename in filenames:
+    # Invoke read_weather on filename; append result to weather_dfs
+    weather_dfs.append(read_weather(filename))
+
+# Call dd.from_delayed() with weather_dfs: weather
+weather = dd.from_delayed(weather_dfs)
+
+# Print result of weather.nlargest(1, 'Max TemperatureF')
+print(weather.nlargest(1, 'Max TemperatureF').compute())
+
+
+
+
+
+# Make cleaned Boolean Series from weather['Events']: is_snowy
+is_snowy = weather['Events'].str.contains('Snow').fillna(False)
+
+# Create filtered DataFrame with weather.loc & is_snowy: got_snow
+got_snow = weather.loc[is_snowy]
+
+# Groupby 'Airport' column; select 'PrecipitationIn'; aggregate sum(): result
+result = got_snow.groupby('Airport')['PrecipitationIn'].sum()
+
+# Compute & print the value of result
+print(result.compute())
+
+
+
+
+
+
+# Print time in milliseconds to compute percent_delayed on weather_delays
+t_start = time.time()
+print(percent_delayed(weather_delays).compute())
+t_end = time.time()
+print((t_end-t_start)*1000)
+
+# Call weather_delays.persist(): persisted_weather_delays
+persisted_weather_delays = weather_delays.persist()
+
+# Print time in milliseconds to compute percent_delayed on persisted_weather_delays
+t_start = time.time()
+print(percent_delayed(persisted_weather_delays).compute())
+t_end = time.time()
+print((t_end-t_start)*1000)
+
+
+
+
+
+
+# Group persisted_weather_delays by 'Events': by_event
+by_event = persisted_weather_delays.groupby('Events')
+
+# Count 'by_event['WEATHER_DELAY'] column & divide by total number of delayed flights
+pct_delayed = by_event['WEATHER_DELAY'].count()/persisted_weather_delays['WEATHER_DELAY'].count()*100
+
+# Compute & print five largest values of pct_delayed
+print(pct_delayed.nlargest(5).compute())
+
+# Calculate mean of by_event['WEATHER_DELAY'] column & return the 5 largest entries: avg_delay_time
+avg_delay_time = by_event['WEATHER_DELAY'].mean().nlargest(5)
+
+# Compute & print avg_delay_time
+print(avg_delay_time.compute())
+
+
+
+
+
+
+
+
+# Import custom text_analyzer package
+import text_analyzer
+
+# Create an instance of Document with datacamp_tweet
+my_document = text_analyzer.Document(text=datacamp_tweet)
+
+# Print the text attribute of the Document instance
+print(my_document.text)
+
+
+
+
+
+
+
+class Document:
+  def __init__(self, text):
+    self.text = text
+    # Tokenize the document with non-public tokenize method
+    self.tokens = self._tokenize()
+    # Perform word count with non-public count_words method
+    self.word_counts = self._count_words()
+
+  def _tokenize(self):
+    return tokenize(self.text)
+	
+  # non-public method to tally document's word counts with Counter
+  def _count_words(self):
+    return Counter(self.tokens)
+
+
+
+
+
+
+# create a new document instance from datacamp_tweets
+datacamp_doc = Document(datacamp_tweets)
+
+# print the first 5 tokens from datacamp_doc
+print(datacamp_doc.tokens[:5])
+
+# print the top 5 most used words in datacamp_doc
+print(datacamp_doc.word_counts.most_common(5))
+
+
+
+
+
+# Define a SocialMedia class that is a child of the `Document class`
+class SocialMedia(Document):
+    def __init__(self, text):
+        Document.__init__(self, text)
+
+
+
+
+
+
+# Define a SocialMedia class that is a child of the `Document class`
+class SocialMedia(Document):
+    def __init__(self, text):
+        Document.__init__(self, text)
+        self.hashtag_counts = self._count_hashtags()
+        
+    def _count_hashtags(self):
+        # Filter attribute so only words starting with '#' remain
+        return filter_word_counts(self.word_counts, first_char='#')
+
+
+
+
+
+
+
+
+# Define a SocialMedia class that is a child of the `Document class`
+class SocialMedia(Document):
+    def __init__(self, text):
+        Document.__init__(self, text)
+        self.hashtag_counts = self._count_hashtags()
+        self.mention_counts = self._count_mentions()
+        
+    def _count_hashtags(self):
+        # Filter attribute so only words starting with '#' remain
+        return filter_word_counts(self.word_counts, first_char='#')
+    
+    def _count_mentions(self):
+        # Filter attribute so only words starting with '@' remain
+        return filter_word_counts(self.word_counts, first_char='@')
+
+
+
+
+
+
+# Import custom text_analyzer package
+import text_analyzer
+
+# Create a SocialMedia instance with datacamp_tweets
+dc_tweets = text_analyzer.SocialMedia(text=datacamp_tweets)
+
+# Print the top five most most mentioned users
+print(dc_tweets.mention_counts.most_common(5))
+
+# Plot the most used hashtags
+text_analyzer.plot_counter(dc_tweets.hashtag_counts)
+
+
+
+
+
+
+# Import needed package
+import text_analyzer
+
+# Create instance of document
+my_doc = text_analyzer.Document(datacamp_tweets)
+
+# Run help on my_doc's plot method
+help(my_doc.plot_counts)
+
+# Plot the word_counts of my_doc
+my_doc.plot_counts()
+
+
+
+
+
+
+
+# Define a Tweet class that inherits from SocialMedia
+class Tweets(SocialMedia):
+    def __init__(self, text):
+        # Call parent's __init__ with super()
+        super().__init__(text)
+        # Define retweets attribute with non-public method
+        self.retweets = self._process_retweets()
+
+    def _process_retweets(self):
+        # Filter tweet text to only include retweets
+        retweet_text = filter_lines(self.text, first_chars='RT')
+        # Return retweet_text as a SocialMedia object
+        return SocialMedia(retweet_text)
+
+
+
+
+
+
+
+# Import needed package
+import text_analyzer
+
+# Create instance of Tweets
+my_tweets = text_analyzer.Tweets(datacamp_tweets)
+
+# Plot the most used hashtags in the retweets
+my_tweets.retweets.plot_counts('hashtag_counts')
+
+
+
+
+
+
+# Run the help on all 4 functions
+help(goldilocks)
+help(rapunzel)
+help(mary)
+help(sleeping_beauty)
+
+# Execute the function with most complete docstring
+result = rapunzel()
+
+# Print the result
+print(result)
+
+
+
+
+
+
+# Complete the function's docstring
+def tokenize(text, regex=r'[a-zA-z]+'):
+  """Split text into tokens using a regular expression
+
+  :param text: text to be tokenized
+  :param regex: regular expression used to match tokens using re.findall 
+  :return: a list of resulting tokens
+
+  >>> tokenize('the rain in spain')
+  ['the', 'rain', 'in', 'spain']
+  """
+  return re.findall(regex, text, flags=re.IGNORECASE)
+
+# Print the docstring
+help(tokenize)
+
+
+
+
+
+
+
+def sum_counters(counters):
+    """Aggregate collections.Counter objects by summing counts
+
+    :param counters: list/tuple of counters to sum
+    :return: aggregated counters with counts summed
+
+    >>> d1 = text_analyzer.Document('1 2 fizz 4 buzz fizz 7 8')
+    >>> d2 = text_analyzer.Document('fizz buzz 11 fizz 13 14')
+    >>> sum_counters([d1.word_counts, d2.word_counts])
+    Counter({'fizz': 4, 'buzz': 2})
+    """
+    return sum(counters, Counter())
+
+doctest.testmod()
+
+
+
+
+
+
+from collections import Counter
+from text_analyzer import SocialMedia
+
+# Create an instance of SocialMedia for testing
+test_post = 'learning #python & #rstats is awesome! thanks @datacamp!'
+sm_post = SocialMedia(test_post)
+
+# Test hashtag counts are created properly
+def test_social_media_hashtags():
+    expected_hashtag_counts = Counter({'#python': 1, '#rstats': 1})
+    assert sm_post.hashtag_counts == expected_hashtag_counts
+
+
+
+
+
+
+from text_analyzer import Document
+
+class SocialMedia(Document):
+    """Analyze text data from social media
+    
+    :param text: social media text to analyze
+
+    :ivar hashtag_counts: Counter object containing counts of hashtags used in text
+    :ivar mention_counts: Counter object containing counts of @mentions used in text
+    """
+    def __init__(self, text):
+        Document.__init__(self, text)
+        self.hashtag_counts = self._count_hashtags()
+        self.mention_counts = self._count_mentions()
+
+
+
+
+
+# Import the pytest package
+import pytest
+
+# Import the function convert_to_int()
+from preprocessing_helpers import convert_to_int
+
+# Complete the unit test name by adding a prefix
+def test_on_string_with_one_comma():
+  # Complete the assert statement
+  assert convert_to_int("2,081") == 2081
+
+
+
+
+
+
+import pytest
+from preprocessing_helpers import convert_to_int
+
+def test_on_string_with_one_comma():
+    test_argument = "2,081"
+    expected = 2081
+    actual = convert_to_int(test_argument)
+    # Format the string with the actual return value
+    message = "convert_to_int('2,081') should return the int 2081, but it actually returned {0}".format(actual)
+    # Write the assert statement which prints message on failure
+    assert actual == expected, message
+
+
+
+
+
+
+
+import numpy as np
+import pytest
+from as_numpy import get_data_as_numpy_array
+
+def test_on_clean_file():
+  expected = np.array([[2081.0, 314942.0],
+                       [1059.0, 186606.0],
+  					   [1148.0, 206186.0]
+                       ]
+                      )
+  actual = get_data_as_numpy_array("example_clean_data.txt", num_columns=2)
+  message = "Expected return value: {0}, Actual return value: {1}".format(expected, actual)
+  # Complete the assert statement
+  assert actual == pytest.approx(expected), message
+
+
+
+
+
+
+
+
+
+def test_on_six_rows():
+    example_argument = np.array([[2081.0, 314942.0], [1059.0, 186606.0],
+                                 [1148.0, 206186.0], [1506.0, 248419.0],
+                                 [1210.0, 214114.0], [1697.0, 277794.0]]
+                                )
+    # Fill in with training array's expected number of rows
+    expected_training_array_num_rows = 4
+    # Fill in with testing array's expected number of rows
+    expected_testing_array_num_rows = 2
+    actual = split_into_training_and_testing_sets(example_argument)
+    # Write the assert statement checking training array's number of rows
+    assert actual[0].shape[0] == expected_training_array_num_rows, "The actual number of rows in the training array is not {}".format(expected_training_array_num_rows)
+    # Write the assert statement checking testing array's number of rows
+    assert actual[1].shape[0] == expected_testing_array_num_rows, "The actual number of rows in the testing array is not {}".format(expected_testing_array_num_rows)
+
+
+
+
+
+
+
+import pytest
+
+with pytest.raises(ValueError) as exc_info:
+    raise ValueError("Silence me!")
+# Check if the raised ValueError contains the correct message
+assert exc_info.match("Silence me!")
+
+
+
+
+
+
+
+import numpy as np
+import pytest
+from train import split_into_training_and_testing_sets
+
+def test_on_one_row():
+    test_argument = np.array([[1382.0, 390167.0]])
+    # Store information about raised ValueError in exc_info
+    with pytest.raises(ValueError) as exc_info:
+      split_into_training_and_testing_sets(test_argument)
+    expected_error_msg = "Argument data_array must have at least 2 rows, it actually has just 1"
+    # Check if the raised ValueError contains the correct message
+    assert exc_info.match(expected_error_msg)
+
+
+
+
+
+
+
+import pytest
+from preprocessing_helpers import row_to_list
+
+def test_on_no_tab_no_missing_value():    # (0, 0) boundary value
+    # Assign actual to the return value for the argument "123\n"
+    actual = row_to_list("123\n")
+    assert actual is None, "Expected: None, Actual: {0}".format(actual)
+    
+def test_on_two_tabs_no_missing_value():    # (2, 0) boundary value
+    actual = row_to_list("123\t4,567\t89\n")
+    # Complete the assert statement
+    assert actual is None, "Expected: None, Actual: {0}".format(actual)
+    
+def test_on_one_tab_with_missing_value():    # (1, 1) boundary value
+    actual = row_to_list("\t4,567\n")
+    # Format the failure message
+    assert actual is None, "Expected: None, Actual: {0}".format(actual)
+
+
+
+
+
+
+
+import pytest
+from preprocessing_helpers import row_to_list
+
+def test_on_normal_argument_1():
+    actual = row_to_list("123\t4,567\n")
+    # Fill in with the expected return value for the argument "123\t4,567\n"
+    expected = ["123", "4,567"]
+    assert actual == expected, "Expected: {0}, Actual: {1}".format(expected, actual)
+    
+def test_on_normal_argument_2():
+    actual = row_to_list("1,059\t186,606\n")
+    expected = ["1,059", "186,606"]
+    # Write the assert statement along with a failure message
+    assert actual == expected, "Expected: {0}, Actual: {1}".format(expected, actual)
+
+
+
+
+
+
+
+def test_with_no_comma():
+    actual = convert_to_int("756")
+    # Complete the assert statement
+    assert actual == 756, "Expected: 756, Actual: {0}".format(actual)
+    
+def test_with_one_comma():
+    actual = convert_to_int("2,081")
+    # Complete the assert statement
+    assert actual == 2081, "Expected: 2081, Actual: {0}".format(actual)
+    
+def test_with_two_commas():
+    actual = convert_to_int("1,034,891")
+    # Complete the assert statement
+    assert actual == 1034891, "Expected: 1034891, Actual: {0}".format(actual)
+
+
+
+
+
+
+
+
+def convert_to_int(integer_string_with_commas):
+    comma_separated_parts = integer_string_with_commas.split(",")
+    for i in range(len(comma_separated_parts)):
+        # Write an if statement for checking missing commas
+        if len(comma_separated_parts[i]) > 3:
+            return None
+        # Write the if statement for incorrectly placed commas
+        if i != 0 and len(comma_separated_parts[i]) != 3:
+            return None
+    integer_string_without_commas = "".join(comma_separated_parts)
+    try:
+        return int(integer_string_without_commas)
+    # Fill in with a ValueError
+    except ValueError:
+        return None
+
+
+
+
+
+
+import pytest
+import numpy as np
+
+from models.train import split_into_training_and_testing_sets
+
+# Declare the test class
+class TestSplitIntoTrainingAndTestingSets(object):
+    # Fill in with the correct mandatory argument
+    def test_on_one_row(self):
+        test_argument = np.array([[1382.0, 390167.0]])
+        with pytest.raises(ValueError) as exc_info:
+            split_into_training_and_testing_sets(test_argument)
+        expected_error_msg = "Argument data_array must have at least 2 rows, it actually has just 1"
+        assert exc_info.match(expected_error_msg)
+
+
+
+
+
+
+# Add a reason for the expected failure
+@pytest.mark.xfail(reason = "Using TDD, model_test() has not yet been implemented")
+class TestModelTest(object):
+    def test_on_linear_data(self):
+        test_input = np.array([[1.0, 3.0], [2.0, 5.0], [3.0, 7.0]])
+        expected = 1.0
+        actual = model_test(test_input, 2.0, 1.0)
+        message = "model_test({0}) should return {1}, but it actually returned {2}".format(test_input, expected, actual)
+        assert actual == pytest.approx(expected), message
+        
+    def test_on_one_dimensional_array(self):
+        test_input = np.array([1.0, 2.0, 3.0, 4.0])
+        with pytest.raises(ValueError) as exc_info:
+            model_test(test_input, 1.0, 1.0)
+
+
+
+
+
+
+ # Import the sys module
+import sys
+
+class TestGetDataAsNumpyArray(object):
+    # Add a reason for skipping the test
+    @pytest.mark.skipif(sys.version_info > (2, 7), reason = "Works only on Python 2.7 or lower")
+    def test_on_clean_file(self):
+        expected = np.array([[2081.0, 314942.0],
+                             [1059.0, 186606.0],
+                             [1148.0, 206186.0]
+                             ]
+                            )
+        actual = get_data_as_numpy_array("example_clean_data.txt", num_columns=2)
+        message = "Expected return value: {0}, Actual return value: {1}".format(expected, actual)
+        assert actual == pytest.approx(expected), message
+
+
+
+
+
+
+
+
+# Add a decorator to make this function a fixture
+@pytest.fixture
+def clean_data_file():
+    file_path = "clean_data_file.txt"
+    with open(file_path, "w") as f:
+        f.write("201\t305671\n7892\t298140\n501\t738293\n")
+    yield file_path
+    os.remove(file_path)
+    
+# Pass the correct argument so that the test can use the fixture
+def test_on_clean_file(clean_data_file):
+    expected = np.array([[201.0, 305671.0], [7892.0, 298140.0], [501.0, 738293.0]])
+    # Pass the clean data file path yielded by the fixture as the first argument
+    actual = get_data_as_numpy_array(clean_data_file, 2)
+    assert actual == pytest.approx(expected), "Expected: {0}, Actual: {1}".format(expected, actual) 
+
+
+
+
+
+
+
+
+@pytest.fixture
+def empty_file():
+    # Assign the file path "empty.txt" to the variable
+    file_path = "empty_file"
+    open(file_path, "w").close()
+    # Yield the variable file_path
+    yield file_path
+    # Remove the file in the teardown
+    os.remove(file_path)
+    
+def test_on_empty_file(self, empty_file):
+    expected = np.empty((0, 2))
+    actual = get_data_as_numpy_array(empty_file, 2)
+    assert actual == pytest.approx(expected), "Expected: {0}, Actual: {1}".format(expected, actual)
+
+
+
+
+
+
+
+
+import pytest
+
+@pytest.fixture
+# Add the correct argument so that this fixture can chain with the tmpdir fixture
+def empty_file(tmpdir):
+    # Use the appropriate method to create an empty file in the temporary directory
+    file_path = tmpdir.join("empty.txt")
+    open(file_path, "w").close()
+    yield file_path
+
+
+
+
+
+# Define a function convert_to_int_bug_free
+def convert_to_int_bug_free(comma_separated_integer_string):
+    # Assign to the dict holding the correct return values 
+    return_values = {"1,801": 1801, "201,411": 201411, "2,002": 2002, "333,209": 333209, "1990": None, "782,911": 782911, "1,285": 1285, "389129": None}
+    # Return the correct result using the dict return_values
+    return return_values[comma_separated_integer_string]
+
+
+
+
+
+
+
+def test_on_circular_data(self):
+    theta = pi/4.0
+    # Assign to a NumPy array holding the circular testing data
+    test_argument = np.array([[1.0, 0.0], [cos(theta), sin(theta)],
+                              [0.0, 1.0],
+                              [cos(3 * theta), sin(3 * theta)],
+                              [-1.0, 0.0],
+                              [cos(5 * theta), sin(5 * theta)],
+                              [0.0, -1.0],
+                              [cos(7 * theta), sin(7 * theta)]]
+                             )
+    # Fill in with the slope and intercept of the straight line
+    actual = model_test(test_argument, slope=0.0, intercept=0.0)
+    # Complete the assert statement
+    assert actual == pytest.approx(0.0)
+
+
+
+
+
+
+

@@ -1,0 +1,2567 @@
+import matplotlib.pyplot as plt
+
+# Initalize a Figure and Axes
+fig, ax = plt.subplots()
+
+# Plot the CO2 variable in blue
+ax.plot(climate_change.index, climate_change["co2"], color='blue')
+
+# Create a twin Axes that shares the x-axis
+ax2 = ax.twinx()
+
+# Plot the relative temperature in red
+ax2.plot(climate_change.index, climate_change["relative_temp"], color='red')
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+# Define a function called plot_timeseries
+def plot_timeseries(axes, x, y, color, xlabel, ylabel):
+
+  # Plot the inputs x,y in the provided color
+  axes.plot(x, y, color=color)
+
+  # Set the x-axis label
+  axes.set_xlabel(xlabel)
+
+  # Set the y-axis label
+  axes.set_ylabel(ylabel, color=color)
+
+  # Set the colors tick params for y-axis
+  axes.tick_params('y', colors=color)
+
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Plot the CO2 levels time-series in blue
+plot_timeseries(ax, climate_change.index, climate_change["co2"], "blue", "Time (years)", "CO2 levels")
+
+# Create a twin Axes object that shares the x-axis
+ax2 = ax.twinx()
+
+# Plot the relative temperature data in red
+plot_timeseries(ax2, climate_change.index, climate_change["relative_temp"], "red", "Time (years)", "Relative temperature (Celsius)")
+
+plt.show()
+
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Plot the relative temperature data
+ax.plot(climate_change.index, climate_change["relative_temp"])
+
+# Annotate the date at which temperatures exceeded 1 degree
+ax.annotate(">1 degree", xy=[pd.Timestamp('2015-10-06'), 1])
+
+plt.show()
+
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Plot the CO2 levels time-series in blue
+plot_timeseries(ax, climate_change.index, climate_change["co2"], 'blue', "Time (years)", "CO2 levels")
+
+# Create an Axes object that shares the x-axis
+ax2 = ax.twinx()
+
+# Plot the relative temperature data in red
+plot_timeseries(ax2, climate_change.index, climate_change["relative_temp"], 'red', "Time (years)", "Relative temp (Celsius)")
+
+# Annotate point with relative temperature >1 degree
+ax2.annotate(">1 degree", xy=(pd.Timestamp('2015-10-06'), 1), xytext=(pd.Timestamp('2008-10-06'), -0.2), arrowprops={"arrowstyle":"->", "color":"gray"})
+
+plt.show()
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Plot a bar-chart of gold medals as a function of country
+ax.bar(medals.index, medals["Gold"])
+
+# Set the x-axis tick labels to the country names
+ax.set_xticklabels(medals.index, rotation=90)
+
+# Set the y-axis label
+ax.set_ylabel("Number of medals")
+
+plt.show()
+
+
+
+
+
+
+# Add bars for "Gold" with the label "Gold"
+ax.bar(medals.index, medals["Gold"], label="Gold")
+
+# Stack bars for "Silver" on top with label "Silver"
+ax.bar(medals.index, medals["Silver"], bottom=medals["Gold"], label="Silver")
+
+# Stack bars for "Bronze" on top of that with label "Bronze"
+ax.bar(medals.index, medals["Bronze"], bottom=medals["Gold"]+medals["Silver"], label="Bronze")
+
+# Display the legend
+ax.legend()
+
+plt.show()
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Plot a histogram of "Weight" for mens_rowing
+ax.hist(mens_rowing["Weight"], label="Rowing", histtype="step", bins=5)
+
+# Compare to histogram of "Weight" for mens_gymnastics
+ax.hist(mens_gymnastics["Weight"], label="Gymnastics", histtype="step", bins=5)
+
+ax.set_xlabel("Weight (kg)")
+ax.set_ylabel("# of observations")
+
+# Add the legend and show the Figure
+ax.legend()
+plt.show()
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Add Seattle temperature data in each month with error bars
+ax.errorbar(seattle_weather["MONTH"], seattle_weather["MLY-TAVG-NORMAL"], yerr=seattle_weather["MLY-TAVG-STDDEV"])
+
+# Add Austin temperature data in each month with error bars
+ax.errorbar(austin_weather["MONTH"], austin_weather["MLY-TAVG-NORMAL"], yerr=austin_weather["MLY-TAVG-STDDEV"]) 
+
+# Set the y-axis label
+ax.set_ylabel("Temperature (Fahrenheit)")
+
+plt.show()
+
+
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Add data: "co2", "relative_temp" as x-y, index as color
+ax.scatter(climate_change["co2"], climate_change["relative_temp"], c=climate_change.index)
+
+# Set the x-axis label to "CO2 (ppm)"
+ax.set_xlabel("CO2 (ppm)")
+
+# Set the y-axis label to "Relative temperature (C)"
+ax.set_ylabel("Relative temperature (C)")
+
+plt.show()
+
+
+
+
+
+
+
+fig, ax = plt.subplots()
+
+# Loop over the different sports branches
+for sport in sports:
+  # Extract the rows only for this sport
+  sport_df = summer_2016_medals[summer_2016_medals["Sport"]==sport]
+  # Add a bar for the "Weight" mean with std y error bar
+  ax.bar(sport, sport_df["Weight"].mean(), yerr=sport_df["Weight"].std())
+
+ax.set_ylabel("Weight")
+ax.set_xticklabels(sports, rotation=90)
+
+# Save the figure to file
+fig.savefig('sports_weights.png')
+
+
+
+
+
+
+
+# Import Matplotlib and Seaborn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create count plot with region on the y-axis
+sns.countplot(y=region)
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+
+# Import Matplotlib, Pandas, and Seaborn
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+# Create a DataFrame from csv file
+df = pd.read_csv(csv_filepath)
+
+# Create a count plot with "Spiders" on the x-axis
+sns.countplot(x="Spiders", data=df)
+
+# Display the plot
+plt.show()
+
+
+
+
+
+
+
+# Import Matplotlib and Seaborn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Change the legend order in the scatter plot
+sns.scatterplot(x="absences", y="G3", 
+                data=student_data, 
+                hue="location", hue_order=["Rural", "Urban"])
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+
+
+# Import Matplotlib and Seaborn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create a dictionary mapping subgroup values to colors
+palette_colors = {"Rural": "green", "Urban": "blue"}
+
+# Create a count plot of school with location subgroups
+sns.countplot(x="school", data=student_data, hue="location", palette=palette_colors)
+
+
+
+# Display plot
+plt.show()
+
+
+
+
+
+
+
+
+# Change this scatter plot to arrange the plots in rows instead of columns
+sns.relplot(x="absences", y="G3", 
+            data=student_data,
+            kind="scatter", 
+            col="study_time", row="study_time")
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+# Adjust further to add subplots based on family support
+sns.relplot(x="G1", y="G3", 
+            data=student_data,
+            kind="scatter", 
+            col="schoolsup",
+            col_order=["yes", "no"], 
+            row="famsup",
+            row_order=["yes", "no"])
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Import Matplotlib and Seaborn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create scatter plot of horsepower vs. mpg
+sns.relplot(x="horsepower", y="mpg", 
+            data=mpg, kind="scatter", 
+            size="cylinders", hue="cylinders")
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Import Matplotlib and Seaborn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Add markers and make each line have the same style
+sns.relplot(x="model_year", y="horsepower", 
+            data=mpg, kind="line", 
+            ci=None, style="origin", 
+            hue="origin", dashes=False, markers=True)
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Turn off the confidence intervals
+sns.catplot(x="study_time", y="G3",
+            data=student_data,
+            kind="bar",
+            order=["<2 hours", 
+                   "2 to 5 hours", 
+                   "5 to 10 hours", 
+                   ">10 hours"], ci=None)
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Create a box plot with subgroups and omit the outliers
+
+sns.catplot(x="internet", y="G3", data=student_data, kind='box', hue="location", sym="")
+
+
+
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Set the whiskers at the min and max values
+sns.catplot(x="romantic", y="G3",
+            data=student_data,
+            kind="box",
+            whis=[0,100])
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Remove the lines joining the points
+sns.catplot(x="famrel", y="absences",
+			data=student_data,
+            kind="point",
+            capsize=0.2, join=False)
+            
+# Show plot
+plt.show()
+
+
+
+
+
+
+# Import median function from numpy
+from numpy import median
+
+# Plot the median number of absences instead of the mean
+sns.catplot(x="romantic", y="absences",
+			data=student_data,
+            kind="point",
+            hue="school",
+            ci=None, estimator=median)
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+# Change the context to "poster"
+sns.set_context("poster")
+# Change the color palette to "RdBu"
+sns.set_style("whitegrid")
+sns.set_palette("RdBu")
+
+# Create a count plot of survey responses
+category_order = ["Never", "Rarely", "Sometimes", 
+                  "Often", "Always"]
+
+sns.catplot(x="Parents Advice", 
+            data=survey_data, 
+            kind="count", 
+            order=category_order)
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+
+
+# Set the style to "darkgrid"
+sns.set_style("darkgrid")
+
+# Set a custom color palette
+sns.set_palette(["#39A7D0", "#36ADA4"])
+
+# Create the box plot of age distribution by gender
+sns.catplot(x="Gender", y="Age", 
+            data=survey_data, kind="box")
+
+# Show plot
+plt.show()
+
+
+
+
+
+# Create scatter plot
+g = sns.relplot(x="weight", 
+                y="horsepower", 
+                data=mpg,
+                kind="scatter")
+
+# Add a title "Car Weight vs. Horsepower"
+g.fig.suptitle("Car Weight vs. Horsepower")
+
+# Show plot
+plt.show()
+
+
+
+
+
+# Create line plot
+g = sns.lineplot(x="model_year", y="mpg_mean", 
+                 data=mpg_mean,
+                 hue="origin")
+
+# Add a title "Average MPG Over Time"
+g.set_title("Average MPG Over Time")
+
+# Add x-axis and y-axis labels
+g.set(xlabel="Car Model Year", ylabel="Average MPG")
+
+# Show plot
+plt.show()
+
+
+
+
+
+# Create point plot
+sns.catplot(x="origin", 
+            y="acceleration", 
+            data=mpg, 
+            kind="point", 
+            join=False, 
+            capsize=0.1)
+
+# Rotate x-tick labels
+plt.xticks(rotation=90)
+
+# Show plot
+plt.show()
+
+
+
+
+
+# Set palette to "Blues"
+sns.set_palette("Blues")
+
+# Adjust to add subgroups based on "Interested in Pets"
+g = sns.catplot(x="Gender",
+                y="Age", data=survey_data, 
+                kind="box", hue="Interested in Pets")
+
+# Set title to "Age of Those Interested in Pets vs. Not"
+g.fig.suptitle("Age of Those Interested in Pets vs. Not")
+
+# Show plot
+plt.show()
+
+
+
+
+
+
+# Set the figure style to "dark"
+sns.set_style("dark")
+
+# Adjust to add subplots per gender
+g = sns.catplot(x="Village - town", y="Likes Techno", 
+                data=survey_data, kind="bar",
+                col="Gender")
+
+# Add title and axis labels
+g.fig.suptitle("Percentage of Young People Who Like Techno", y=1.02)
+g.set(xlabel="Location of Residence", 
+       ylabel="% Who Like Techno")
+
+# Show plot
+plt.show()
+
+
+
+
+
+# Print the information of ride_sharing
+print(ride_sharing.info())
+
+# Print summary statistics of user_type column
+print(ride_sharing['user_type'].describe())
+
+# Convert user_type from integer to category
+ride_sharing['user_type_cat'] = ride_sharing['user_type'].astype('category')
+
+# Write an assert statement confirming the change
+assert ride_sharing['user_type_cat'].dtype == 'category'
+
+# Print new summary statistics 
+print(ride_sharing['user_type_cat'].describe())
+
+
+
+
+
+
+# Strip duration of minutes
+ride_sharing['duration_trim'] = ride_sharing['duration'].str.strip("minutes")
+
+# Convert duration to integer
+ride_sharing['duration_time'] = ride_sharing['duration_trim'].astype('int')
+
+# Write an assert statement making sure of conversion
+assert ride_sharing['duration_time'].dtype == 'int'
+
+# Print formed columns and calculate average ride duration 
+print(ride_sharing[['duration','duration_trim','duration_time']])
+print(ride_sharing['duration_time'].mean())
+
+
+
+
+
+# Convert tire_sizes to integer
+ride_sharing['tire_sizes'] = ride_sharing['tire_sizes'].astype('int')
+
+# Set all values above 27 to 27
+ride_sharing.loc[ride_sharing['tire_sizes'] > 27, 'tire_sizes'] = 27
+
+# Reconvert tire_sizes back to categorical
+ride_sharing['tire_sizes'] = ride_sharing['tire_sizes'].astype('category')
+
+# Print tire size description
+print(ride_sharing['tire_sizes'].describe())
+
+
+
+
+
+
+
+# Convert ride_date to datetime
+ride_sharing['ride_dt'] = pd.to_datetime(ride_sharing['ride_date'])
+
+# Save today's date
+today = dt.date.today()
+
+# Set all in the future to today's date
+ride_sharing.loc[ride_sharing['ride_dt'] > today, 'ride_dt'] = today
+
+# Print maximum of ride_dt column
+print(ride_sharing['ride_dt'].max())
+
+
+
+
+
+
+# Find duplicates
+duplicates = ride_sharing.duplicated(subset='ride_id', keep=False)
+
+# Sort your duplicated rides
+duplicated_rides = ride_sharing[duplicates].sort_values('ride_id')
+
+# Print relevant columns of duplicated_rides
+print(duplicated_rides[['ride_id','duration','user_birth_year']])
+
+
+
+
+
+
+
+# Drop complete duplicates from ride_sharing
+ride_dup = ride_sharing.drop_duplicates()
+
+# Create statistics dictionary for aggregation function
+statistics = {'user_birth_year': 'min', 'duration': 'mean'}
+
+# Group by ride_id and compute new statistics
+ride_unique = ride_dup.groupby('ride_id').agg(statistics).reset_index()
+
+# Find duplicated values again
+duplicates = ride_unique.duplicated(subset = 'ride_id', keep = False)
+duplicated_rides = ride_unique[duplicates == True]
+
+# Assert duplicates are processed
+assert duplicated_rides.shape[0] == 0
+
+
+
+
+
+
+
+# Print categories DataFrame
+print(categories)
+
+# Print unique values of survey columns in airlines
+print('Cleanliness: ', airlines['cleanliness'].unique(), "\n")
+print('Safety: ', airlines['safety'].unique(), "\n")
+print('Satisfaction: ', airlines['satisfaction'].unique(),"\n")
+
+
+
+
+
+# Find the cleanliness category in airlines not in categories
+cat_clean = set(airlines['cleanliness']).difference(categories['cleanliness'])
+
+# Find rows with that category
+cat_clean_rows = airlines['cleanliness'].isin(cat_clean)
+
+# Print rows with inconsistent category
+print(airlines[cat_clean_rows])
+
+# Print rows with consistent categories only
+print(airlines[~cat_clean_rows])
+
+
+
+
+
+# Print unique values of both columns
+print(airlines['dest_region'].unique())
+print(airlines['dest_size'].unique())
+
+# Lower dest_region column and then replace "eur" with "europe"
+airlines['dest_region'] = airlines['dest_region'].str.lower() 
+airlines['dest_region'] = airlines['dest_region'].replace({'eur':'europe'})
+
+# Remove white spaces from `dest_size`
+airlines['dest_size'] = airlines['dest_size'].str.strip()
+
+# Verify changes have been effected
+print(airlines['dest_region'].unique())
+print(airlines['dest_size'].unique())
+
+
+
+
+
+# Create ranges for categories
+label_ranges = [0, 60, 180, np.inf]
+label_names = ['short', 'medium', 'long']
+
+# Create wait_type column
+airlines['wait_type'] = pd.cut(airlines['wait_min'], bins = label_ranges, 
+                                labels = label_names)
+
+# Create mappings and replace
+mappings = {'Monday':'weekday', 'Tuesday':'weekday', 'Wednesday': 'weekday', 
+            'Thursday': 'weekday', 'Friday': 'weekday', 
+            'Saturday': 'weekend', 'Sunday': 'weekend'}
+
+airlines['day_week'] = airlines['day'].replace(mappings)
+
+
+
+
+
+
+# Replace "Dr." with empty string ""
+airlines['full_name'] = airlines['full_name'].str.replace("Dr.","")
+
+# Replace "Mr." with empty string ""
+airlines['full_name'] = airlines['full_name'].str.replace("Mr.","")
+
+# Replace "Miss" with empty string ""
+airlines['full_name'] = airlines['full_name'].str.replace("Miss","")
+
+# Replace "Ms." with empty string ""
+airlines['full_name'] = airlines['full_name'].str.replace("Ms.","")
+
+# Assert that full_name has no honorifics
+assert airlines['full_name'].str.contains('Ms.|Mr.|Miss|Dr.').any() == False
+
+
+
+
+
+
+# Store length of each row in survey_response column
+resp_length = airlines['survey_response'].str.len()
+
+# Find rows in airlines where resp_length > 40
+airlines_survey = airlines[resp_length > 40]
+
+# Assert minimum survey_response length is > 40
+assert airlines_survey["survey_response"].str.len().min() > 40
+
+# Print new survey_response column
+print(airlines_survey['survey_response'])
+
+
+
+
+
+
+# Find values of acct_cur that are equal to 'euro'
+acct_eu = banking['acct_cur'] == 'euro'
+
+# Convert acct_amount where it is in euro to dollars
+banking.loc[acct_eu, 'acct_amount'] = banking.loc[acct_eu, 'acct_amount'] * 1.1
+
+# Unify acct_cur column by changing 'euro' values to 'dollar'
+banking.loc[acct_eu, 'acct_cur'] = 'dollar'
+
+# Print unique values of acct_cur
+assert banking['acct_cur'].unique() == 'dollar'
+
+
+
+
+
+
+# Print the header of account_opend
+print(banking['account_opened'].head())
+
+# Convert account_opened to datetime
+banking['account_opened'] = pd.to_datetime(banking['account_opened'],
+                                           # Infer datetime format
+                                           infer_datetime_format = True,
+                                           # Return missing value for error
+                                           errors = 'coerce') 
+
+# Get year of account opened
+banking['acct_year'] = banking['account_opened'].dt.strftime('%Y')
+
+# Print acct_year
+print(banking['acct_year'])
+
+
+
+
+
+
+# Store fund columns to sum against
+fund_columns = ['fund_A', 'fund_B', 'fund_C', 'fund_D']
+
+# Find rows where fund_columns row sum == inv_amount
+inv_equ = banking[fund_columns].sum(axis = 1) == banking['inv_amount']
+
+# Store consistent and inconsistent data
+consistent_inv = banking[inv_equ]
+inconsistent_inv = banking[~inv_equ]
+
+# Store consistent and inconsistent data
+print("Number of inconsistent investments: ", inconsistent_inv.shape[0])
+
+
+
+
+
+
+
+# Store today's date and find ages
+today = dt.date.today()
+ages_manual = today.year - banking['birth_date'].dt.year
+
+# Find rows where age column == ages_manual
+age_equ = banking['age'] == ages_manual
+
+# Store consistent and inconsistent data
+consistent_ages = banking[age_equ]
+inconsistent_ages = banking[~age_equ]
+
+# Store consistent and inconsistent data
+print("Number of inconsistent ages: ", inconsistent_ages.shape[0])
+
+
+
+
+
+
+# Print number of missing values in banking
+print(banking.isna().sum())
+
+# Visualize missingness matrix
+msno.matrix(banking)
+plt.show()
+
+# Isolate missing and non missing values of inv_amount
+missing_investors = banking[banking['inv_amount'].isna()]
+investors = banking[~banking['inv_amount'].isna()]
+
+# Sort banking by age and visualize
+banking_sorted = banking.sort_values(by='age')
+msno.matrix(banking_sorted)
+plt.show()
+
+
+
+
+
+# Drop missing values of cust_id
+banking_fullid = banking.dropna(subset = ['cust_id'])
+
+# Compute estimated acct_amount
+acct_imp = banking_fullid['inv_amount']*5
+
+# Impute missing acct_amount with corresponding acct_imp
+banking_imputed = banking_fullid.fillna({'acct_amount':acct_imp})
+
+# Print number of missing values
+print(banking_imputed.isna().sum())
+
+
+
+
+
+
+# Import process from fuzzywuzzy
+from fuzzywuzzy import process
+
+# Store the unique values of cuisine_type in unique_types
+unique_types = restaurants['cuisine_type'].unique()
+
+# Calculate similarity of 'asian' to all values of unique_types
+print(process.extract('asian', unique_types, limit = len(unique_types)))
+
+# Calculate similarity of 'american' to all values of unique_types
+print(process.extract('american', unique_types, limit = len(unique_types)))
+
+# Calculate similarity of 'italian' to all values of unique_types
+print(process.extract('italian', unique_types, limit = len(unique_types)))
+
+
+
+
+
+categories = ['asian', 'american', 'italian']
+
+# For each correct cuisine_type in categories
+for cuisine in categories:
+  # Find matches in cuisine_type of restaurants
+  matches = process.extract(cuisine, restaurants['cuisine_type'], 
+                 limit = restaurants.shape[0])
+  
+  # For each possible_match with similarity score >= 80
+  for possible_match in matches:
+    if possible_match[1] >= 80:
+      # Find matching cuisine type
+      matching_cuisine = restaurants['cuisine_type'] == possible_match[0]
+      restaurants.loc[matching_cuisine, 'cuisine_type'] = cuisine
+
+# Print unique values to confirm mapping
+print(restaurants['cuisine_type'].unique())
+
+
+
+
+
+# Create an indexer and object and find possible pairs
+indexer = recordlinkage.Index()
+
+# Block pairing on cuisine_type
+indexer.block('cuisine_type')
+
+# Generate pairs
+pairs = indexer.index(restaurants, restaurants_new)
+
+
+
+
+
+# Create a comparison object
+comp_cl = recordlinkage.Compare()
+
+# Find exact matches on city, cuisine_types - 
+comp_cl.exact('city', 'city', label='city')
+comp_cl.exact('cuisine_type', 'cuisine_type', label='cuisine_type')
+
+# Find similar matches of rest_name
+comp_cl.string('rest_name', 'rest_name', label='name', threshold = 0.8) 
+
+# Get potential matches and print
+potential_matches = comp_cl.compute(pairs, restaurants, restaurants_new)
+print(potential_matches)
+
+
+
+
+
+
+
+# Isolate potential matches with row sum >=3
+matches = potential_matches[potential_matches.sum(axis=1) >= 3]
+
+# Get values of second column index of matches
+matching_indices = matches.index.get_level_values(1)
+
+# Subset restaurants_new based on non-duplicate values
+non_dup = restaurants_new[~restaurants_new.index.isin(matching_indices)]
+
+# Append non_dup to restaurants
+full_restaurants = restaurants.append(non_dup)
+print(full_restaurants)
+
+
+
+
+
+
+# Select educ
+educ = gss['educ']
+
+# Bachelor's degree
+bach = (educ >= 16)
+
+# Associate degree
+assc = (educ>=14) & (educ<16)
+
+# High school (12 or fewer years of education)
+high =  (educ<=12)
+print(high.mean())
+
+
+
+
+
+
+income = gss['realinc']
+
+# Plot the CDFs
+Cdf(income[high]).plot(label='High school')
+Cdf(income[assc]).plot(label='Associate')
+Cdf(income[bach]).plot(label='Bachelor')
+
+# Label the axes
+plt.xlabel('Income (1986 USD)')
+plt.ylabel('CDF')
+plt.legend()
+plt.show()
+
+
+
+
+
+
+
+# Extract realinc and compute its log
+income = gss['realinc']
+log_income = np.log10(income)
+
+# Compute mean and standard deviation
+mean = log_income.mean()
+std = log_income.std()
+print(mean, std)
+
+# Make a norm object
+from scipy.stats import norm
+dist = norm(mean, std).pdf(log_income)
+
+
+
+
+
+
+# Evaluate the model CDF
+xs = np.linspace(2, 5.5)
+ys = dist.cdf(xs)
+
+# Plot the model CDF
+plt.clf()
+plt.plot(xs, ys, color='gray')
+
+# Create and plot the Cdf of log_income
+Cdf(log_income).plot()
+    
+# Label the axes
+plt.xlabel('log10 of realinc')
+plt.ylabel('CDF')
+plt.show()
+
+
+
+
+
+
+
+# Evaluate the normal PDF
+xs = np.linspace(2, 5.5)
+ys = dist.pdf(xs)
+
+# Plot the model PDF
+plt.clf()
+plt.plot(xs, ys, color='gray')
+
+# Plot the data KDE
+sns.kdeplot(log_income)
+
+# Label the axes
+plt.xlabel('log10 of realinc')
+plt.ylabel('PDF')
+plt.show()
+
+
+
+
+
+
+# Extract age
+age = brfss['AGE']
+
+# Plot the PMF
+Pmf(age).bar()
+
+# Label the axes
+plt.xlabel('Age in years')
+plt.ylabel('PMF')
+plt.show()
+
+
+
+
+# Select the first 1000 respondents
+brfss = brfss[:1000]
+
+# Add jittering to age
+age = brfss['AGE'] + np.random.normal(0, 2.5, size=len(brfss))
+# Extract weight
+weight = brfss['WTKG3']
+
+# Make a scatter plot
+plt.plot(age, weight, 'o', markersize=5, alpha=0.2)
+
+plt.xlabel('Age in years')
+plt.ylabel('Weight in kg')
+plt.show()
+
+
+
+
+
+
+# Drop rows with missing data
+data = brfss.dropna(subset=['_HTMG10', 'WTKG3'])
+
+# Make a box plot
+sns.boxplot(x='_HTMG10', y='WTKG3',data=data,  whis=10)
+
+# Plot the y-axis on a log scale
+plt.yscale('log')
+
+# Remove unneeded lines and label axes
+sns.despine(left=True, bottom=True)
+plt.xlabel('Height in cm')
+plt.ylabel('Weight in kg')
+plt.show()
+
+
+
+
+
+# Select columns
+columns = ["AGE", "INCOME2", "_VEGESU1"]
+subset = brfss[columns]
+
+# Compute the correlation matrix
+print(subset.corr())
+
+
+
+
+
+
+from scipy.stats import linregress
+
+# Extract the variables
+subset = brfss.dropna(subset=['INCOME2', '_VEGESU1'])
+xs = subset['INCOME2']
+ys = subset['_VEGESU1']
+
+# Compute the linear regression
+res = linregress(xs, ys)
+print(res)
+
+
+
+
+
+
+# Plot the scatter plot
+plt.clf()
+x_jitter = xs + np.random.normal(0, 0.15, len(xs))
+plt.plot(x_jitter, ys, 'o', alpha=0.2)
+
+# Plot the line of best fit
+fx = np.array([xs.min(), xs.max()])
+fy = res.intercept + res.slope*fx
+plt.plot(fx, fy, '-', alpha=0.7)
+
+plt.xlabel('Income code')
+plt.ylabel('Vegetable servings per day')
+plt.ylim([0, 6])
+plt.show()
+
+
+
+
+
+
+from scipy.stats import linregress
+import statsmodels.formula.api as smf
+
+# Run regression with linregress
+subset = brfss.dropna(subset=['INCOME2', '_VEGESU1'])
+xs = subset['INCOME2']
+ys = subset['_VEGESU1']
+res = linregress(xs,ys)
+print(res)
+
+# Run regression with StatsModels
+results = smf.ols('_VEGESU1 ~ INCOME2', data = brfss).fit()
+print(results.params)
+
+
+
+
+
+
+
+# Group by educ
+grouped = gss.groupby('educ')
+
+# Compute mean income in each group
+mean_income_by_educ = grouped['realinc'].mean()
+
+# Plot mean income as a scatter plot
+plt.plot(mean_income_by_educ, 'o', data=gss, alpha=0.5)
+
+# Label the axes
+plt.xlabel('Education (years)')
+plt.ylabel('Income (1986 $)')
+plt.show()
+
+
+
+
+
+
+import statsmodels.formula.api as smf
+
+# Add a new column with educ squared
+gss['educ2'] = gss['educ']**2
+
+# Run a regression model with educ, educ2, age, and age2
+results = smf.ols('realinc ~ educ + educ2 + age + age2', data=gss).fit()
+
+# Print the estimated parameters
+print(results.params)
+
+
+
+
+
+
+
+# Run a regression model with educ, educ2, age, and age2
+results = smf.ols('realinc ~ educ + educ2 + age + age2', data=gss).fit()
+
+# Make the DataFrame
+df = pd.DataFrame()
+df['educ'] = np.linspace(0, 20)
+df['age'] = 30
+df['educ2'] = df['educ']**2
+df['age2'] = df['age']**2
+
+# Generate and plot the predictions
+pred = results.predict(df)
+print(pred.head())
+
+
+
+
+
+
+# Plot mean income in each age group
+plt.clf()
+grouped = gss.groupby('educ')
+mean_income_by_educ = grouped['realinc'].mean()
+plt.plot(mean_income_by_educ, 'o', alpha=0.5)
+
+# Plot the predictions
+pred = results.predict(df)
+plt.plot(df['educ'], pred, label='Age 30')
+
+# Label axes
+plt.xlabel('Education (years)')
+plt.ylabel('Income (1986 $)')
+plt.legend()
+plt.show()
+
+
+
+
+
+
+# Recode grass
+gss['grass'].replace(2, 0, inplace=True)
+
+# Run logistic regression
+results = smf.logit('grass ~ age + age2 + educ + educ2 + C(sex)', data=gss).fit()
+results.params
+
+# Make a DataFrame with a range of ages
+df = pd.DataFrame()
+df['age'] = np.linspace(18, 89)
+df['age2'] = df['age']**2
+
+# Set the education level to 12
+df['educ'] = 12
+df['educ2'] = df['educ']**2
+
+# Generate predictions for men and women
+df['sex'] = 1
+pred1 = results.predict(df)
+
+df['sex'] = 2
+pred2 = results.predict(df)
+
+plt.clf()
+grouped = gss.groupby('age')
+favor_by_age = grouped['grass'].mean()
+plt.plot(favor_by_age, 'o', alpha=0.5)
+
+plt.plot(df['age'], pred1, label='Male')
+plt.plot(df['age'], pred2, label='Female')
+
+plt.xlabel('Age')
+plt.ylabel('Probability of favoring legalization')
+plt.legend()
+plt.show()
+
+
+
+
+
+
+
+# Create list of columns to use
+cols = ['zipcode', 'agi_stub', 'mars1', 'MARS2', 'NUMDEP']
+
+# Create data frame from csv using only selected columns
+data = pd.read_csv("vt_tax_data_2016.csv", usecols=cols)
+
+# View counts of dependents and tax returns by income level
+print(data.groupby("agi_stub").sum())
+
+
+
+
+
+
+
+# Create data frame of next 500 rows with labeled columns
+vt_data_next500 = pd.read_csv("vt_tax_data_2016.csv", 
+                       		  nrows=500,
+                       		  skiprows=500,
+                       		  header=None,
+                       		  names=list(vt_data_first500))
+
+# View the Vermont data frames to confirm they're different
+print(vt_data_first500.head())
+print(vt_data_next500.head())	
+
+
+
+
+
+
+# Create dict specifying data types for agi_stub and zipcode
+data_types = {"agi_stub": "category",
+			  "zipcode": str}
+
+# Load csv using dtype to set correct data types
+data = pd.read_csv("vt_tax_data_2016.csv", dtype=data_types)
+
+# Print data types of resulting frame
+print(data.dtypes.head())
+
+
+
+
+
+# Create dict specifying that 0s in zipcode are NA values
+null_values = {"zipcode":0}
+
+# Load csv using na_values keyword argument
+data = pd.read_csv("vt_tax_data_2016.csv", 
+                   na_values=null_values)
+
+# View rows with NA ZIP codes
+print(data[data.zipcode.isna()])
+
+
+
+
+
+
+try:
+  # Set warn_bad_lines to issue warnings about bad records
+  data = pd.read_csv("vt_tax_data_2016_corrupt.csv", 
+                     error_bad_lines=False, 
+                     warn_bad_lines=True)
+  
+  # View first 5 records
+  print(data.head())
+  
+except pd.io.common.CParserError:
+    print("Your data contained rows that could not be parsed.")
+
+
+
+
+
+# Create string of lettered columns to load
+col_string = "AD, AW:BA"
+
+# Load data with skiprows and usecols set
+survey_responses = pd.read_excel("fcc_survey_headers.xlsx", 
+                        skiprows=2, 
+                        usecols=col_string)
+
+# View the names of the columns selected
+print(survey_responses.columns)
+
+
+
+
+
+
+# Create an empty data frame
+all_responses = pd.DataFrame()
+
+# Set up for loop to iterate through values in responses
+for df in responses.values():
+  # Print the number of rows being added
+  print("Adding {} rows".format(df.shape[0]))
+  # Append df to all_responses, assign result
+  all_responses = all_responses.append(df)
+
+# Graph employment statuses in sample
+counts = all_responses.groupby("EmploymentStatus").EmploymentStatus.count()
+counts.plot.barh()
+plt.show()
+
+
+
+
+
+responses_2017 = pd.read_excel("fcc_survey.xlsx",
+                               sheet_name=1)
+responses_2017 = pd.read_excel("fcc_survey.xlsx",
+                               sheet_name="2017")
+all_survey_data = pd.read_excel("fcc_survey.xlsx",
+                                sheet_name=["2016", "2017"])
+all_survey_data = pd.read_excel("fcc_survey.xlsx",
+                                sheet_name=[0,"2017"])
+all_survey_data = pd.read_excel("fcc_survey.xlsx",
+                                sheet_name=None)
+
+
+
+
+
+# Set dtype to load appropriate column(s) as Boolean data
+survey_data = pd.read_excel("fcc_survey_subset.xlsx",
+                            dtype={"HasDebt": bool})
+
+# View financial burdens by Boolean group
+print(survey_data.groupby("HasDebt").sum())
+
+
+
+
+
+
+# Load file with Yes as a True value and No as a False value
+survey_subset = pd.read_excel("fcc_survey_yn_data.xlsx",
+                              dtype={"HasDebt": bool,
+                              "AttendedBootCampYesNo": bool},
+                              true_values=["Yes"],
+                              false_values=["No"])
+
+# View the data
+print(survey_subset.head())
+
+
+
+
+
+
+# Create dict of columns to combine into new datetime column
+datetime_cols = {"Part2Start": ["Part2StartDate", "Part2StartTime"]}
+
+
+# Load file, supplying the dict to parse_dates
+survey_data = pd.read_excel("fcc_survey_dts.xlsx",
+                            parse_dates=datetime_cols)
+
+# View summary statistics about Part2Start
+print(survey_data.Part2Start.describe())
+
+
+
+
+
+
+
+# Parse datetimes and assign result back to Part2EndTime
+survey_data["Part2EndTime"] = pd.to_datetime(survey_data["Part2EndTime"], 
+                                             format="%m%d%Y %H:%M:%S")
+
+# Print first few values of Part2EndTime
+print(survey_data["Part2EndTime"].head())
+
+
+
+
+
+
+# Create the database engine
+engine = create_engine("sqlite:///data.db")
+
+# Create a SQL query to load the entire weather table
+query = """
+SELECT * 
+  FROM weather;
+"""
+
+# Load weather with the SQL query
+weather = pd.read_sql(query, engine)
+
+# View the first few rows of data
+print(weather.head())
+
+
+
+
+
+
+
+# Create query for records with max temps <= 32 or snow >= 1
+query = """
+SELECT *
+  FROM weather
+  WHERE tmax <= 32
+  OR snow >= 1;
+"""
+
+# Query database and assign result to wintry_days
+wintry_days = pd.read_sql(query, engine)
+
+# View summary stats about the temperatures
+print(wintry_days.describe())
+
+
+
+
+
+
+
+# Create query for unique combinations of borough and complaint_type
+query = """
+SELECT DISTINCT borough, 
+       complaint_type
+  FROM hpd311calls;
+"""
+
+# Load results of query to a data frame
+issues_and_boros = pd.read_sql(query, engine)
+
+# Check assumption about issues and boroughs
+print(issues_and_boros)
+
+
+
+
+
+
+
+# Create query to get call counts by complaint_type
+query = """
+SELECT complaint_type, 
+     COUNT(*)
+  FROM hpd311calls
+  GROUP BY complaint_type;
+"""
+
+# Create data frame of call counts by issue
+calls_by_issue = pd.read_sql(query, engine)
+
+# Graph the number of calls for each housing issue
+calls_by_issue.plot.barh(x="complaint_type")
+plt.show()
+
+
+
+
+
+
+
+# Create query to get temperature and precipitation by month
+query = """
+SELECT month, 
+       MAX(tmax), 
+       MIN(tmin),
+       SUM(prcp)
+  FROM weather 
+ GROUP BY month;
+"""
+
+# Get data frame of monthly weather stats
+weather_by_month = pd.read_sql(query, engine)
+
+# View weather stats by month
+print(weather_by_month)
+
+
+
+
+
+
+# Query to join weather to call records by date columns
+query = """
+SELECT * 
+  FROM hpd311calls
+  JOIN weather 
+  ON hpd311calls.created_date = weather.date;
+"""
+
+# Create data frame of joined tables
+calls_with_weather = pd.read_sql(query, engine)
+
+# View the data frame to make sure all columns were joined
+print(calls_with_weather.head())
+
+
+
+
+
+
+# Query to get water leak calls and daily precipitation
+query = """
+SELECT hpd311calls.*, weather.prcp
+  FROM hpd311calls
+  JOIN weather
+    ON hpd311calls.created_date = weather.date
+  WHERE hpd311calls.complaint_type = 'WATER LEAK';"""
+
+# Load query results into the leak_calls data frame
+leak_calls = pd.read_sql(query, engine)
+
+# View the data frame
+print(leak_calls.head())
+
+
+
+
+
+
+# Modify query to join tmax and tmin from weather by date
+query = """
+SELECT hpd311calls.created_date, 
+       COUNT(*), 
+       weather.tmax, 
+       weather.tmin
+  FROM hpd311calls 
+       JOIN weather 
+       ON hpd311calls.created_date = weather.date
+ WHERE hpd311calls.complaint_type = 'HEAT/HOT WATER' 
+ GROUP BY hpd311calls.created_date;
+ """
+
+# Query database and save results as df
+df = pd.read_sql(query, engine)
+
+# View first 5 records
+print(df.head())
+
+
+
+
+
+
+try:
+    # Load the JSON with orient specified
+    df = pd.read_json("dhs_report_reformatted.json",
+                      orient="split")
+    
+    # Plot total population in shelters over time
+    df["date_of_census"] = pd.to_datetime(df["date_of_census"])
+    df.plot(x="date_of_census", 
+            y="total_individuals_in_shelter")
+    plt.show()
+    
+except ValueError:
+    print("pandas could not parse the JSON.")
+
+
+
+
+
+api_url = "https://api.yelp.com/v3/businesses/search"
+
+# Get data about NYC cafes from the Yelp API
+response = requests.get(api_url, 
+                headers=headers, 
+                params=params)
+
+# Extract JSON data from the response
+data = response.json()
+
+# Load data to a data frame
+cafes = pd.DataFrame(data["businesses"])
+
+# View the data's dtypes
+print(cafes.dtypes)
+
+
+
+
+
+
+# Create dictionary to query API for cafes in NYC
+parameters = {"term":"cafe",
+          	  "location":"NYC"}
+
+# Query the Yelp API with headers and params set
+response = requests.get(api_url,
+                headers=headers,
+                params=parameters)
+
+# Extract JSON data from response
+data = response.json()
+
+# Load "businesses" values to a data frame and print head
+cafes = pd.DataFrame(data["businesses"])
+print(cafes.head())
+
+
+
+
+
+# Create dictionary that passes Authorization and key string
+headers = {"Authorization": "Bearer {}".format(api_key)}
+
+# Query the Yelp API with headers and params set
+response = requests.get(api_url, headers=headers, params=params)
+
+
+
+# Extract JSON data from response
+data = response.json()
+
+# Load "businesses" values to a data frame and print names
+cafes = pd.DataFrame(data["businesses"])
+print(cafes.name)
+
+
+
+
+
+
+
+# Load json_normalize()
+from pandas.io.json import json_normalize
+
+# Isolate the JSON data from the API response
+data = response.json()
+
+# Flatten business data into a data frame, replace separator
+cafes = json_normalize(data["businesses"],
+             sep="_")
+
+# View data
+print(cafes.head())
+
+
+
+
+
+
+
+
+# Load other business attributes and set meta prefix
+flat_cafes = json_normalize(data["businesses"],
+                            sep="_",
+                    		record_path="categories",
+                    		meta=["name", 
+                                  "alias",  
+                                  "rating",
+                          		  ["coordinates", "latitude"], 
+                          		  ["coordinates", "longitude"]],
+                    		meta_prefix="biz_")
+
+
+
+
+
+# View the data
+print(flat_cafes.head())
+
+
+
+
+
+
+
+
+# Add an offset parameter to get cafes 51-100
+params = {"term": "cafe", 
+          "location": "NYC",
+          "sort_by": "rating", 
+          "limit": 50,
+          "offset":50}
+
+result = requests.get(api_url, headers=headers, params=params)
+next_50_cafes = json_normalize(result.json()["businesses"])
+
+# Append the results, setting ignore_index to renumber rows
+cafes = top_50_cafes.append(next_50_cafes, ignore_index=True)
+
+# Print shape of cafes
+print(cafes.shape)
+
+
+
+
+
+
+
+
+# Merge crosswalk into cafes on their zip code fields
+cafes_with_pumas = cafes.merge(crosswalk, left_on="location_zip_code", right_on="zipcode")
+
+
+
+# Merge pop_data into cafes_with_pumas on puma field
+cafes_with_pop = cafes_with_pumas.merge(pop_data, left_on="puma", right_on="puma")
+
+# View the data
+print(cafes_with_pop.head())
+
+
+
+
+
+
+
+# Import create_engine, MetaData, and Table
+from sqlalchemy import create_engine, MetaData, Table
+
+# Create engine: engine
+engine = create_engine('sqlite:///census.sqlite')
+
+# Create a metadata object: metadata
+metadata = MetaData()
+
+# Reflect census table from the engine: census
+census = Table('census', metadata, autoload=True, autoload_with=engine)
+
+# Print census table metadata
+print(repr(census))
+
+
+
+
+
+
+
+
+from sqlalchemy import create_engine, MetaData, Table
+
+engine = create_engine('sqlite:///census.sqlite')
+
+metadata = MetaData()
+
+# Reflect the census table from the engine: census
+census = Table('census', metadata, autoload=True, autoload_with=engine)
+
+# Print the column names
+print(census.columns.keys())
+
+# Print full metadata of census
+print(repr(metadata.tables['census']))
+
+
+
+
+
+
+
+# Import select
+from sqlalchemy import select
+
+# Reflect census table via engine: census
+census = Table('census', metadata, autoload=True, autoload_with=engine)
+
+# Build select statement for census table: stmt
+stmt = select([census])
+
+# Print the emitted statement to see the SQL string
+print(stmt)
+
+# Execute the statement on connection and fetch 10 records: result
+results = connection.execute(stmt).fetchmany(size=10)
+
+# Execute the statement and print the results
+print(results)
+
+
+
+
+
+
+# Get the first row of the results by using an index: first_row
+first_row = results[0]
+
+# Print the first row of the results
+print(first_row)
+
+# Print the first column of the first row by accessing it by its index
+print(first_row[:][0])
+
+# Print the 'state' column of the first row by using its name
+print(first_row.state)
+
+
+
+
+
+
+
+# Import create_engine function
+from sqlalchemy import create_engine
+
+# Create an engine to the census database
+engine = create_engine('postgresql+psycopg2://student:datacamp@postgresql.csrrinzqubik.us-east-1.rds.amazonaws.com:5432/census')
+
+# Use the .table_names() method on the engine to print the table names
+print(engine.table_names())
+
+
+
+
+
+
+# Create a select query: stmt
+stmt = select([census])
+
+# Add a where clause to filter the results to only those for New York : stmt_filtered
+stmt = stmt.where(census.columns.state == 'New York')
+
+# Execute the query to retrieve all the data returned: results
+results = connection.execute(stmt).fetchall()
+
+# Loop over the results and print the age, sex, and pop2000
+for result in results:
+    print(result.age, result.sex, result.pop2000)
+
+
+
+
+
+
+# Define a list of states for which we want results
+states = ['New York', 'California', 'Texas']
+
+# Create a query for the census table: stmt
+stmt = select([census])
+
+# Append a where clause to match all the states in_ the list states
+stmt = stmt.where(census.columns.state.in_(states))
+
+# Loop over the ResultProxy and print the state and its population in 2000
+for result in connection.execute(stmt):
+    print(result.state, result.pop2000)
+
+
+
+
+
+
+
+# Import and_
+from sqlalchemy import and_
+
+# Build a query for the census table: stmt
+stmt = select([census])
+
+# Append a where clause to select only non-male records from California using and_
+stmt = stmt.where(
+    # The state of California with a non-male sex
+    and_(census.columns.state == 'California',
+         census.columns.sex != 'M'
+         )
+)
+
+# Loop over the ResultProxy printing the age and sex
+for result in connection.execute(stmt):
+    print(result.age, result.sex)
+
+
+
+
+
+
+# Build a query to select the state column: stmt
+stmt = select([census.columns.state])
+
+# Order stmt by the state column
+stmt = stmt.order_by(census.columns.state)
+
+# Execute the query and store the results: results
+results = connection.execute(stmt).fetchall()
+
+# Print the first 10 results
+print(results[:10])
+
+
+
+
+
+
+
+
+# Import desc
+from sqlalchemy import desc
+
+# Build a query to select the state column: stmt
+stmt = select([census.columns.state])
+
+# Order stmt by state in descending order: rev_stmt
+rev_stmt = stmt.order_by(census.columns.state.desc())
+
+# Execute the query and store the results: rev_results
+rev_results = connection.execute(rev_stmt).fetchall()
+
+# Print the first 10 rev_results
+print(rev_results[:10])
+
+
+
+
+
+
+
+
+# Build a query to select state and age: stmt
+stmt = select([census.columns.state, census.columns.age])
+
+# Append order by to ascend by state and descend by age
+stmt = stmt.order_by(census.columns.state, census.columns.age.desc())
+
+# Execute the statement and store all the records: results
+results = connection.execute(stmt).fetchall()
+
+# Print the first 20 results
+print(results[:20])
+
+
+
+
+
+
+# Build a query to count the distinct states values: stmt
+stmt = select([func.count(census.columns.state.distinct())])
+
+# Execute the query and store the scalar result: distinct_state_count
+distinct_state_count = connection.execute(stmt).scalar()
+
+# Print the distinct_state_count
+print(distinct_state_count)
+
+
+
+
+
+
+# Import func
+from sqlalchemy import func
+
+# Build a query to select the state and count of ages by state: stmt
+stmt = select([census.columns.state, func.count(census.columns.age)])
+
+# Group stmt by state
+stmt = stmt.group_by(census.columns.state)
+
+# Execute the statement and store all the records: results
+results = connection.execute(stmt).fetchall()
+
+# Print results
+print(results)
+
+# Print the keys/column names of the results returned
+print(results[0].keys())
+
+
+
+
+
+# Import func
+from sqlalchemy import func
+
+# Build an expression to calculate the sum of pop2008 labeled as population
+pop2008_sum = func.sum(census.columns.pop2008).label('population')
+
+# Build a query to select the state and sum of pop2008: stmt
+stmt = select([census.columns.state, pop2008_sum])
+
+# Group stmt by state
+stmt = stmt.group_by(census.columns.state)
+
+# Execute the statement and store all the records: results
+results = connection.execute(stmt).fetchall()
+
+# Print results
+print(results)
+
+# Print the keys/column names of the results returned
+print(results[0].keys())
+
+
+
+
+
+
+# import pandas
+import pandas as pd
+
+# Create a DataFrame from the results: df
+df = pd.DataFrame(results)
+
+# Set column names
+df.columns = results[0].keys()
+
+# Print the DataFrame
+print(df)
+
+
+
+
+
+
+# Import pyplot as plt from matplotlib
+import matplotlib.pyplot as plt
+
+# Create a DataFrame from the results: df
+df = pd.DataFrame(results)
+
+# Set Column names
+df.columns = results[0].keys()
+
+# Print the DataFrame
+print(df)
+
+# Plot the DataFrame
+df.plot.bar()
+plt.show()
+
+
+
+
+
+
+
+# Import create_engine function
+from sqlalchemy import create_engine
+
+# Create an engine to the census database
+engine = create_engine('mysql+pymysql://student:datacamp@courses.csrrinzqubik.us-east-1.rds.amazonaws.com:3306/census')
+
+# Print the table names
+print(engine.table_names())
+
+
+
+
+
+
+
+# Build query to return state names by population difference from 2008 to 2000: stmt
+stmt = select([census.columns.state, (census.columns.pop2008-census.columns.pop2000).label('pop_change')])
+
+# Append group by for the state: stmt_grouped
+stmt_grouped = stmt.group_by(census.columns.state)
+
+# Append order by for pop_change descendingly: stmt_ordered
+stmt_ordered = stmt_grouped.order_by(desc('pop_change'))
+
+# Return only 5 results: stmt_top5
+stmt_top5 = stmt_ordered.limit(5)
+
+# Use connection to execute stmt_top5 and fetch all results
+results = connection.execute(stmt_top5).fetchall()
+
+# Print the state and population change for each record
+for result in results:
+    print('{}:{}'.format(result.state, result.pop_change))
+
+
+
+
+
+
+
+# import case, cast and Float from sqlalchemy
+from sqlalchemy import case, cast, Float
+
+# Build an expression to calculate female population in 2000
+female_pop2000 = func.sum(
+    case([
+        (census.columns.sex == 'F', census.columns.pop2000)
+    ], else_=0))
+
+# Cast an expression to calculate total population in 2000 to Float
+total_pop2000 = cast(func.sum(census.columns.pop2000), Float)
+
+# Build a query to calculate the percentage of women in 2000: stmt
+stmt = select([female_pop2000 / total_pop2000* 100])
+
+# Execute the query and store the scalar result: percent_female
+percent_female = connection.execute(stmt).scalar()
+
+# Print the percentage
+print(percent_female)
+
+
+
+
+
+
+
+# Build a statement to join census and state_fact tables: stmt
+stmt = select([census.columns.pop2000, state_fact.columns.abbreviation])
+
+# Execute the statement and get the first result: result
+result = connection.execute(stmt).first()
+
+# Loop over the keys in the result object and print the key and value
+for key in result.keys():
+    print(key, getattr(result, key))
+
+
+
+
+
+
+
+# Build a statement to select the census and state_fact tables: stmt
+stmt = select([census, state_fact])
+
+# Add a select_from clause that wraps a join for the census and state_fact
+# tables where the census state column and state_fact name column match
+stmt_join = stmt.select_from(
+    census.join(state_fact, census.columns.state == state_fact.columns.name))
+
+# Execute the statement and get the first result: result
+result = connection.execute(stmt_join).first()
+
+# Loop over the keys in the result object and print the key and value
+for key in result.keys():
+    print(key, getattr(result, key))
+
+
+
+
+
+
+
+
+# Build a statement to select the state, sum of 2008 population and census
+# division name: stmt
+stmt = select([
+    census.columns.state,
+    func.sum(census.columns.pop2008),
+    state_fact.columns.census_division_name
+])
+
+# Append select_from to join the census and state_fact tables by the census state and state_fact name columns
+stmt_joined = stmt.select_from(
+    census.join(state_fact, census.columns.state == state_fact.columns.name)
+)
+
+# Append a group by for the state_fact name column
+stmt_grouped = stmt_joined.group_by(state_fact.columns.name)
+
+# Execute the statement and get the results: results
+results = connection.execute(stmt_grouped).fetchall()
+
+# Loop over the results object and print each record.
+for record in results:
+    print(record)
+
+
+
+
+
+
+
+# Make an alias of the employees table: managers
+managers = employees.alias()
+
+# Build a query to select names of managers and their employees: stmt
+stmt = select(
+    [managers.columns.name.label('manager'),
+     employees.columns.name.label('employee')]
+)
+
+# Match managers id with employees mgr: stmt_matched
+stmt_matched = stmt.where(managers.columns.id == employees.columns.mgr)
+
+# Order the statement by the managers name: stmt_ordered
+stmt_ordered = stmt_matched.order_by(managers.columns.name)
+
+# Execute statement: results
+results = connection.execute(stmt_ordered).fetchall()
+
+# Print records
+for record in results:
+    print(record)
+
+
+
+
+
+
+
+# Make an alias of the employees table: managers
+managers = employees.alias()
+
+# Build a query to select names of managers and counts of their employees: stmt
+stmt = select([managers.columns.name, func.count(employees.columns.id)])
+
+# Append a where clause that ensures the manager id and employee mgr are equal
+stmt_matched = stmt.where(managers.columns.id == employees.columns.mgr)
+
+# Group by Managers Name
+stmt_grouped = stmt_matched.group_by(managers.columns.name)
+
+# Execute statement: results
+results = connection.execute(stmt_grouped).fetchall()
+
+# print manager
+for record in results:
+    print(record)
+
+
+
+
+
+
+
+# Start a while loop checking for more results
+while more_results:
+    # Fetch the first 50 results from the ResultProxy: partial_results
+    partial_results = results_proxy.fetchmany(50)
+
+    # if empty list, set more_results to False
+    if partial_results == []:
+        more_results = False
+
+    # Loop over the fetched records and increment the count for the state
+    for row in partial_results:
+        if row.state in state_count:
+            state_count[row.state]+=1
+        else:
+            state_count[row.state]=1
+
+# Close the ResultProxy, and thus the connection
+results_proxy.close()
+
+# Print the count by state
+print(state_count)
+
+
+
+
+
+
+# Import Table, Column, String, Integer, Float, Boolean from sqlalchemy
+from sqlalchemy import Table, Column, String, Integer, Float, Boolean
+
+# Define a new table with a name, count, amount, and valid column: data
+data = Table('data', metadata,
+             Column('name', String(255), unique=True),
+             Column('count', Integer(), default=1),
+             Column('amount', Float()),
+             Column('valid', Boolean(), default=False)
+)
+
+# Use the metadata to create the table
+metadata.create_all(engine)
+
+# Print the table details
+print(repr(metadata.tables['data']))
+
+
+
+
+
+
+# Build a list of dictionaries: values_list
+values_list = [
+    {'name': 'Anna', 'count': 1, 'amount': 1000.00, 'valid': True},
+    {'name': 'Taylor', 'count': 1, 'amount': 750.00, 'valid': False}
+]
+
+# Build an insert statement for the data table: stmt
+stmt = insert(data)
+
+# Execute stmt with the values_list: results
+results = connection.execute(stmt, values_list)
+
+# Print rowcount
+print(results.rowcount)
+
+
+
+
+
+
+
+# import pandas
+import pandas as pd
+
+# read census.csv into a DataFrame : census_df
+census_df = pd.read_csv("census.csv", header=None)
+
+# rename the columns of the census DataFrame
+census_df.columns = ['state', 'sex', 'age', 'pop2000', 'pop2008']
+
+# append the data from census_df to the "census" table via connection
+census_df.to_sql(name="census", con=connection, if_exists="append", index=False)
+
+
+
+
+
+
+select_stmt = select([state_fact]).where(state_fact.columns.name == 'New York')
+results = connection.execute(select_stmt).fetchall()
+print(results)
+print(results[0]['fips_state'])
+
+update_stmt = update(state_fact).values(fips_state = 36)
+update_stmt = update_stmt.where(state_fact.columns.name == 'New York')
+update_results = connection.execute(update_stmt)
+
+# Execute select_stmt again and fetch the new results
+new_results = connection.execute(select_stmt).fetchall()
+
+# Print the new_results
+print(new_results)
+
+# Print the FIPS code for the first row of the new_results
+print(new_results[0]['fips_state'])
+
+
+
+
+
+
+# Build a statement to update the notes to 'The Wild West': stmt
+stmt = update(state_fact).values(notes='The Wild West')
+
+# Append a where clause to match the West census region records: stmt_west
+stmt_west = stmt.where(state_fact.columns.census_region_name == 'West')
+
+# Execute the statement: results
+results = connection.execute(stmt_west)
+
+# Print rowcount
+print(results.rowcount)
+
+
+
+
+
+
+
+# Build a statement to select name from state_fact: fips_stmt
+fips_stmt = select([state_fact.columns.name])
+
+# Append a where clause to match the fips_state to flat_census fips_code: fips_stmt
+fips_stmt = fips_stmt.where(
+    state_fact.columns.fips_state == flat_census.columns.fips_code)
+
+# Build an update statement to set the name to fips_stmt_where: update_stmt
+update_stmt = update(flat_census).values(state_name=fips_stmt)
+
+# Execute update_stmt: results
+results = connection.execute(update_stmt)
+
+# Print rowcount
+print(results.rowcount)
+
+
+
+
+
+
+# Import delete, select
+from sqlalchemy import delete, select
+
+# Build a statement to empty the census table: stmt
+delete_stmt = delete(census)
+
+# Execute the statement: results
+results = connection.execute(delete_stmt)
+
+# Print affected rowcount
+print(results.rowcount)
+
+# Build a statement to select all records from the census table : select_stmt
+select_stmt = select([census])
+
+# Print the results of executing the statement to verify there are no rows
+print(connection.execute(select_stmt).fetchall())
+
+
+
+
+
+
+
+# Build a statement to count records using the sex column for Men ('M') age 36: count_stmt
+count_stmt = select([func.count(census.columns.sex)]).where(
+    and_(census.columns.sex == 'M',
+         census.columns.age == 36)
+)
+
+# Execute the select statement and use the scalar() fetch method to save the record count
+to_delete = connection.execute(count_stmt).scalar()
+
+# Build a statement to delete records from the census table: delete_stmt
+delete_stmt = delete(census)
+
+# Append a where clause to target Men ('M') age 36: delete_stmt
+delete_stmt = delete_stmt.where(
+    and_(census.columns.sex == 'M',
+         census.columns.age == 36)
+)
+
+# Execute the statement: results
+results = connection.execute(delete_stmt)
+
+# Print affected rowcount and to_delete record count, make sure they match
+print(results.rowcount, to_delete)
+
+
+
+
+
+
+
+# Drop the state_fact table
+state_fact.drop(engine)
+
+# Check to see if state_fact exists
+print(state_fact.exists(engine))
+
+# Drop all tables
+metadata.drop_all(engine)
+
+# Check to see if census exists
+print(census.exists(engine))

@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Mar  2 16:06:11 2020
+
+@author: Admin
+"""
+from sqlalchemy import create_engine
+import pandas as pd
+import numpy as np
+import os
+import psycopg2 as pc2
+import pandas.io.sql as psql
+#The first way: Use sqlalchemy to set up connection with PostgreSQL 
+#engine = create_engine('postgresql://username:password\localhost:5432/postgres')
+username = 'username'
+hoststr = 'localhost'
+portstr = '5432'
+database = 'postgres'
+password = 'password'
+
+os.chdir('C:\\Users\\Admin')
+
+Company = pd.read_csv('Company.csv')
+Company.head()
+
+from sqlalchemy import create_engine
+
+engine = create_engine('postgresql://username:password@localhost:5432/postgres')
+
+engine.execute('DROP TABLE IF EXISTS public.Company ;')
+
+Company.to_sql('Company', engine)
+
+sql1 = 'select * from "Company"'
+df = pd.read_sql_query((sql1), engine)
+print(df)
+
+#conn = pc2.connect(dbname = database, host = hoststr,\
+                  port = portstr, user = username, password = 'password')
+#cur = conn.cursor()
+#conn.commit()

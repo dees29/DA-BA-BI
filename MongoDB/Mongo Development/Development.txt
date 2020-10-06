@@ -1,0 +1,271 @@
+--------------------------------------------------------
+- Course: Complete Guide to MongoDB
+- Author: Ahmed Ibrahem
+- Script: MongoDB Development
+--------------------------------------------------------
+-------- Databases Managment ---------------------------
+1- show databases
+show dbs
+2- show currently used database
+db
+3- create new database / use existing database
+use <database name> //database will not appear until there are at least 1 document 
+3- Drop database
+to delete database first switch to the database then use dropDatabase command
+use <databasename>
+db.dropDatabase()
+
+Notes:
+ - database names are case insensitive in mongo
+ - name in windows cannot contain any of the following(/\. "$*<>:|?)
+ - name in Linux cannot contain any of the following(/\. "$)
+ - Database names cannot be empty and must have fewer than 64 characters.
+ 
+-------- Collection Managment --------------------------
+1- Create Collection
+db.createCollection(<collection name>, { capped : <true/false> , autoIndexId : <true/false> , size : <max size for capped      Collection>, max :<maximum number of documents in capped collection > } )
+db.createCollection("Products", { capped : true , autoIndexId : true, size : 6142800, max :10000} )
+
+
+2- Drop Collection
+show collections
+db.<Collection Name>.drop()
+
+Notes:
+ - begin with an underscore or a letter character
+ - cannot contain the $
+ - cannot be the empty string ("")
+ - maximum length of the <databasename>.<collection name> is 120 Bytes
+
+------- Documents Managment -------------------------------
+1- insert Document 
+db.<collection name>.insert({document1})
+db.<collection name>.insertMany([{document1,document2 ,,,,documentx)},{continueOnError:true}])
+newObjectId = ObjectId()
+db.Employees.insert({
+    _id:newObjectId,
+    name:"john",
+    department:"IT",
+    Annual_Salary:20000,
+    Hire_Date:Date()
+})
+
+db.Employees.insertMany([{
+    name:"john",
+    department:"IT",
+    Annual_Salary:20000,
+    Hire_Date:Date()
+},
+{
+    name:"max",
+    department:"DWH",
+    Annual_Salary:15000,
+    Hire_Date:Date()
+},
+{
+    name:"john",
+    department:"Network",
+    Annual_Salary:10000,
+    Hire_Date:Date()
+}])
+
+DataTypes:
+ {"column" : null}
+ {"flag" : true/false}
+ {"bi" : 3.14}
+ {"salary" : NumberInt("3000")}
+ {"long" : NumberLong("3")}
+ {"name" : "alex"}
+ {"x" : /foobar/i}
+ {"x" : ["a", "b", "c"]}
+ {"department" : {"name" : "IT","manager":"mark"}}
+
+db.Employees.insert({
+    _id:newObjectId,
+    name:"john",
+    department:"IT",
+    Annual_Salary:20000,
+    Hire_Date:Date(),
+    hire:true,
+    "department" : {"name" : "IT","manager":"mark"}
+})
+
+
+2- Query Document
+db.<collection name>.find().pretty()
+db.<collection name>.findOne()
+db.<collection name>.find({key:{<$operator>:value}},,,).pretty()
+db.<collection name>.find({$<logical operator>:[{key:{<$operator>:value}},,,]}).pretty()
+
+db.Employees.find({"department":"IT"})
+db.Employees.find({"department.name":"IT"})
+db.Employees.find({$and:[{"department":"Network"},{"name":"john"}]})
+db.Employees.find({$and:[{"Annual_Salary":{$lt:50000}},{"department":"IT"}]}).pretty()
+
+logical operators:
+ Less than --> $lt
+ Less than equals --> $lte
+ Greater than --> $gt
+ Greater than equals --> $gte
+ Not equals --> $ne
+
+ 
+3- Update Document
+db.<collectionname>.update({key:value},{$set:{key:updateValue}})
+db.Employees.update({"department":"IT"},{$set:{"department":"IT&Database"}})
+db.Employees.update({"Annual_Salary":{$lte:20000}},{$set:{"department":"NETWORK"}},{multi:true})
+
+"$unset"
+db.Employees.update({"Annual_Salary":{$lte:20000}},{$unset:{"Hire_Date":""}})
+"$inc"
+db.Employees.insert({"url" : "www.example.com","pageviews" : 52})
+db.Employees.update({"url" : "www.example.com"},{$inc:{"pageviews":1}})
+"$push"
+db.courses.insert({"title":"MongoDB Course","category":"Software"})
+db.courses.update({"title":"MongoDB Course"},{"$push":{"Comments":"Good Course"}})
+
+"$each"
+db.Courses.update({"title":"MongoDB Course"},{"$push":{"categoryID":{"$each":[100,105,120]}}})
+"$slice"
+db.Courses.update({"title":"MongoDB Course"},{"$push":{"categoryID":{"$each":[100,105,120],"$slice":-5}}})
+"$sort"
+db.Courses.update({"title":"MongoDB Course"},                  {"$push":{"user_rating":{"$each":[{"name":"user1","rating":3.9},{"name":"user2","rating":4.3},{"name":"user3","rating":4.1}],
+                   "$slice":-5,
+                   "$sort":{"rating":-1}}}})
+
+4- Remove Document
+db.<collectionname>.deleteOne()
+db.<collectionname>.deleteMany()
+
+db.Employees.deleteMany({"department":"Maintenance"})
+db.Employees.deleteMany({$and:[{"department":"Maintenance"},{"Annual_Salary":1000}]})
+Note: - Drop the all collection it will be much faster if you need to remove all documents
+      - You cannot remove documents from capped collection you can drop the collection or use emptyCapped command
+
+5- Select specific fields
+db.<collectionname>.find({},{KEY:1})
+db.Employees.find({},{"department":1,"Annual_Salary":1,_id:0})
+
+6- Sorting Fields 
+db.<collectionname>.find().sort({KEY:1/-1})
+db.<collectionname>.find().sort({KEY:1}).limit(<number>)
+db.Employees.find().sort({Annual_Salary:1})
+
+
+7- Aggregation
+db.<collection name>.aggregate([
+ { $match: {matching condition}},
+ { $group: { _id:<key field>,total:{<operator>:<field>}}}
+ ])
+ 
+db.Purchases.aggregate([
+ { $match: {"status":"A"}},
+ { $group: { _id:"$cust_id",total:{$sum:"$price"}}}
+ ])
+ 
+
+6- Create index
+single field index:
+db.<collectionname>.createIndex({<field:1/-1>})  // +1 order items in ascending, -1 order items in descending 
+compound index:
+db.<collectionname>.createIndex({<field:1/-1>, <field:1/-1> })  //compound index  +1 order items in ascending, -1 order items in descending 
+unique index:
+db.<collectionname>.createIndex({<field:1/-1>},{unique: true})
+index in background:
+db.<collectionname>.createIndex({<field:1/-1>}, {background: true})
+
+Note: - use explain() to see of query use indexes or not
+      - use db.collection.getIndexes() to list available indexes 
+
+Note: 
+- in queries on fields other than index fields, MongoDB will scan all documents 
+- Each index requires at least 8KB of data space.
+- Adding an index has some negative performance impact for write operations. For collections with high write-to-read ratio,  indexes are expensive since each insert must also update any indexes.
+- Collections with high read-to-write ratio often benefit from additional indexes. Indexes do not affect un-indexed read operations.
+- When active, each index consumes disk space and memory. This usage can be significant and should be tracked for capacity planning, especially for concerns over working set size
+
+7- autoincrement sequence
+//create counters collection
+db.createCollection("counters")
+//insert document for required ID
+db.counters.insert({_id:"productid",sequence_value:0})
+//create java script function to get the value and increase by one
+function getNextSequenceValue(sequenceName){
+
+   var sequenceDocument = db.counters.findAndModify({
+      query:{_id: sequenceName },
+      update: {$inc:{sequence_value:1}},
+      new:true
+   });
+	
+   return sequenceDocument.sequence_value;
+}
+//insert data and test results
+db.Products.insert({
+   "_id":getNextSequenceValue("productid"),
+   "product_name":"Apple iPhone",
+   "category":"mobiles"
+})
+
+
+
+8- Reference documents
+{
+   $lookup:
+     {
+       from: <collection to join>,
+       localField: <field from the input documents>,
+       foreignField: <field from the documents of the "from" collection>,
+       as: <output array field>
+     }
+}
+
+//Data
+db.createCollection("Publisher")
+db.Publisher.insert({
+   _id: "oreilly",
+   name: "O'Reilly Media",
+   founded: 1980,
+   location: "CA"
+})
+
+db.createCollection("Books")
+db.books.insert({
+   _id: 123456789,
+   title: "MongoDB: The Definitive Guide",
+   author: [ "Kristina Chodorow", "Mike Dirolf" ],
+   published_date: ISODate("2010-09-24"),
+   pages: 216,
+   language: "English",
+   publisher_id: "oreilly"
+})
+db.createCollection("Books")
+db.books.insert({
+   _id: 234567890,
+   title: "50 Tips and Tricks for MongoDB Developer",
+   author: "Kristina Chodorow",
+   published_date: ISODate("2011-05-06"),
+   pages: 68,
+   language: "English",
+   publisher_id: "oreilly"
+})
+
+db.Publisher.aggregate([
+    {
+      $lookup:
+        {
+          from: "books",
+          localField: "_id",
+          foreignField: "publisher_id",
+          as: "publisher_books_list"
+        }
+   }
+])
+   
+
+
+
+
+
+
+

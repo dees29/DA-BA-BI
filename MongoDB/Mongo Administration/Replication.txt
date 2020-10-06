@@ -1,0 +1,25 @@
+--------------------------------------------------------
+- Course: MongoDB Complete Guide
+- Author: Ahmed Ibrahem
+- Script: Setup Replication Cluster
+--------------------------------------------------------
+1- start three mongo instances
+mongod.exe --dbpath=<data path> --replSet "rs0"
+mongod.exe --dbpath=<data path> --port <port> --replSet "rs0"
+
+mongod.exe --dbpath=C:\data\db --replSet "rs0"
+mongod.exe --dbpath=E:\mongo-instance2\data --port 28017 --replSet "rs0"
+mongod.exe --dbpath=E:\mongo-instance3\data --port 29017 --replSet "rs0"
+
+2- add hosts
+rs.add("<host>:28017")
+rs.add("<host>:29017")
+
+3- Create Collection , and insert document and you will observe it has been replicated to other nodes
+
+4-if you need to query from seconday you need to set rs.slaveOk(), this feature protects your application form reading fro any secondary nodes by accident 
+
+5-you can determine the preferred location to read from for a spceific Collection, by setting the preferred References 
+db.getMongo().setReadPref('primaryPreferred')
+db.Employees.find().readPref('primary')
+db.collection.find().readPref('nearest', [ { 'dc': 'east' } ])

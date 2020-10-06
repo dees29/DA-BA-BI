@@ -1,0 +1,487 @@
+show dbs
+use local(datbase eg:practical)
+show collections
+db.createOllection("log",{capped:true, size:5242880, max:5000}
+db.createCollection("log")
+
+Insert:
+db.inventory.insertOne(
+  {item:"canvas", qty:100,tags:["cotton"], size:{h:28, w:35.5, uom="cm"}}
+  )
+
+db.inventory.find({item:"canvas"})
+
+
+db.inventory.insertMany([{item:"journal", qty:25, tags:["blank","red"], size:{h:14, w:21, wom="cm"}},
+{item:"mat", qty:85, tags:["gray"], size:{h:27.9, w:35.5, wom="cm"}},
+{item:"mousepad", qty:25, tags:["gel","blue"], size:{h:19, w:285, wom="cm"}}
+])
+
+db.inventory.find({})
+
+db.products.insert({item:"card", qty:15})
+
+db.products.insert(
+[
+{id:11, item:"pencil", qty:50, type:"no.2"},
+{item:"pen", qty:20},
+{item:"earser", qty:25}
+]
+)
+
+Perform an Unordered Insert:
+
+db.products.insert(
+[
+{_id:20, item:"lamp", qty:50, type:"desk"},
+{_id:21, item:"lamp", qty:20, type:"floor"},
+{_id:22, item:"bulk", qty:100}
+],
+{ordered:false}
+)
+
+db.products.insert({item:"envelopes", qty:100, type:"Clasp"},
+{writeConcern:{w:"majority", wtimeout:5000}}
+)
+
+Query documents:
+
+db.inventory.insertMany([
+{item:"journal", qty:25, size:{h:14, w:21, uom:"cm"}, status:"A"},
+{item:"notebook", qty:50, size:{h:8.5, w:11, uom:"cm"}, status:"A"},
+{item:"paper", qty:100, size:{h:8.5, w:11, uom:"cm"}, status:"D"},
+{item:"planner", qty:75, size:{h:22.85, w:30, uom:"cm"}, status:"D"},
+{item:"postcard", qty:45, size:{h:10, w:21, uom:"cm"}, status:"A"}]);
+
+db.inventory.find({})
+db.inventory.find({status:{$in:["A","D"]}})
+
+
+Specify OR Conditions:
+
+d.inventory.find({$or:[{status:"A"}, {qty:{$lt30}}, {item:/^p/}]}).pretty()
+
+Specify AND as well as OR Conditions:
+d.inventory.find({status:"A", $or:[{qty:{$lt30}}, {item:/^p/}]}).pretty()
+
+
+Query on Embedded/Nested Documents:
+
+db.inventoryinsertMany([
+{item:"journal", qty:25, size:{h:14, w:21, uom:"cm"}, status:"A"},
+{item:"notebook", qty:50, size:{h:8.5, w:11, uom:"cm"}, status:"A"},
+{item:"paper", qty:100, size:{h:8.5, w:11, uom:"cm"}, status:"A"},
+{item:"planner", qty:75, size:{h:22.85, w:30, uom:"cm"}, status:"A"},
+{item:"postcard", qty:45, size:{h:10, w:14, uom:"cm"}, status:"A"}
+]);
+
+
+db.inventory.find({size:{w:21, h:14, uom:"cm"}})
+
+db.inventory.find({"size.uom":"in"})
+
+
+Query an Array:
+
+db.inventory.find([
+{item:"journal", qty:25, tags:["blank", "red"], dim_cm:[14,21]},
+{item:"notebook", qty:50, tags:["red", "blank"], dim_cm:[14,21]},
+{item:"paper", qty:100, tags:["red", "blank", "plain"], dim_cm:[14,21]},
+{item:"planner", qty:75, tags:["blank", "red"], dim_cm:[22.85, 30]},
+{item:"postcard", qty:45, tags:["blue"], dim_cm:[10, 15.25]}
+]);
+
+db.inventory.find({tags:["red", "blank"]})
+db.inventory.find({tags:{$all:["red", "blank"]}})
+db.inventory.insertMany([
+{item:null}
+])
+
+
+db.inventory.find({item:null})
+db.inventory.find({item:{$type:10}})
+db.inventory.find({item:{$exists:false}})
+
+
+Update Documents:
+db.inventory.insertMany([
+{item:"canvas", qty:100, size:{h:28, w:35.5, uom:"cm"}, status:"A"},
+{item:"journal", qty:25, size:{h:14, w:21, uom:"cm"}, status:"A"},
+{item:"mat", qty:85, size:{h:27.9, w:35.5, uom:"cm"}, status:"A"},
+{item:"mousepad", qty:25, size:{h:19, w:22.85, uom:"cm"}, status:"A"},
+{item:"notebook", qty:50, size:{h:8.5, w:11, uom:"in"}, status:"A"},
+{item:"paper", qty:100, size:{h:8.5, w:11, uom:"in"}, status:"A"},
+{item:"planner", qty:75, size:{h:22.85, w:30, uom:"cm"}, status:"A"},
+{item:"postcard", qty:45, size:{h:10, w:15.25, uom:"cm"}, status:"A"},
+{item:"sketchbook", qty:80, size:{h:14, w:21, uom:"cm"}, status:"A"},
+{item:"sketch pad", qty:95, size:{h:22.85, w:30.5, uom:"cm"}, status:"A"}
+]);
+
+db.inventory.updateOne(
+{item:"paper"},
+{
+$set:{"size.uom":"cm", status:"P"},
+$currentDate:{lastModified:true}
+}
+)
+
+
+db.inventory.updateMany(
+{"qty":{$lt:50}},
+{
+$set:{"size.uom":"in", status:"P"},
+$currentDate:{lastModified:true}
+}
+)
+
+
+db.inventory.replaceOne(
+{item:"paper"},
+{item:"paper", instock:[{warehouse:"A", qty:60}, {warehouse:"B", qty:40}]}
+)
+
+
+db.inventory.deleteMany({})
+db.inventory.deleteMany({status:"A"})
+db.inventory.deleteOne({status:"D"})
+
+
+Bulk Write Operations:
+
+db.characters.insert({"_id":1, "char":"Brisbane", "class":"monk", "lvl":4}, {"_id":2, "char":"Eldon", "class":"alchemist", "lvl":3}, {"_id":3, "char":"Meldane", "class":"ranger", "lvl":3})
+
+
+try{db.characters.bulkWrite(
+[
+{insertOne:
+{
+"document":
+{
+"_id":4, "char":"Dithras", "class":"barbarian", "lvl":4}
+}
+},
+{insertOne:
+{"document":
+{"_id":5, "char":"Taeln", "class":"fighter","lvl":3}
+}
+},
+{updateOne:
+{"document":
+{"filter":{"char":"Eldon"},
+"update":{$set:{"status":"Critical Injury"}}
+}
+},
+{deleteOne:
+{"filter":{"char":"Brisbane"}}
+},
+{replaceOne:
+{
+"filter":{"char":"Meldane"},
+"replacement":{"char":"Tanys", "class":"oracle", "lvl":4}
+}
+}
+]
+);
+}
+
+
+catch(e){
+print(e);
+}
+
+
+Text Search
+
+db.stores.insert(
+[
+{_id:1, name:"Java Hut", description:"Coffee and cakes"},
+{_id:2, name:"Burger Buns", description:"Gourment hamburgers"},
+{_id:3, name:"Coffee Shop", description:"Just coffee"},
+{_id:4, name:"Clothes Clothes Clothes", description:"Discount clothing"},
+{_id:5, name:"Java Shopping", description:"Indonesian goods"}
+]
+)
+
+
+db.stores.createIndex({name:"text", decription:"text"})
+
+db.stores.find({$text:{$search:"java coffee shop"}})
+
+db.store.find({$text:{$search:"java shop-coffee"}})
+
+db.stores.find(
+{$text:{$search:"java coffee shop"}},
+{score:{$meta:"textScore"}}
+).sort({score:{$meta:"textScore"}})
+
+
+Model Tree Structure:
+db.categories.insert({_id:"MongoDB", parent:"Databases"})
+
+db.categories.insert({_id:"dbm", parent:"Databases"})
+
+db.categories.insert({_id:"Databases", parent:"Programming"})
+
+db.categories.insert({_id:"Languages", parent:"Programming"})
+
+db.categories.insert({_id:"Programming", parent:"Books"})
+
+db.categories.insert({_id:"Books", parent:null})
+
+
+db.categories.findOne({_id:"MongoDB"}).parent
+db.categories.createIndex({parent:1})
+db.categories.find({parent:"Databases"})
+
+
+Model Tree Structures with Materialized Paths:
+
+db.categories.insert({_id:"Books", path:null})
+
+db.categories.insert({_id:"Programming", path:"Books"})
+
+db.categories.insert({_id:"Databases", path:"Books, Programming"})
+
+db.categories.insert({_id:"Languages", path:"Books, Programming, Databases"})
+
+db.categories.insert({_id:"MongoDB", path:"Books, Programming, Databases, Languages"})
+
+db.categories.insert({_id:"dbm", path:"Books, Programming, Databases, Languages, MongoDB"})
+
+
+
+db.categories.find().sort({path:1})
+db.categories.find({path:/,Programming,/})
+db.categories.find({path:/^,Books,/})
+
+
+Model Tree Structures with Nested Set:
+
+
+db.categories.insert({_id:"Books", parent:0, left:1, right:1})
+
+db.categories.insert({_id:"Programming", parent:"Boolean:11"})
+
+db.categories.insert({_id:"Languages", parent:"Program" right:4})
+
+db.categories.insert({_id:"Databases", parent:"Program" right:10})
+
+db.categories.insert({_id:"MongoDB", parent:"Database" right:7})
+
+
+
+db.categories.insert({_id:"dbm", parent:"Database"})
+
+
+
+
+
+var databaseCategory=db.categories.findOne({_id:"Databases"});
+
+db.categories.find({left:{$gt:databaseCategory.left}, right:{$lt:databaseCategory.right}});
+
+
+
+MongoImport:
+
+Mongoimport --dbtest --collection zipcode --file
+
+C:\Users\Welcome\Desktop\zips.json
+
+
+AggregationPipeline:
+
+Return States with Populations above 10 Million
+
+db.zipcodes.aggregate([
+{$group:{_id:"$state", totalPop:{$sum:"$pop"}}},
+{$match:{totalPop:{$gte:10*1000*1000}}}
+])
+
+Return Average City Population by State
+
+db.zipcodes.aggregate([
+{$group:{_id:{state:"$state", city:"$city"}, pop:{$sum:"$pop"}}},
+{$group:{_id:"$_id.state", avgCityPop:{$avg:"$pop"}}}
+])
+
+
+Return Largest and Smallest Cities by State
+
+db.zipcodes.aggregates([
+{$group:
+{
+_id:{state:"$state", city:"$city"},
+smallestPop:{$first:"$pop"}
+pop:{$sum:"$pop"}
+}
+},
+{$sort:{pop:1}},
+{$group:
+{
+_id:"$_id.state",
+biggestCity:{$last:"$_id.city"},
+biggestPop:{$last:"$pop"},
+smallestCity:{$first:"$_id.city"},
+smallestPop:{$first:"$pop"}
+}},
+//the following $project is optional, and
+//modifies the output format.
+
+{$project:
+{_id:0;
+state:"$_id",
+biggestCity:{name:"$biggestCity", pop:"$biggestPop"}
+smallestCity:{name:"$smallestCity", pop:"$smallestPop"}
+}
+}
+])
+
+
+
+Aggregation with User PreferenceData:
+
+db.users.insert({
+_id:"jane",
+joined:ISODate("2011-03-02"),
+likes:["golf", "racquetball"]
+},
+{
+_id:"joe",
+joined:ISODate("2012-07-02"),
+
+likes:["tennis", "golf", "swimming"]
+})
+
+
+db.users.aggregate(
+[
+{$project:{name:{$toUpper:"$_id"},_id:0}},
+
+{$sort:{name:1}}
+
+Return Usernames Ordered by Join Month
+
+db.users.agregate(
+[
+{$project:
+{
+month_joined:{$month:"$joined"},
+name:"$_id",
+_id:0
+}
+},
+{
+$sort:{month_joined:1}
+}
+]
+)
+
+Return Total Number of Joins per Month
+
+db.users.aggregate(
+[
+{$project:{month_joined:{$month:"$joined"}}},
+{$group:{_id:{month_joined:"$month_joined"}, number}}},
+{sort:{"_id.month_joined":1}}
+]
+
+)
+]
+)
+
+Return the Five Most Common "Likes"
+
+db.users.aggregate([
+{$unwind:$likes},
+{$group:{_id:"$likes", number:{$sum:1}}},
+
+{sort:{number:-1}},
+{$limit:5}
+])
+
+
+Map-Reduce:
+
+Do.orders.insert({
+_id:ObjectId("50a8240b927d5d8b5891743c"),
+cust_id:"abc123",
+ord_date:newDate("Oct04,2012"),
+status:'A',
+price:25,
+items[{sku:"mmm", qty:5`, price:2.5},
+{sku:"nnn", qty:5`, price:2.5}]
+
+})
+
+Return the Total Price Per Customer
+
+var mapFunction1=function(){
+emit(this.cust_id,this.price);
+};
+
+var reduceFunction1=function(keyCustId, valuesPrices)
+{return Array.sum(valuesPrices);
+};
+
+
+Perform the map-reduce on all documents in the organ using the mapFunction1 map function and the reduceFunction1 reduce function.
+
+db.orders.mapReduce(
+mapFunction1,
+reduceFunction1,
+{out:"map_reduce_example"}
+)
+
+
+Calculate Order and Total Quantity with Average Quantity 
+
+var mapFunction2=function(){
+for(var idx=0; idx<this.items.length:idx++){
+var key = this.items[idx].sku;
+var value={
+count:1,
+qty:this.items[idx].qty
+};
+emit(key, value);
+}
+};
+
+
+var reduceFunction2=function(keySKU.countObjVals){
+reducedVal={count:0, qty:0};
+
+for (var idx=0; idx<countObjVals.length; idx++){
+reducedVal.count += countObjVals[idx].count;
+reducedVal.qty += countObjVals[idx].qty;
+}
+
+return reducedVal;
+};
+
+
+var finalizeFunction2 = function(key, reducedVal){
+reducedVal.avg= reducedVal.qty/reducedVal.count;
+return reduceVal;
+};
+
+
+db.orders.mapReduce(mapFunction2,
+reduceFunction2,
+{
+out:{merge:"map_reduce_example"},
+
+query:{ord_date:
+{$gt:newDate('01/01/2012')}
+},
+
+finalize:finalizeFunction2
+}
+)
+
+
+})
+
+
+
+

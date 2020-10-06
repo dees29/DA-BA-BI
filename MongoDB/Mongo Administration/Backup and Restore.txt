@@ -1,0 +1,34 @@
+--------------------------------------------------------
+- Course: MongoDB Complete Guide
+- Author: Ahmed Ibrahem
+- Script: Database Dump
+--------------------------------------------------------
+data export/import 
+mongoexport 
+1- you can export the data in two formats JSON,and CSV 
+2- make sure you have read access to target database
+3- command:
+mongoexport --db <database> --collection <collection name> --out <file>
+mongoexport.exe --db training --collection Employees --out Employees.csv[.json]
+
+mongoexport --db <database> --host <hostname><:port> --collection <collection name> --fields <fields1,field2,..> --out <file>
+mongoexport.exe --db training --collection Employees --fields department,name --type=csv --out Employees.csv
+
+mongoexport.exe --db training --collection Employees --fieldFile fieldsname.txt --query '{"department":"ACCOUNT"}' --type=csv --out Employees.csv
+
+4- explore how to add limit and sort your outputs
+mongoexport --db <database> --collection <collection name> --out <file> --limit <number>
+
+mongoimport
+mongoimport --db <database> --collection <collection name> --file <file to import from>
+mongoimport --db training --collection courses --type=csv --headerline --file Employees.csv
+
+mongodump
+1- mongodump used t extract all the content of the database to a binary file except the local database
+2- Commands:
+to export all the content with all databases
+mongodump --out <output file>
+mongodump --host <host name> --port <port number> --username <user> --password <pass> --out <output file>
+
+mongorestore
+mongorestore --host <host name> --port <port number> --username <user> --password <pass> <path to backup file>

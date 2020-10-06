@@ -1,0 +1,3028 @@
+What is the relationship between the graphical file explorer that most people use and the command-line shell?
+
+They are both interfaces for issuing commands to the operating system.
+
+
+
+Run pwd. Where are you right now?
+pwd
+
+
+
+Use ls with an appropriate argument to list the files in the directory /home/repl/seasonal (which holds information on dental surgeries by date, broken down by season). Which of these files is not in that directory?
+
+ls seasonal
+
+
+
+You are in /home/repl. Use ls with a relative path to list the file that has an absolute path of /home/repl/course.txt (and only that file).
+
+ls course.txt
+
+
+You are in /home/repl. Use ls with a relative path to list the file /home/repl/seasonal/summer.csv (and only that file).
+
+ls seasonal/summer.csv
+
+
+You are in /home/repl. Use ls with a relative path to list the contents of the directory /home/repl/people.
+
+ls people
+
+
+
+
+
+You are in /home/repl/. Change directory to /home/repl/seasonal using a relative path.
+
+cd seasonal
+
+Use pwd to check that you're there.
+
+pwd
+
+Use ls without any paths to see what's in that directory.
+
+ls
+
+
+
+
+If you are in /home/repl/seasonal, where does cd ~/../. take you?
+
+/home
+
+
+
+
+Make a copy of seasonal/summer.csv in the backup directory (which is also in /home/repl), calling the new file summer.bck.
+
+cp seasonal/summer.csv backup/summer.bck
+
+Copy spring.csv and summer.csv from the seasonal directory into the backup directory without changing your current working directory (/home/repl).
+
+cp seasonal/spring.csv seasonal/summer.csv backup
+
+
+
+You are in /home/repl, which has sub-directories seasonal and backup. Using a single command, move spring.csv and summer.csv from seasonal to backup.
+
+mv seasonal/spring.csv seasonal/summer.csv backup
+
+
+
+
+Go into the seasonal directory.
+
+cd seasonal
+
+Rename the file winter.csv to be winter.csv.bck.
+
+mv winter.csv winter.csv.bck
+
+
+
+
+Run ls to check that everything has worked.
+
+ls
+
+
+
+
+You are in /home/repl. Go into the seasonal directory.
+
+cd seasonal
+
+Remove autumn.csv.
+
+rm autumn.csv
+
+Go back to your home directory.
+
+cd
+
+Remove seasonal/summer.csv without changing directories again.
+
+rm seasonal/summer.csv
+
+
+
+
+
+Without changing directories, delete the file agarwal.txt in the people directory.
+
+rm people/agarwal.txt
+
+Now that the people directory is empty, use a single command to delete it.
+
+rmdir people
+
+Since a directory is not a file, you must use the command mkdir directory_name to create a new (empty) directory. Use this command to create a new directory called yearly below your home directory.
+
+mkdir yearly
+
+Now that yearly exists, create another directory called 2017 inside it without leaving your home directory.
+
+mkdir yearly/2017
+
+
+
+
+Use cd to go into /tmp
+
+cd /tmp
+
+List the contents of /tmp without typing a directory name.
+
+ls
+
+Make a new directory inside /tmp called scratch.
+
+mkdir scratch
+
+Move /home/repl/people/agarwal.txt into /tmp/scratch. We suggest you use the ~ shortcut for your home directory and a relative path for the second rather than the absolute path.
+
+mv ~/people/agarwal.txt scratch
+
+
+
+
+Print the contents of course.txt to the screen.
+
+cat course.txt
+
+
+
+
+Use less seasonal/spring.csv seasonal/summer.csv to view those two files in that order. Press spacebar to page down, :n to go to the second file, and :q to quit.
+
+less seasonal/spring.csv seasonal/summer.csv | cat
+
+
+
+What does head do if there aren't 10 lines in the file? (To find out, use it to look at the top of people/agarwal.txt.)
+
+Display as many lines as there are.
+
+
+
+
+Run head seasonal/autumn.csv without typing the full filename.
+
+head seasonal/autumn.csv
+
+Run head seasonal/spring.csv without typing the full filename.
+
+head seasonal/spring.csv
+
+
+
+
+Display the first 5 lines of winter.csv in the seasonal directory.
+
+head -n 5 seasonal/winter.csv
+
+
+
+
+
+To help you know what is what, ls has another flag -F that prints a / after the name of every directory and a * after the name of every runnable program. Run ls with the two flags, -R and -F, and the absolute path to your home directory to see everything it contains. (The order of the flags doesn't matter, but the directory name must come last.)
+
+ls -R -F /home/repl
+
+
+
+
+Read the manual page for the tail command to find out what putting a + sign in front of the number used with the -n flag does. (Remember to press spacebar to page down and/or type q to quit.)
+
+man tail | cat
+
+Use tail with the flag -n +7 to display all but the first six lines of seasonal/spring.csv.
+
+tail -n +7 seasonal/spring.csv
+
+
+
+
+What command will select the first column (containing dates) from the file spring.csv?
+
+cut -d , -f 1 seasonal/spring.csv
+
+cut -d, -f1 seasonal/spring.csv
+
+Both will work
+
+Adding a space after the flag is good style, but not compulsory.
+
+
+
+
+What is the output of cut -d : -f 2-4 on the line:
+
+first:second:third:
+(Note the trailing colon.)
+
+second:third:
+
+The trailing colon creates an empty fourth field.
+
+
+
+
+
+Run head summer.csv in your home directory (which should fail).
+
+head summer.csv
+
+Change directory to seasonal.
+
+cd seasonal
+
+Re-run the head command with !head.
+
+!head
+
+Use history to look at what you have done.
+
+history
+
+Re-run head again using ! followed by a command number.
+
+!3
+
+
+
+Print the contents of all of the lines containing the word molar in seasonal/autumn.csv by running a single command while in your home directory. Don't use any flags.
+
+grep molar seasonal/autumn.csv
+
+Invert the match to find all of the lines that don't contain the word molar in seasonal/spring.csv, and show their line numbers. Remember, it's considered good style to put all of the flags before other values like filenames or the search term "molar".
+
+grep -v -n molar seasonal/spring.csv
+
+Count how many lines contain the word incisor in autumn.csv and winter.csv combined. (Again, run a single command from your home directory.)
+
+grep -c incisor seasonal/autumn.csv seasonal/winter.csv
+
+
+Read the manual page for paste, and then run paste to combine the autumn and winter data files in a single table using a comma as a separator. What's wrong with the output from a data analysis point of view?
+
+The last few rows have the wrong number of columns.
+
+joining the lines with columns creates only one empty column at the start, not two.
+
+
+
+
+Combine tail with redirection to save the last 5 lines of seasonal/winter.csv in a file called last.csv.
+
+tail -n 5 seasonal/winter.csv > last.csv
+
+
+
+
+Select the last two lines from seasonal/winter.csv and save them in a file called bottom.csv.
+
+tail -n 2 seasonal/winter.csv > bottom.csv
+
+Select the first line from bottom.csv in order to get the second-to-last line of the original file.
+
+head -n 1 bottom.csv
+
+
+
+
+Use cut to select all of the tooth names from column 2 of the comma delimited file seasonal/summer.csv, then pipe the result to grep, with an inverted match, to exclude the header line containing the word "Tooth". cut and grep were covered in detail in Chapter 2, exercises 8 and 11 respectively.
+
+cut -d , -f 2 seasonal/summer.csv | grep -v Tooth
+
+
+
+
+In the previous exercise, you used the following command to select all the tooth names from column 2 of seasonal/summer.csv:
+
+cut -d , -f 2 seasonal/summer.csv | grep -v Tooth
+Extend this pipeline with a head command to only select the very first tooth name.
+
+cut -d , -f 2 seasonal/summer.csv | grep -v Tooth | head -n 1
+
+
+
+
+
+Count how many records in seasonal/spring.csv have dates in July 2017 (2017-07).
+
+To do this, use grep with a partial date to select the lines and pipe this result into wc with an appropriate flag to count the lines.
+
+grep 2017-07 seasonal/spring.csv | wc -l
+
+
+
+
+
+Write a single command using head to get the first three lines from both seasonal/spring.csv and seasonal/summer.csv, a total of six lines of data, but not from the autumn or winter data files. Use a wildcard instead of spelling out the files' names in full.
+
+head -n 3 seasonal/s* 
+# ...or 
+seasonal/s*.csv, 
+or 
+even s*/s*.csv
+
+
+
+
+Which expression would match singh.pdf and johel.txt but not sandhu.pdf or sandhu.txt?
+
+{singh.pdf, j*.txt}
+
+
+
+
+
+Remember the combination of cut and grep to select all the tooth names from column 2 of seasonal/summer.csv?
+
+cut -d , -f 2 seasonal/summer.csv | grep -v Tooth
+Starting from this recipe, sort the names of the teeth in seasonal/winter.csv (not summer.csv) in descending alphabetical order. To do this, extend the pipeline with a sort step.
+
+cut -d , -f 2 seasonal/winter.csv | grep -v Tooth | sort -r
+
+
+
+
+
+Write a pipeline to:
+
+get the second column from seasonal/winter.csv,
+remove the word "Tooth" from the output so that only tooth names are displayed,
+sort the output so that all occurrences of a particular tooth name are adjacent; and
+display each tooth name once along with a count of how often it occurs.
+The start of your pipeline is the same as the previous exercise:
+
+cut -d , -f 2 seasonal/winter.csv | grep -v Tooth
+Extend it with a sort command, and use uniq -c to display unique lines with a count of how often each occurs rather than using uniq and wc.
+
+cut -d , -f 2 seasonal/winter.csv | grep -v Tooth | sort | uniq -c
+
+
+
+
+What happens if we put redirection at the front of a pipeline as in:
+
+> result.txt head -n 3 seasonal/winter.csv
+
+The command's output is redirected to the file as usual.
+
+
+
+
+
+Run the command:
+
+head
+with no arguments (so that it waits for input that will never come) and then stop it by typing Ctrl + C.
+
+# Simply type head, hit Enter and exit the running program with `Ctrl` + `C`.
+
+
+
+
+Use wc with appropriate parameters to list the number of lines in all of the seasonal data files. (Use a wildcard for the filenames instead of typing them all in by hand.)
+
+wc -l seasonal/*.csv
+
+Add another command to the previous one using a pipe to remove the line containing the word "total".
+
+wc -l seasonal/*.csv | grep -v total
+
+Add two more stages to the pipeline that use sort -n and head -n 1 to find the file containing the fewest lines.
+
+wc -l seasonal/*.csv | grep -v total | sort -n | head -n 1
+
+
+
+
+Use set and grep with a pipe to display the value of HISTFILESIZE, which determines how many old commands are stored in your command history. What is its value?
+
+set | grep HISTFILESIZE
+
+
+
+
+The variable OSTYPE holds the name of the kind of operating system you are using. Display its value using echo.
+
+echo $OSTYPE
+
+
+
+
+Define a variable called testing with the value seasonal/winter.csv.
+
+testing=seasonal/winter.csv
+
+Use head -n 1 SOMETHING to get the first line from seasonal/winter.csv using the value of the variable testing instead of the name of the file.
+
+head -n 1 $testing
+
+
+
+
+
+Modify the loop so that it prints:
+
+docx
+odt
+pdf
+Please use filetype as the name of the loop variable.
+
+for filetype in docx odt pdf; do echo $filetype; done
+
+
+
+
+Modify the wildcard expression to people/* so that the loop prints the names of the files in the people directory regardless of what suffix they do or don't have. Please use filename as the name of your loop variable.
+
+for filename in people/*; do echo $filename; done
+
+
+
+
+
+If you run these two commands in your home directory, how many lines of output will they print?
+
+files=seasonal/*.csv
+for f in $files; do echo $f; done
+
+Four: the names of all four seasonal data files.
+
+
+The command is equivalent to 
+
+for f in seasonal/*.csv; do echo $f; done
+
+
+
+
+If you were to run these two commands in your home directory, what output would be printed?
+
+files=seasonal/*.csv
+for f in files; do echo $f; done
+(Read the first part of the loop carefully before answering.)
+
+
+One line: the word "files".
+
+the loop uses files instead of $files, so the list consists of the word "files".
+
+
+
+
+
+Write a loop that prints the last entry from July 2017 (2017-07) in every seasonal file. It should produce a similar output to:
+
+grep 2017-07 seasonal/winter.csv | tail -n 1
+but for each seasonal file separately. Please use file as the name of the loop variable, and remember to loop through the list of files seasonal/*.csv (instead of 'seasonal/winter.csv' as in the example).
+
+for file in seasonal/*.csv; do grep 2017-07 $file | tail -n 1; done
+
+
+
+
+
+If you have two files called current.csv and last year.csv (with a space in its name) and you type:
+
+rm current.csv last year.csv
+what will happen:
+
+The shell will print an error message because last and year.csv do not exist
+
+The shell will delete current.csv
+
+Both the line is ans
+
+You can use single quotes, ', or double quotes, ", around the file names.
+
+
+
+
+Suppose you forget the semi-colon between the echo and head commands in the previous loop, so that you ask the shell to run:
+
+for f in seasonal/*.csv; do echo $f head -n 2 $f | tail -n 1; done
+What will the shell do?
+
+Print one line for each of the four files
+
+echo produces one line that includes the filename twice, which tail then copies.
+
+
+
+
+
+
+Run nano names.txt to edit a new file in your home directory and enter the following four lines:
+
+Lovelace
+Hopper
+Johnson
+Wilson
+To save what you have written, type Ctrl + O to write the file out, then Enter to confirm the filename, then Ctrl + X to exit the editor.
+
+nano names.txt
+Lovelace
+Hopper
+Johnson
+Wilson
+CTRL+O
+Enter
+CTRL+X
+
+
+
+
+Copy the files seasonal/spring.csv and seasonal/summer.csv to your home directory.
+
+cp seasonal/s* ~
+
+
+Use grep with the -h flag (to stop it from printing filenames) and -v Tooth (to select lines that don't match the header line) to select the data records from spring.csv and summer.csv in that order and redirect the output to temp.csv
+
+grep -h -v Tooth seasonal/s* > temp.csv
+
+
+Pipe history into tail -n 3 and redirect the output to steps.txt to save the last three commands in a file. (You need to save three instead of just two because the history command itself will be in the list.)
+
+history | tail -n 3 > steps.txt
+
+
+
+
+Use nano dates.sh to create a file called dates.sh that contains this command:
+
+cut -d , -f 1 seasonal/*.csv
+to extract the first column from all of the CSV files in seasonal
+
+nano dates.sh
+cut -d , -f 1 seasonal/*.csv
+CTRL+O
+ENTER
+CTRL+X
+Use bash to run the file dates.sh.
+bash dates.sh
+
+
+
+
+A file teeth.sh in your home directory has been prepared for you, but contains some blanks. Use Nano to edit the file and replace the two ____ placeholders with seasonal/*.csv and -c so that this script prints a count of the number of times each tooth name appears in the CSV files in the seasonal directory.
+
+
+nano teeth.sh
+cut -d , -f 2 seasonal/*.csv | grep -v Tooth | sort | uniq -c
+CTRL+O
+ENTER
+CTRL+X
+
+
+Use bash to run teeth.sh and > to redirect its output to teeth.out.
+
+bash teeth.sh > teeth.out
+
+Run cat teeth.out to inspect your results.
+
+cat teeth.out
+
+
+
+
+
+Edit the script count-records.sh with Nano and fill in the two ____ placeholders with $@ and -l (the letter) respectively so that it counts the number of lines in one or more files, excluding the first line of each.
+
+nano count-records.sh
+tail -q -n +2 $@ | wc -l
+
+Run count-records.sh on seasonal/*.csv and redirect the output to num-records.out using >.
+
+bash count-records.sh seasonal/*.csv > num-records.out
+
+
+
+
+
+
+The script get-field.sh is supposed to take a filename, the number of the row to select, the number of the column to select, and print just that field from a CSV file. For example:
+
+bash get-field.sh seasonal/summer.csv 4 2
+should select the second field from line 4 of seasonal/summer.csv. Which of the following commands should be put in get-field.sh to do that?
+
+head -n $2 $1 | tail -n 1 | cut -d , -f $3
+
+
+
+
+
+
+Use Nano to edit the script range.sh and replace the two ____ placeholders with $@ and -v so that it lists the names and number of lines in all of the files given on the command line without showing the total number of lines in all files. (Do not try to subtract the column header lines from the files.)
+
+nano range.sh
+wc -l $@ | grep -v total
+
+Use Nano again to add sort -n and head -n 1 in that order to the pipeline in range.sh to display the name and line count of the shortest file given to it.
+
+nano range.sh
+sort -n head -n 1
+
+Again using Nano, add a second line to range.sh to print the name and record count of the longest file in the directory as well as the shortest. This line should be a duplicate of the one you have already written, but with sort -n -r rather than sort -n.
+
+nano range.sh
+wc -l $@ | grep -v total | sort -n | head -n 1
+
+Run the script on the files in the seasonal directory using seasonal/*.csv to match all of the files and redirect the output using > to a file called range.out in your home directory.
+
+bash range.sh seasonal/*.csv > range.out
+
+
+
+
+
+Fill in the placeholders in the script date-range.sh with $filename (twice), head, and tail so that it prints the first and last date from one or more files.
+
+nano date-range.sh
+for filename in $@
+do
+cut -d , -f 1 $filename | grep -v Date | sort | head -n 1
+cut -d , -f 1 $filename | grep -v Date | sort | tail -n 1
+done
+CTRL+O
+ENTER
+CTRL+X
+
+Run date-range.sh on all four of the seasonal data files using seasonal/*.csv to match their names.
+
+bash date-range.sh seasonal.sh seasonal/*.csv
+
+Run date-range.sh on all four of the seasonal data files using seasonal/*.csv to match their names, and pipe its output to sort to see that your scripts can be used just like Unix's built-in commands.
+
+bash date-range.sh seasonal.sh seasonal/*.csv | sort
+
+
+
+
+
+
+Suppose you do accidentally type:
+
+head -n 5 | tail -n 3 somefile.txt
+What should you do next?
+
+Use Ctrl + C to stop the running head program.
+
+
+Yes! You should use Ctrl + C to stop a running program. This concludes this introductory course! If you're interested to learn more command line tools, we thoroughly recommend taking our free intro to Git course!
+
+
+
+
+
+cd into the correct directory and use cat and grep to find who was the winner in 1959. You could also just ls from the top directory if you like!
+
+Dunav
+
+used cat soccer_scores.csv | grep 1959 (after cd into in start_dir/second_dir), but there are many ways to solve this. You were sucessfully able to navigate the directory, find a file and extract the contents you wanted. This will be very useful in future tasks requiring file manipulation (very common!)
+
+
+
+
+Use command line arguments such as cat, grep and wc with the right flag to count the number of lines in the book that contain either the character 'Sydney Carton' or 'Charles Darnay'. Use exactly these spellings and capitalizations.
+
+77
+
+Nice piping! My code looked like this, though there are many ways to accomplish this cat two_cities.txt | egrep 'Sydney Carton|Charles Darnay' | wc -l. Note that egrep is exactly the same as grep -E. Your skills in shell commands and pattern matching will be very useful in the next Bash scripts we create!
+
+
+
+
+
+Create a single-line script that concatenates the mentioned file.
+Save your script and run from the console.
+
+
+#!/bin/bash
+
+# Concatenate the file
+cat server_log_with_todays_date.txt
+
+
+# Now save and run!
+bash script.sh (in terminal part)
+
+
+
+
+
+
+
+Create a single-line pipe to cat the file, cut out the relevant field and aggregate (sort & uniq -c will help!) based on winning team.
+Save your script and run from the console.
+
+#!/bin/bash
+
+# Create a single-line pipe
+cat soccer_scores.csv | cut -d , -f 2 | tail -n +2 | sort | uniq -c
+
+# Now save and run!
+bash script.sh (in terminal part)
+
+
+
+
+
+
+Create a pipe using sed twice to change the team Cherno to Cherno City first, and then Arda to Arda United.
+Pipe the output to a file called soccer_scores_edited.csv.
+Save your script and run from the console. Try opening soccer_scores_edited.csv using shell commands to confirm it worked (the first line should be changed)!
+
+
+
+#!/bin/bash
+
+# Create a sed pipe to a new file
+cat soccer_scores.csv | sed 's/Cherno/Cherno City/g' | sed 's/Arda/Arda United/g' > soccer_scores_edited.csv
+
+# Now save and run!
+#!/bin/bash
+
+# Create a sed pipe to a new file
+cat soccer_scores.csv | sed 's/Cherno/Cherno City/g' | sed 's/Arda/Arda United/g' > soccer_scores_edited.csv
+
+# Now save and run!
+bash script.sh (in terminal part)
+
+
+
+
+
+Echo the first and second ARGV arguments.
+Echo out the entire ARGV array in one command (not each element).
+Echo out the size of ARGV (how many arguments fed in).
+Save your script and run from the terminal pane using the arguments Bird Fish Rabbit. Don't use the ./script.sh method.
+
+# Echo the first and second ARGV arguments
+echo $1 
+echo $2
+
+# Echo out the entire ARGV array
+echo $@
+
+# Echo out the size of ARGV
+echo $#
+
+
+# Now save and run!
+bash script.sh Bird Fish Rabbit (in terminal part)
+
+
+
+
+
+
+
+Echo the first ARGV argument so you can confirm it is being read in.
+cat all the files in the directory /hire_data and pipe to grep to filter using the city name (your first ARGV argument).
+On the same line, pipe out the filtered data to a new CSV called cityname.csv where cityname is the name of the relevant city from the first instruction.
+Save your script and run from the console twice (do not use the ./script.sh method). Once with the argument Seoul. Then once with the argument Tallinn
+
+
+
+# Echo the first ARGV argument
+echo $ 
+
+# Cat all the files
+# Then pipe to grep using the first ARGV argument
+# Then write out to a named csv using the first ARGV argument
+cat hire_data/* | grep "$1" > "$1".csv
+
+# Now save and run!
+bash script.sh Seoul
+bash script.sh Tallinn
+
+
+
+
+
+
+Create a variable, yourname that contains the name of the user. Let's use the test name 'Sam' for this.
+Fix the echo statement so it prints the variable and not the word yourname.
+Run your script.
+
+
+# Create the required variable
+yourname="Sam"
+
+# Print out the assigned name (Help fix this error!)
+echo "Hi there" $yourname", welcome to the website!"
+
+
+
+
+
+Shell within a shell
+Which of the following correctly uses a 'shell within a shell' to print out the date? We do not want to select the option that will just print out the string 'date'.
+
+You could try these in the console yourself!
+
+output:
+Right now it is Fri Jul 17 15:05:20 UTC 2020
+
+
+
+
+Create a variable temp_f from the first ARGV argument.
+Call a shell-within-a-shell to subtract 32 from temp_f and assign to variable temp_f2.
+Using the same method, multiply temp_f2 by 5 and divide by 9, assigning to a new variable temp_c then print out temp_c.
+Save and run your script (in the terminal) using 108 Fahrenheit (the forecast temperature in Parramatta, Sydney this Saturday!).
+
+
+
+# Get first ARGV into variable
+temp_f=$1
+
+# Subtract 32
+temp_f2=$(echo "scale=2; $temp_f - 32" | bc)
+
+# Multiply by 5/9
+temp_c=$(echo "scale=2; $temp_f2 * 5 / 9" | bc)
+
+# Print the temp
+echo $temp_c
+
+
+# Now save and run!
+bash script.sh 108 (in terminal part)
+
+
+
+
+
+Create three variables from the data in the three files within temps by concatenating the content into a variable using a shell-within-a-shell.
+Print out the variables to ensure it worked.
+Save your script and run from the command line.
+
+
+# Create three variables from the temp data files' contents
+temp_a=$(cat temps/region_A)
+temp_b=$(cat temps/region_B)
+temp_c=$(cat temps/region_C)
+
+# Print out the three variables
+echo "The three temperatures were $temp_a, $temp_b, and $temp_c"
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+Create a normal array called capital_cities which contains the cities Sydney, New York and Paris. Do not use the declare method; fill the array as you create it. Be sure to put quotation marks around each element!
+
+# Create a normal array with the mentioned elements
+capital_cities=("Sydney" "New York" "Paris")
+
+
+Create a normal array called capital_cities. However, use the declare method to create in this exercise.
+Below, add each city, appending to the array. The cities were Sydney, New York, and Paris.
+
+
+# Create a normal array with the mentioned elements using the declare method
+declare -a capital_cities
+
+# Add (append) the elements
+capital_cities+=("Sydney")
+capital_cities+=("New York")
+capital_cities+=("Paris")
+
+
+Now you have the array created, print out the entire array using a special array property.
+Then print out the length of the array using another special property.
+
+
+# The array has been created for you
+capital_cities=("Sydney" "New York" "Paris")
+
+# Print out the entire array
+echo ${capital_cities[@]}
+
+# Print out the array length
+echo ${#capital_cities[@]}
+
+
+
+
+
+
+Create an empty associative array on one line called model_metrics. Do not add any elements to it here.
+Add the following key-value pairs; (model_accuracy, 98), (model_name, "knn"), (model_f1, 0.82).
+
+
+
+# Create empty associative array
+declare -A model_metrics
+
+# Add the key-value pairs
+model_metrics[model_accuracy]=98
+model_metrics[model_name]="knn"
+model_metrics[model_f1]=0.82
+
+
+Create the same associative array (model_metrics) all in one line. (model_accuracy, 98), (model_name, "knn"), (model_f1, 0.82). Remember you must add square brackets* around the keys!
+Print out the array to see what you created.
+
+
+# Declare associative array with key-value pairs on one line
+declare -A model_metrics=([model_accuracy]=98 [model_name]="knn" [model_f1]=0.82)
+
+# Print out the entire array
+echo ${model_metrics[*]}
+
+
+Now that you've created an associative array, print out just the keys of this associative array.
+
+
+# An associative array has been created for you
+declare -A model_metrics=([model_accuracy]=98 [model_name]="knn" [model_f1]=0.82)
+
+# Print out just the keys
+echo ${!model_metrics[@]}
+
+
+
+
+
+
+
+Create an array with the two temp variables as elements.
+Call an external program to get the average temperature. You will need to sum array elements then divide by 2. Use the scale parameter to ensure this is to 2 decimal places.
+Append this new variable to your array and print out the entire array.
+Run your script.
+
+
+# Create variables from the temperature data files
+temp_b="$(cat temps/region_B)"
+temp_c="$(cat temps/region_C)"
+
+# Create an array with these variables as elements
+region_temps=($temp_b $temp_c)
+
+# Call an external program to get average temperature
+average_temp=$(echo "scale=2; (${region_temps[0]} + ${region_temps[1]}) / 2" | bc)
+
+# Append average temp to the array
+region_temps+=($average_temp)
+
+# Print out the whole array
+echo ${region_temps[*]}
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+
+Create a variable, accuracy by extracting the accuracy line (and accuracy value) in the first ARGV element (a file).
+Create an IF statement to move the file into good_models/ folder if it is greater than or equal to 90 using a flag, not a mathematical sign.
+Create an IF statement to move the file into bad_models/ folder if it is less than 90 using a flag, not a mathematical sign.
+Run your script from the terminal pane twice, feeding each name of the first two files model_results (model_1.txt, model_2.txt) respectively.
+
+
+# Extract Accuracy from first ARGV element
+accuracy=$(grep Accuracy $1 | sed 's/.* //')
+
+# Conditionally move into good_models folder
+if [ $accuracy -ge 90 ]; then
+    mv $1 good_models/
+fi
+
+# Conditionally move into bad_models folder
+if [ $accuracy -lt 90 ]; then
+    mv $1 bad_models/
+fi
+
+
+# Now save and run!
+bash script.sh model_results/model_1.txt
+bash script.sh model_results/model_2.txt
+
+
+
+
+
+
+
+Create a variable sfile out of the first ARGV element.
+Use an IF statement and grep to check if the first ARGV element contains SRVM_ AND vpt inside.
+Inside the IF statement, move matching files to the good_logs/ directory.
+Try your script on all of the files in the directory (that is, run it four times - once for each file). It should move only one of them.
+
+
+# Create variable from first ARGV element
+sfile=$1
+
+# Create an IF statement on first ARGV element's contents
+if grep -q 'SRVM_' $sfile && grep -q 'vpt' $sfile ; then
+	# Move file if matched
+	mv $sfile good_logs/
+fi
+
+
+# Now save and run!
+bash script.sh log1.txt
+bash script.sh logdays.txt
+bash script.sh logfiles8.txt
+bash script.sh log.csv
+
+
+
+
+
+
+Use a FOR statement to loop through files that end in .R in inherited_folder/ using a glob expansion.
+echo out each file name into the console.
+
+
+
+# Use a FOR loop on files in directory
+for file in inherited_folder/*.R
+do  
+    # Echo out each file
+    echo $file
+done
+
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+Using your knowledge of WHILE scripts, can you determine where the mistake is? What will happen if it runs?
+
+
+#!/usr/bash
+emp_num=1
+while [ $emp_num -le 1000 ];
+do
+    cat "$emp_num-dailySales.txt"|egrep'Sales_total'|sed 's/.* ://' > "$emp_num-agg.txt"
+done
+
+
+Answer:
+
+It will run forever because emp_num isn't incremented inside the loop.
+
+
+
+
+
+
+Use a FOR statement to loop through (using glob expansion) files that end in .py in robs_files/.
+Use an IF statement and grep (remember the 'quiet' flag?) to check if RandomForestClassifier is in the file. Don't use a shell-within-a-shell here.
+Move the Python files that contain RandomForestClassifier into the to_keep/ directory.
+
+
+# Create a FOR statement on files in directory
+for file in robs_files/*
+do  
+    # Create IF statement using grep
+    if grep -q 'RandomForestClassifier' $file ; then
+        # Move wanted files to to_keep/ folder
+        mv $file to_keep/
+    fi
+done
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+Build a CASE statement that matches on the first ARGV element.
+Create a match on each weekday such as Monday, Tuesday etc. using OR syntax on a single line, then a match on each weekend day (Saturday and Sunday) etc. using OR syntax on a single line.
+Create a default match that prints out Not a day! if none of the above patterns are matched.
+Save your script and run in the terminal window with Wednesday and Saturday to test.
+
+
+# Create a CASE statement matching the first ARGV element
+case $1 in
+  # Match on all weekdays
+  Monday|Tuesday|Wednesday|Thursday|Friday)
+  echo "It is a Weekday!";;
+  # Match on all weekend days
+  Saturday|Sunday)
+  echo "It is a Weekend!";;
+  # Create a default
+  *) 
+  echo "Not a day!";;
+esac
+
+
+# Now save and run!
+bash script.sh Wednesday
+
+# Now save and run!
+bash script.sh Saturday
+
+
+
+
+
+
+
+Use a FOR statement to loop through (using glob expansion) files in model_out/.
+Use a CASE statement to match on the contents of the file (we will use cat and shell-within-a-shell to get the contents to match against). It must check if the text contains a tree-based model name and move to tree_models/, otherwise delete the file.
+Create a default match that prints out Unknown model in FILE where FILE is the filename then run your script.
+
+
+# Use a FOR loop for each file in 'model_out/'
+for file in model_out/*
+do
+    # Create a CASE statement for each file's contents
+    case $(cat $file) in
+      # Match on tree and non-tree models
+      *"Random Forest"*|*GBM*|*XGBoost*)
+      mv $file tree_models/ ;;
+      *KNN*|*Logistic*)
+      rm $file ;;
+      # Create a default
+      *) 
+      echo "Unknown model in $file" ;;
+    esac
+done
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+
+Set up a function using the 'function-word' method called upload_to_cloud.
+Use a FOR statement to loop through (using glob expansion) files whose names contain results in output_dir/ and echo that the filename is being uploaded to the cloud.
+Call the function just below the function definition using its name.
+
+
+# Create function
+function upload_to_cloud () {
+  # Loop through files with glob expansion
+  for file in output_dir/*results*
+  do
+    # Echo that they are being uploaded
+    echo "Uploading $file to cloud"
+  done
+}
+
+# Call the function
+upload_to_cloud
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+Set up a function called what_day_is_it without using the word function (as you did using the function-word method).
+Parse the output of date into a variable called current_day. The extraction component has been done for you.
+Echo the result.
+Call the function just below the function definition.
+
+
+# Create function
+what_day_is_it () {
+
+  # Parse the results of date
+  current_day=$(date | cut -d " " -f1)
+
+  # Echo the result
+  echo $current_day
+}
+
+# Call the function
+what_day_is_it
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+Create a function called return_percentage using the function-word method.
+Create a variable inside the function called percent that divides the first argument fed into the function by the second argument.
+Return the calculated value by echoing it back.
+Call the function with the mentioned test values of 456 (the first argument) and 632 (the second argument) and echo the result.
+
+
+# Create a function 
+function return_percentage () {
+
+  # Calculate the percentage using bc
+  percent=$(echo "scale=4; $1 / $2" | bc)
+
+  # Return the calculated percentage
+  echo $percent
+}
+
+# Call the function with 456 and 632 and echo the result
+return_test=$(return_percentage 456 632)
+echo "456 out of 632 as a percent is $return_test"
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+Create a function called get_number_wins using the function-word method.
+Create a variable inside the function called win_stats that takes the argument fed into the function to filter the last step of the shell-pipeline presented.
+Call the function using the city Etar.
+Below the function call, try to access the win_stats variable created inside the function in the echo command presented.
+
+
+# Create a function
+function get_number_wins () {
+
+  # Filter aggregate results by argument
+  win_stats=$(cat soccer_scores.csv | cut -d "," -f2 | egrep -v 'Winner'| sort | uniq -c | egrep "$1")
+
+}
+
+# Call the function with specified argument
+get_number_wins "Etar"
+
+# Print out the global variable
+echo "The aggregated stats are: $win_stats"
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+Create a function called sum_array and add a base variable (equal to 0) called sum with local scope. You will loop through the array and increment this variable.
+Create a FOR loop through the ARGV array inside sum_array (hint: This is not $1! but another special array property) and increment sum with each element of the array.
+Rather than assign to a global variable, echo back the result of your FOR loop summation.
+Call your function using the test array provided and echo the result. You can capture the results of the function call using the shell-within-a-shell notation.
+
+
+# Create a function with a local base variable
+function sum_array () {
+  local sum=0
+  # Loop through, adding to base variable
+  for number in "$@"
+  do
+    sum=$(echo "$sum + $number" | bc)
+  done
+  # Echo back the result
+  echo $sum
+  }
+# Call function with array
+test_array=(14 12 23.5 16 19.34)
+total=$(sum_array "${test_array[@]}")
+echo "The sum of the test array is $total"
+
+
+# Now save and run!
+bash script.sh
+
+
+
+
+
+
+
+
+Using your knowledge of the structure of a crontab schedule, can you determine how often the script.sh Bash script will run if the following line is in the user's crontab?
+
+15 * * * 6,7 bash script.sh
+
+
+15 minutes past every hour on Saturdays and Sundays.
+
+
+
+ The first star being 15 means 'run every 15 minutes' and the last star is for the days of the week. Hence 6 and 7 means to run on every 6th and 7th days of the week or all Saturdays and Sundays.
+
+
+
+
+
+
+
+
+Create a crontab schedule that runs script1.sh at 30 minutes past 2am every day.
+Create a crontab schedule that runs script2.sh every 15, 30 and 45 minutes past the hour.
+Create a crontab schedule that runs script3.sh at 11.30pm on Sunday evening, every week. For this task, assume Sunday is the 7th day rather than 0th day (as in some unix systems).
+
+
+
+# Create a schedule for 30 minutes past 2am every day
+30 2 * * * bash script1.sh
+
+# Create a schedule for every 15, 30 and 45 minutes past the hour
+15,30,45 * * * * bash script2.sh
+
+# Create a schedule for 11.30pm on Sunday evening, every week
+30 23 * * 7 bash script3.sh
+
+
+
+
+
+
+
+
+Verify there are no existing cronjobs by listing them.
+
+
+crontab -l
+
+
+Use the edit command for crontab (select nano) then schedule extract_data.sh to run with Bash at 2:30am every day.
+
+
+nano extract_data.sh
+Enter
+30 2 * * * bash extract_data.sh
+CTRL+O
+CTRL+X
+
+
+Verify the cronjob has been scheduled in the crontab by listing all current scheduled cronjobs.
+
+
+crontab -l
+
+
+
+
+
+
+
+Based on the information in the curl manual, which of the following is NOT a supported file protocol:
+
+OFTP
+
+
+
+
+
+
+
+
+Fill in the option flag that allow downloading from a redirected URL.
+
+
+# Use curl to download the file from the redirected URL
+curl -L https://assets.datacamp.com/production/repositories/4180/datasets/eb1d6a36fa3039e4e00064797e1a1600d267b135/201812SpotifyData.zip
+
+
+In the same step as the download, add in the necessary syntax to rename the downloaded file as Spotify201812.zip
+
+
+# Download and rename the file in the same step
+curl -o Spotify201812.zip -L https://assets.datacamp.com/production/repositories/4180/datasets/eb1d6a36fa3039e4e00064797e1a1600d267b135/201812SpotifyData.zip
+
+
+
+
+
+
+Download all 100 data files using a single curl command.
+Print all downloaded files to directory.
+
+
+# Download all 100 data files
+curl -O https://s3.amazonaws.com/assets.datacamp.com/production/repositories/4180/datasets/files/datafile[001-100].txt
+
+# Print all downloaded files to directory
+ls datafile*.txt
+
+
+
+
+
+
+
+
+Fill in the option flag for resuming a partial download.
+Fill in the option flag for letting the download occur in the background.
+Preview the download log file
+
+
+# Fill in the two option flags 
+wget -c -b https://assets.datacamp.com/production/repositories/4180/datasets/eb1d6a36fa3039e4e00064797e1a1600d267b135/201812SpotifyData.zip
+
+# Verify that the Spotify file has been downloaded
+ls 
+
+# Preview the log file 
+cat wget-log
+
+
+
+
+
+
+
+
+
+Which of the following is NOT the correct way to set download constraints for multiple file downloads using wget?
+
+
+Store all URL locations in a text file (e.g. url_list.txt) and iteratively download using wget and option flag i
+
+
+While wget -i url_list.txt is syntactically correct, this only iterates through the files but does not set any constraints for downloads.
+
+
+
+
+
+
+
+Create a mandatory 1 second pause between downloading all files in url_list.txt.
+
+
+# View url_list.txt to verify content
+cat url_list.txt
+
+# Create a mandatory 1 second pause between downloading all files in url_list.txt
+wget --wait=1 -i url_list.txt
+
+# Take a look at all files downloaded
+ls
+
+
+
+
+
+
+Download the zipped 201812SpotifyData data saved in the shortened (redirected) URL using curl. In the same step, rename file as Spotify201812.zip.
+Unzip Spotify201812.zip, delete the original zipped file, and rename the unzipped file to Spotify201812.csv to stay consistent.
+Use url_list.txt and Wget to download all 3 files: Spotify201809.csv, Spotify201810.csv, and Spotify201811.csv in one step, with an upper cap download speed of 2500KB/s.
+
+
+
+# Use curl, download and rename a single file from URL
+curl -o Spotify201812.zip -L https://assets.datacamp.com/production/repositories/4180/datasets/eb1d6a36fa3039e4e00064797e1a1600d267b135/201812SpotifyData.zip
+
+# Unzip, delete, then re-name to Spotify201812.csv
+unzip Spotify201812.zip && rm Spotify201812.zip
+mv 201812SpotifyData.csv Spotify201812.csv
+
+# View url_list.txt to verify content
+cat url_list.txt
+
+# Use Wget, limit the download rate to 2500 KB/s, download all files in url_list.txt
+wget --limit=2500k -i url_list.txt
+
+# Take a look at all files downloaded
+ls
+
+
+
+
+
+
+Upgrade csvkit to the latest version using Python package manager pip.
+
+Print the manual for in2csv on the command line.
+
+Print the manual for csvlook on the command line.
+
+
+# Upgrade csvkit using pip  
+pip install --upgrade csvkit 
+
+# Print manual for in2csv
+in2csv --h
+
+# Print manual for csvlook
+csvlook -h
+
+
+
+
+
+
+
+Use Linux's built in unzip tool to unpack the zipped file SpotifyData.zip.
+
+Convert the unzipped Excel file SpotifyData.xslx to csv and name this new file SpotifyData.csv. There is only one sheet (tab) in this file, so there's no need to worry about sheet specifications.
+
+Print a preview of the newly converted csv file in console using a command that is part of the csvkit suite.
+
+
+
+# Use ls to find the name of the zipped file
+ls
+
+# Use Linux's built in unzip tool to unpack the zipped file 
+unzip SpotifyData.zip
+
+# Check to confirm name and location of unzipped file
+ls
+
+# Convert SpotifyData.xlsx to csv
+in2csv SpotifyData.xlsx > SpotifyData.csv
+
+# Print a preview in console using a csvkit suite command 
+csvlook SpotifyData.csv 
+
+
+
+
+
+
+
+
+From SpotifyData.xlsx, convert the sheet "Worksheet1_Popularity" to CSV and call it Spotify_Popularity.csv.
+
+Print the high level summary statistics for each column in Spotify_Popularity.csv.
+
+
+
+# Check to confirm name and location of the Excel data file
+ls
+
+# Convert sheet "Worksheet1_Popularity" to CSV
+in2csv SpotifyData.xlsx --sheet "Worksheet1_Popularity" > Spotify_Popularity.csv
+
+# Check to confirm name and location of the new CSV file
+ls
+
+# Print high level summary statistics for each column
+csvstat Spotify_Popularity.csv 
+
+
+
+From SpotifyData.xlsx, convert the tab "Worksheet2_MusicAttributes" to CSV and call it Spotify_MusicAttributes.csv.
+
+Print a preview of Spotify_MusicAttributes.csv using a function in csvkit with Markdown-compatible, fixed-width format.
+
+
+# Check to confirm name and location of the Excel data file
+ls
+
+# Convert sheet "Worksheet2_MusicAttributes" to CSV
+in2csv SpotifyData.xlsx --sheet "Worksheet2_MusicAttributes" > Spotify_MusicAttributes.csv
+
+# Check to confirm name and location of the new CSV file
+ls
+
+# Print preview of Spotify_MusicAttributes
+csvlook Spotify_MusicAttributes.csv
+
+
+
+
+
+
+
+
+
+Print in console a list of column headers in the data file Spotify_MusicAttributes.csv using a csvkit command.
+
+
+# Check to confirm name and location of data file
+ls
+
+# Print a list of column headers in data file 
+csvcut -n Spotify_MusicAttributes.csv
+
+
+
+
+
+
+
+
+Print the first column in Spotify_MusicAttributes.csv by referring to the column by its position in the file.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Print the first column, by position
+csvcut -c 1 Spotify_MusicAttributes.csv
+
+
+Print the first, third, and fifth column in Spotify_MusicAttributes.csv by referring to them by position.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Print the first, third, and fifth column, by position
+csvcut -c 1,3,5 Spotify_MusicAttributes.csv
+
+
+Print the first column in Spotify_MusicAttributes.csv by referring to the column by its name.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Print the first column, by name
+csvcut -c "track_id" Spotify_MusicAttributes.csv
+
+
+
+Print the first, third, and fifth column in Spotify_MusicAttributes.csv by referring to them by name.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Print the track id, song duration, and loudness, by name 
+csvcut -c "track_id","duration_ms","loudness" Spotify_MusicAttributes.csv
+
+
+
+
+
+
+
+
+
+Filter Spotify_MusicAttributes.csv and return the row or rows where track_id equals118GQ70Sp6pMqn6w1oKuki.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Filter for row(s) where track_id = 118GQ70Sp6pMqn6w1oKuki
+csvgrep -c "track_id" -m 118GQ70Sp6pMqn6w1oKuki Spotify_MusicAttributes.csv
+
+
+Filter Spotify_MusicAttributes.csv and return the row or rows where danceability equals 0.812.
+
+
+# Print a list of column headers in the data 
+csvcut -n Spotify_MusicAttributes.csv
+
+# Filter for row(s) where danceability = 0.812
+csvgrep -c "danceability" -m 0.812 Spotify_MusicAttributes.csv
+
+
+
+
+
+Stack SpotifyData_PopularityRank6.csv and SpotifyData_PopularityRank7.csv together. Re-direct the output of this stacking and save as a new file called SpotifyPopularity.csv.
+
+
+# Stack the two files and save results as a new file
+csvstack SpotifyData_PopularityRank6.csv SpotifyData_PopularityRank7.csv > SpotifyPopularity.csv
+
+# Preview the newly created file 
+csvlook SpotifyPopularity.csv
+
+
+
+
+
+
+
+
+Use the chain operator that allows csvlook to run first, and if it succeeds, then run csvstat.
+
+
+# If csvlook succeeds, then run csvstat 
+csvlook Spotify_Popularity.csv && csvstat Spotify_Popularity.csv
+
+
+
+Use the chain operator that to pass the output of csvsort as input to csvlook.
+
+
+# Use the output of csvsort as input to csvlook
+csvsort -c 2 Spotify_Popularity.csv | csvlook
+
+
+
+Use the 2 chain operators that takes the top 15 results from the sorted output and saves it to a new file.
+
+Familiarize ourselves with the column names by printing a preview of the file using a function in csvkit.
+Find the column names for song track and popularity rank. Create a new CSV containing only these 2 columns.
+
+
+Stack Spotify201809_subset.csv and Spotify201810_subset.csv together to form 1 csv file and create a new column with either Sep2018 or Oct2018, depending on original file source. Leave the name of the new column to its default group.
+
+
+
+
+# Convert the Spotify201809 tab into its own csv file 
+in2csv Spotify_201809_201810.xlsx --sheet "Spotify201809" > Spotify201809.csv
+
+# Check to confirm name and location of data file
+ls
+
+# Preview file preview using a csvkit function
+csvlook Spotify201809.csv
+
+# Create a new csv with 2 columns: track_id and popularity
+csvcut -c "track_id","popularity" Spotify201809.csv > Spotify201809_subset.csv
+
+# While stacking the 2 files, create a data source column
+csvstack -g "Sep2018","Oct2018" Spotify201809_subset.csv Spotify201810_subset.csv > Spotify_all_rankings.csv
+
+
+
+
+
+
+
+
+
+Suppose you're trying to run a query with sql2csv but you've been having issues because the error message is not detailed enough to help debug the error. Which optional argument in sql2csv will print detailed tracebacks and logs when errors occur while using sql2csv?
+
+
+-v or --verbose
+
+ By printing more tracebacks and logs, this will help you debug should an error arise!
+
+
+
+
+
+
+Suppose you have a SQL database you would like to connect to using sql2csv, but you're not sure yet if this particular database can be connected to. sql2csv's manual does not readily have the list of possible database connectors, but csvsql does!
+
+Could you use csvsql's manual to check what SQL database connections are currently NOT supported for sql2csv and for the rest of the csvkit suite?
+
+
+MongoDB
+
+
+Not only is MongoDB not listed in the documentation, it is a document based database, which means it is not even a SQL database - it's NoSQL!
+
+
+
+
+
+
+
+
+Use sql2csv to access the SQLite database SpotifyDatabase and query and print all data in the table Spotify_Popularity.
+
+
+Use a SQL query to print the first 5 rows in the table Spotify_Popularity. Then, preview the results using csvlook.
+
+
+Save queried results to a new file Spotify_Popularity_5Rows.csv. Verify and preview the file with ls and csvlook.
+
+
+
+# Verify database name 
+ls
+
+# Save query to new file Spotify_Popularity_5Rows.csv
+sql2csv --db "sqlite:///SpotifyDatabase.db" \
+        --query "SELECT * FROM Spotify_Popularity LIMIT 5" \
+        > Spotify_Popularity_5Rows.csv
+
+# Verify newly created file
+ls
+
+# Print preview of newly created file
+csvlook Spotify_Popularity_5Rows.csv
+
+
+
+
+
+
+
+
+Complete the command to apply the SQL query to Spotify_MusicAttributes.csv.
+
+
+# Preview CSV file
+ls
+
+# Apply SQL query to Spotify_MusicAttributes.csv
+csvsql --query "SELECT * FROM Spotify_MusicAttributes ORDER BY duration_ms LIMIT 1" Spotify_MusicAttributes.csv
+
+
+
+Further improve the output by piping the output to csvlook.
+
+
+# Reformat the output using csvlook 
+csvsql --query "SELECT * FROM Spotify_MusicAttributes ORDER BY duration_ms LIMIT 1" \
+	Spotify_MusicAttributes.csv | csvlook
+
+
+
+Instead of printing to console, re-direct output and save as new file: LongestSong.csv.
+
+
+# Re-direct output to new file: LongestSong.csv
+csvsql --query "SELECT * FROM Spotify_MusicAttributes ORDER BY duration_ms LIMIT 1" \
+	Spotify_MusicAttributes.csv > LongestSong.csv
+    
+# Preview newly created file 
+csvlook LongestSong.csv
+
+
+
+
+
+
+
+Fill in the csvsql command by calling upon the bash variable containing the SQL query instead of writing out the SQL query in full.
+
+
+# Preview CSV file
+ls
+
+# Store SQL query as shell variable
+sqlquery="SELECT * FROM Spotify_MusicAttributes ORDER BY duration_ms LIMIT 1"
+
+# Apply SQL query to Spotify_MusicAttributes.csv
+csvsql --query "$sqlquery" Spotify_MusicAttributes.csv
+
+
+
+
+
+
+Join Spotify_MusicAttributes.csv and Spotify_Popularity.csv together to form a new file Spotify_FullData.csv.
+
+
+# Store SQL query as shell variable
+sql_query="SELECT ma.*, p.popularity FROM Spotify_MusicAttributes ma INNER JOIN Spotify_Popularity p ON ma.track_id = p.track_id"
+
+# Join 2 local csvs into a new csv using the saved SQL
+csvsql --query "$sql_query" Spotify_MusicAttributes.csv Spotify_Popularity.csv > Spotify_FullData.csv
+
+# Preview newly created file
+csvstat Spotify_FullData.csv
+
+
+
+
+
+
+
+
+Upload Spotify_MusicAttributes.csv as its own table in the SQLite database SpotifyDatabase.
+Re-pull the data from the newly created table Spotify_MusicAttributes in the SQLite database SpotifyDatabase.
+
+
+# Preview file
+ls
+
+# Upload Spotify_MusicAttributes.csv to database
+csvsql --db "sqlite:///SpotifyDatabase.db" --insert Spotify_MusicAttributes.csv
+
+# Store SQL query as shell variable
+sqlquery="SELECT * FROM Spotify_MusicAttributes"
+
+# Apply SQL query to re-pull new table in database
+sql2csv --db "sqlite:///SpotifyDatabase.db" --query "$sqlquery" 
+
+
+
+
+
+
+
+Download the entire table SpotifyMostRecentData from the SQLite database SpotifyDatabase and save it as a csv file locally as SpotifyMostRecentData.csv.
+
+
+Manipulate the two local csv files SpotifyMostRecentData.csv and Spotify201812.csv by passing in the stored UNION ALL SQL query into csvsql. Save the newly created file as UnionedSpotifyData.csv.
+
+
+Push the newly created csv file UnionedSpotifyData.csv back to database SpotifyDatabase as its own table.
+
+
+
+# Store SQL for querying from SQLite database 
+sqlquery_pull="SELECT * FROM SpotifyMostRecentData"
+
+# Apply SQL to save table as local file 
+sql2csv --db "sqlite:///SpotifyDatabase.db" --query "$sqlquery_pull" > SpotifyMostRecentData.csv
+
+# Store SQL for UNION of the two local CSV files
+sqlquery_union="SELECT * FROM SpotifyMostRecentData UNION ALL SELECT * FROM Spotify201812"
+
+# Apply SQL to union the two local CSV files and save as local file
+csvsql 	--query "$sqlquery_union" SpotifyMostRecentData.csv Spotify201812.csv > UnionedSpotifyData.csv
+
+# Push UnionedSpotifyData.csv to database as a new table
+csvsql --db "sqlite:///SpotifyDatabase.db" --insert UnionedSpotifyData.csv
+
+
+
+
+
+
+
+
+In one step, create a new Python file and pass the Python print command into the file.
+Execute the new Python file by calling it directly from the command line.
+
+
+# in one step, create a new file and pass the print function into the file
+echo "print('This is my first Python script')" > my_first_python_script.py
+
+# check file location 
+ls
+
+# check file content 
+cat my_first_python_script.py
+
+# execute Python script file directly from command line  
+python my_first_python_script.py
+
+
+
+
+
+
+
+
+Instantiate the requirements.txt document and add the scikit-learn library to the requirements.txt file.
+
+
+Use pip to install the dependencies in the requirements.txt file.
+
+
+Use pip to list what Python libraries are already installed in your environment.
+
+
+
+# Add scikit-learn to the requirements.txt file
+echo "scikit-learn" > requirements.txt
+
+# Preview file content
+cat requirements.txt
+
+# Install the required dependencies
+pip install -r requirements.txt
+
+# Verify that Scikit-Learn is now installed
+pip list
+
+
+
+
+
+
+
+
+Use pip to list and verify that the libraries specified in create_model.py have been installed.
+
+
+Run the Python script create_model.py from the command line.
+
+
+# Re-install requirements
+pip install -r requirements.txt
+
+# Preview Python model script for import dependencies
+cat create_model.py
+
+# Verify that dependencies are installed
+pip list
+
+# Execute Python model script, which outputs a pkl file
+python create_model.py
+
+# Verify that the model.pkl file has been created 
+ls
+
+
+
+
+
+
+
+
+Verify that there are currently no CRON jobs currently scheduled via CRONTAB.
+
+
+Create a Python file called hello_world.py which prints "hello world" when executed.
+
+
+Modify CRONTAB by adding a job that runs the Python script hello_world.py every minute on the minute.
+
+
+Verify that the CRON job has been created successfully.
+
+
+
+# Verify that there are no CRON jobs currently scheduled
+crontab -l 
+
+# Create Python file hello_world.py
+echo "print('hello world')" > hello_world.py
+
+# Preview Python file 
+cat hello_world.py
+
+# Add as job that runs every minute on the minute to crontab
+echo "* * * * * python hello_world.py" | crontab
+
+# Verify that the CRON job has been added
+crontab -l
+
+
+
+
+
+
+
+Use pip to install the Python dependencies listed in the requirements.txt file.
+
+Now that the necessary Python dependencies have been installed, run the create_model.py script on the command line.
+
+We have verified that the Python model can be run. Next step is to automate this job so it runs every minute. Use CRONTAB to schedule a per minute run of the Python script create_model.py.
+
+Print the job scheduled in CRONTAB to verify that the CRON job is scheduled correctly.
+
+
+
+# Preview both Python script and requirements text file
+cat create_model.py
+cat requirements.txt
+
+# Pip install Python dependencies in requirements file
+pip install -r requirements.txt
+
+# Run Python script on command line
+python create_model.py
+
+# Add CRON job that runs create_model.py every minute
+echo "* * * * * python create_model.py" | crontab
+
+# Verify that the CRON job has been scheduled via CRONTAB
+crontab -l
+
+
+
+
+
+
+
+What is the correct syntax for a "one liner" using python that will print a random day of the week? Feel free to experiment in the IPython console!
+
+
+!python3 -c "from random import choices;days = ['Mo', 'Tu', 'We', 'Th', 'Fr'];print(choices(days))"
+
+
+The choices method will select a random items from a Python list. When this is combined with print, it will give you a random day.
+
+
+
+
+
+
+
+
+How many total files with the extension .csv are in the test_dir directory? Make sure you store the results of command to variable and run len() on that variable. You can store a variable from a shell command in IPython like this: var = !ls -h *.png.
+
+
+var = !ls -h test_dir/*.csv
+
+len(var)
+5
+
+
+5 files with extension .csv
+
+
+You are on your way to mastering an important automation tool in IPython. You can use !ls */*.csv to find the number of csv files. If you store as a variable, you can then use: len(var) to get the count.
+
+
+
+
+
+
+
+Select the correct method of running a bash script in IPython. You can try this out in the IPython terminal if you get stuck. You will need to hit shift+enter to return to the next line. After you run the magic command, print the output variable to see the results.
+
+%%bash --out output
+ls
+
+
+%%bash --out output will allow you to run a code block with output stored in the variable output. Being able to run a full bash script in Jupyter notebooks or IPython can be very helpful. One good use case is needing to download machine learning training data using wget, then uncompressing it.
+
+
+
+
+
+
+
+You have a directory full of files you want the size of. You need a technique that will allow you to filter patterns. You want to do this in Python. Use the ! operator to create a command that sums the total size of the files in a directory. The piped command will use this awk snippet awk '{ SUM+=$5} END {print SUM}'. Awk is a tool that is used often on the Unix command line because it understands how to deal with whitespace delimited output from shell commands. The awk command works well at grabbing fields from a string.
+
+
+!ls -l | awk '{SUM+=$5} END {print SUM}'
+
+
+ls -l | awk '{ SUM+=$5} END {print SUM}' to sum the file sizes. Being able to do a little bit of Unix piping will make you stand out in your career.
+
+
+
+
+
+
+
+
+In this exercise you investigate what you can accomplish with the SList data type. You will start from this command: disk_space = !df -h
+
+Using the .fields method on the df variable, select the column that shows total size of the mounted volumes.
+
+
+
+disk_space = !df -h
+disk_space.fields(1)
+o/p: disk_space.fields(1)
+
+
+
+The second column of whitespace-separated fields is the Size. Mastering the IPython and Jupyter filtering techniques for shell output can save many lines of code.
+
+
+
+
+
+ Help clean up the mess by using the SList .grep() method to filter for files only containing the pattern .py.
+
+What are the names of only the Python source code files in the src directory? Remember to store the output of !ls src. The .grep() method will accept a file extension as a pattern.
+
+
+
+apple.py, orange.py, banana.py
+
+
+
+You can use ls.grep('.py') to filter only the python files. This is a handy trick that can becomes part of your daily workflow.
+
+
+
+
+
+
+
+
+Use the SList result object to find all files with the pattern '_2' in them.
+Use the grep method to accomplish this task.
+Iterate over the results of the SList query and create a full path to the file.
+Print the full path to files matching this query.
+
+
+
+# Use the results of an SList object
+root = "test_dir"
+
+# Find the backups with "_2" in them
+result = slist_out.grep('_2')
+
+# Extract the filenames
+for res in result:
+	filename = res.split()[-1]
+    
+	# Create the full path
+	fullpath = os.path.join(root, filename)
+	print(f"fullpath of backup file: {fullpath}")
+
+
+
+
+
+
+
+
+Import the subprocess and os packages.
+Write a script that will use the Unix touch command in subprocess.Popen to create a file.
+Then use the os.stat module to check the correct uid was created on the file.
+If the correct uid was created, print out a success message.
+
+
+import subprocess
+import os
+
+#setup
+file_location = "/tmp/file.txt"
+expected_uid = 1000
+#touch a file
+proc = subprocess.Popen(["touch", file_location])
+
+#check user permissions
+stat = os.stat(file_location)
+if stat.st_uid == expected_uid:
+  print(f"File System exported properly: {expected_uid} == {stat.st_uid}")
+else:
+  print(f"File System NOT exported properly: {expected_uid} != {stat.st_uid}")
+
+
+
+
+
+
+
+
+
+
+Print the first few lines of poem.txt using head.
+Count the total words in poem.txt using wc -w and print out the total.
+Safely execute these commands by passing them in as items in a list.
+
+
+import subprocess
+
+# Execute Unix command `head` safely as items in a list
+with subprocess.Popen(["head", "poem.txt"], stdout=subprocess.PIPE) as head:
+  
+  # Print each line of list returned by `stdout.readlines()`
+  for line in head.stdout.readlines():
+    print(line)
+    
+# Execute Unix command `wc -w` safely as items in a list
+with subprocess.Popen(['wc', '-w', "poem.txt"], stdout=subprocess.PIPE) as word_count:
+  
+  # Print the string output of standard out of `wc -w`
+  print(word_count.stdout.read())
+
+
+
+
+
+
+
+
+Use subprocess.run to execute ps aux.
+Discard lines with 'python' in them.
+Print out all other lines.
+
+import subprocess
+
+# Use subprocess to run the `ps aux` command that lists running processes
+with subprocess.Popen(["ps", "aux"], stdout=subprocess.PIPE) as proc:
+    process_output = proc.stdout.readlines()
+    
+# Look through each line in the output and skip it if it contains "python"
+for line in process_output:
+    if b'python' in line:
+        continue
+    print(line)
+
+
+
+
+
+
+
+
+Use the with context manager to run subprocess.Popen().
+Pipe the output of subprocess.Popen() to stdout as an iterator.
+Convert the JSON payload to a Python dictionary with json.loads after extracting the only element of the results list.
+Print the result using the pprint function of the pprint package.
+
+
+from subprocess import Popen, PIPE
+import json
+import pprint
+
+# Use the with context manager to run subprocess.Popen()
+with Popen(["pip","list","--format=json"], stdout=PIPE) as proc:
+  # Pipe the output of subprocess.Popen() to stdout
+  result = proc.stdout.readlines()
+  
+# Convert the JSON payload to a Python dictionary
+# JSON is a datastructure similar to a Python dictionary
+converted_result = json.loads(result[0])
+
+# Display the result in the IPython terminal
+pprint.pprint(converted_result)
+
+
+
+
+
+
+
+
+
+Start a long running process using subprocess.Popen().
+Use subprocess.communicate() to create a timeout.
+Cleanup the process if it takes longer than the timeout.
+Print error message and standard out and standard error streams.
+
+
+
+# Start a long running process using subprocess.Popen()
+proc = Popen(["sleep", "6"], stdout=PIPE, stderr=PIPE)
+
+# Use subprocess.communicate() to create a timeout 
+try:
+    output, error = proc.communicate(timeout=5)
+    
+except TimeoutExpired:
+
+	# Cleanup the process if it takes longer than the timeout
+    proc.kill()
+    
+    # Read standard out and standard error streams and print
+    output, error = proc.communicate()
+    print(f"Process timed out with output: {output}, error: {error}")
+
+
+
+
+
+
+
+
+
+
+
+
+Iterate over the list of files filenames.
+Use Popen to call the md5sum utility.
+Append duplicate file to a list.
+Print the duplicates out.
+
+
+checksums = {}
+duplicates = []
+
+# Iterate over the list of files filenames
+for filename in files:
+  	# Use Popen to call the md5sum utility
+    with Popen(['md5sum', filename], stdout=PIPE) as proc:
+        checksum, _ = proc.stdout.read().split()
+        
+        # Append duplicate to a list if the checksum is found
+        if checksum in checksums:
+            duplicates.append(filename)
+        checksums[checksum] = filename
+
+print(f"Found Duplicates: {duplicates}")
+
+
+
+
+
+
+
+Use subprocess.run to run unix command find . -type f -print.
+Send the output of the find command to the input of wc -l.
+Decode the bytes to strings.
+Strip the output of spaces and print.
+
+
+import subprocess
+
+# runs find command to search for files
+find = subprocess.Popen(
+    ["find", ".", "-type", "f", "-print"], stdout=subprocess.PIPE)
+
+# runs wc and counts the number of lines
+word_count = subprocess.Popen(
+    ["wc", "-l"], stdin=find.stdout, stdout=subprocess.PIPE)
+
+# print the decoded and formatted output
+output = word_count.stdout.read()
+print(output.decode('utf-8').strip())
+
+
+
+
+
+
+
+Echo 'python3' using subprocess.Popen.
+Send the output of the echo subprocess to the ./healthcheck.sh script.
+- Capture the output of subprocess that invokes ./healthcheck.sh and use assert to verify python3 is in the output.
+
+
+
+import subprocess
+
+# equivalent to 'echo "python3"'
+echo = subprocess.Popen(
+    ["echo", "python3"], stdout=subprocess.PIPE)
+
+# equivalent to: echo "python3" | ./healthcheck.sh
+path = subprocess.Popen(
+    ["./healthcheck.sh"], stdin=echo.stdout, stdout=subprocess.PIPE)
+
+full_path = path.stdout.read().decode("utf-8")
+print(f"...Health Check Output...\n\n {full_path}")
+
+# The assertion will fail if python3 executable path is not found
+assert "python3" in full_path
+
+
+
+
+
+
+
+
+
+Write a script that safely can test user input in subprocess.Popen.
+Find all of the files in the current working directory.
+Print out all of the directories found.
+
+
+
+import subprocess
+
+#Accepts user input
+print("Enter a path to search for directories: \n")
+user_input = "."
+print(f"directory to process: {user_input}")
+
+#Pass safe user input into subprocess
+with subprocess.Popen(["find", user_input, "-type", "d"], stdout=subprocess.PIPE) as find:
+    result = find.stdout.readlines()
+    
+    #Process each line and decode it and strip it
+    for line in result:
+        formatted_line = line.decode("utf-8").strip()
+        print(f"Found Directory: {formatted_line}")
+
+
+
+
+
+Use shlex.split to safely split a list of directories: pluto, mars and jupiter.
+Pass the output of the shlex.split to subprocess.run.
+Print out the results.
+The subprocess and shlex module have been imported for you.
+
+
+print("Enter a list of directories to calculate storage total: \n")
+user_input = "pluto mars jupiter"
+
+# Sanitize the user input
+sanitized_user_input = shlex.split(user_input)
+print(f"raw_user_input: {user_input} |  sanitized_user_input: {sanitized_user_input}")
+
+# Safely Extend the command with sanitized input
+cmd = ["du", "-sh", "--total"]
+cmd.extend(sanitized_user_input)
+print(f"cmd: {cmd}")
+
+# Print the totals out
+disk_total = subprocess.run(cmd, stdout=subprocess.PIPE)
+print(disk_total.stdout.decode("utf-8"))
+
+
+
+
+
+
+Walk the file system starting at the test_dir.
+Create the full path to the file by using os.path.join().
+Match the extension pattern .csv using os.path.splitext() method and append matches to a list.
+Print the matches you find.
+
+
+matches = []
+# Walk the filesystem starting at the test_dir
+for root, _, files in os.walk('test_dir'):
+    for name in files:
+      	# Create the full path to the file by using os.path.join()
+        fullpath = os.path.join(root, name)
+        print(f"Processing file: {fullpath}")
+        # Split off the extension and discard the rest of the path
+        _, ext = os.path.splitext(fullpath)
+        # Match the extension pattern .csv
+        if ext == ".csv":
+            matches.append(fullpath)
+            
+# Print the matches you find          
+print(matches)
+
+
+
+
+
+
+
+Use os.walk to traverse the cattle directory.
+Use pathlib to rename all files with 'shorthorn' to 'longhorn'.
+
+
+# Walk the filesystem starting at the test_dir
+for root, _, files in os.walk('cattle'):
+    for name in files:
+      	
+        # Create the full path to the file by using os.path.join()
+        fullpath = os.path.join(root, name)
+        print(f"Processing file: {fullpath}")
+        
+        # Rename file
+        if "shorthorn" in name:
+            p = pathlib.Path(fullpath)
+            shortname = name.split("_")[0] # You need to split the name by underscore
+            new_name = f"{shortname}_longhorn"
+            print(f"Renaming file {name} to {new_name}")
+            p.rename(new_name)
+
+
+
+
+
+
+
+
+Walk the the file system path my using os.walk.
+Look for a file extension named .joblib and load the model into clf using joblib's load() function.
+Use sklearn to predict from the unpickled model by loading it into clf.predict() and pass the input data X_digits to it (X_digits is already in memory).
+Print your predictions.
+
+
+
+# Walk the filesystem starting at the my path
+for root, _, files in os.walk('my'):
+    for name in files:
+      	# Create the full path to the file by using os.path.join()
+        fullpath = os.path.join(root, name)
+        print(f"Processing file: {fullpath}")
+        _, ext = os.path.splitext(fullpath)
+        # Match the extension pattern .joblib
+        if ext == ".joblib":
+            clf = joblib.load(fullpath)
+            break
+
+# Predict from pickled model
+print(clf.predict(X_digits))
+
+
+
+
+
+
+
+Use pathlib.Path to make a Path object for the prod directory.
+Use .glob on the Path object to filter the .jar pattern.
+Print out all matches to the .glob pattern.
+
+
+
+import pathlib
+import os
+
+path = pathlib.Path("prod")
+matches = sorted(path.glob("*.jar"))
+for match in matches:
+  print(f"Found rogue .jar file in production: {match}")
+
+
+
+
+
+Use fnmatch.filter to check for csv files in a list of files.
+Write a function that returns these matches.
+
+
+import fnmatch
+
+# List of file names to process
+files = ["data1.csv", "script.py", "image.png", "data2.csv", "all.py"]
+
+# Function that returns 
+def csv_matches(list_of_files):
+    """Return matches for csv files"""
+
+    matches = fnmatch.filter(list_of_files, "*.csv")
+    return matches
+
+# Call function to find matches
+matches = csv_matches(files)
+print(f"Found matches: {matches}")
+
+
+
+
+
+
+
+
+
+Use tempfile.NamedTemporaryFile to create a named temporary file.
+Write a message to it and verify it was written.
+Verify temporary file was destroyed using os.path.exists.
+
+
+
+# Create a self-destructing temporary file
+with tempfile.NamedTemporaryFile() as exploding_file:
+  	# This file will be deleted automatically after the with statement block
+    print(f"Temp file created: {exploding_file.name}")
+    exploding_file.write(b"This message will self-destruct in 5....4...\n")
+    
+    # Get to the top of the file
+    exploding_file.seek(0)
+
+    #Print the message
+    print(exploding_file.read())
+
+# Check to sure file self-destructed
+if not os.path.exists(exploding_file.name): 
+    print(f"self-destruction verified: {exploding_file.name}")
+
+
+
+
+
+
+
+
+
+apath is the path where the tree is archived and string arguments "zip" and "gztar" can create the two archives.
+Archive the user folder copied to the location /tmp/user1.
+Create a tar and gzipped archive and a zip archive.
+Print both archive files out using os.listdir().
+
+
+username = "user1"
+root_dir = "/tmp"
+# archive root
+apath = "/tmp/archive"
+# archive base
+final_archive_base = f"{apath}/{username}"
+
+# create tar and gzipped archive
+make_archive(final_archive_base, "gztar", apath)
+
+# create zip archive
+make_archive(final_archive_base, "zip", apath)
+
+# print out archives
+print(os.listdir(apath))
+
+
+
+
+
+
+
+
+
+Read in a posts_index.txt file to find paths.
+Create pathlib.Path objects and use .exists() to check if the path is valid.
+Use post.strip() to clean up the output of path you pass to pathlib.Post.
+
+
+
+import pathlib
+
+# Read the index of social media posts
+with open("posts_index.txt") as posts:
+  for post in posts.readlines():
+    
+    # Create a pathlib object
+    path = pathlib.Path(post.strip())
+    
+    # Check if the social media post still exists on disk
+    if post.exists():
+      print(f"Found active post: {post}")
+    else:
+      print(f"Post is missing: {post}")
+
+
+
+
+
+
+
+
+
+Use pathlib.write_text to write to create and write files.
+Use Path and .glob to find these files.
+Run all the matching python scripts using subprocess.run method.
+
+
+
+from subprocess import run, PIPE
+
+# Find all the python files you created and print them out
+for i in range(3):
+  path = Path(f"/tmp/test/file_{i}.py")
+  path.write_text("#!/usr/bin/env python\n")
+  path.write_text("import datetime;print(datetime.datetime.now())")
+  
+
+# Find all the python files you created and print them out
+for file in Path("/tmp/test/").glob("*.py"):
+  # gets the resolved full path
+  fullpath = str(file.resolve())
+  proc = run(["python3", fullpath], stdout=PIPE)
+  print(proc)
+
+
+
+
+
+
+
+
+
+
+
+sklearn is a machine learning library that has many algorithms. You will use it to perform machine learning.
+Create a function that makes blobs using the sklearn.datasets.samples_generator.make_blobs library. These blobs are sample data that will be used to create clusters. It accepts n_samples, centers, random_state.
+Create a function that performs KMeans clustering. KMeans is a type of machine learning algorithm that clusters data into logical groups.
+
+
+
+# create sample blobs from sklearn datasets
+def blobs():
+    X,y = make_blobs(n_samples=10, centers=3, n_features=2,random_state=0)
+    return X,y
+  
+# Perform KMeans cluster
+def cluster(X, random_state=170, num=2):
+    return KMeans(n_clusters=num, random_state=random_state).fit_predict(X) # Returns cluster assignment
+
+#Run everything:  Call both functions. `X` creates the data and `cluster`, clusters the data.
+def main():
+    X,_ = blobs()
+    return cluster(X)
+
+print(main()) #print the KMeans cluster assignments
+
+
+
+
+
+
+
+
+
+
+Decorate two functions with the decorator @nothing which has been imported for you.
+Put both uncalled functions into a list.
+Print the name of each function by using a for loop to pull them out of a list.
+
+
+
+# decorate first function
+@nothing
+def something():
+    pass
+
+# decorate second function
+@nothing
+def another():
+    pass
+
+# Put uncalled function into a list and print name  
+funcs = [something, another]
+for func in funcs:
+    print(f"function name: {func.__name__}")
+
+
+
+
+
+
+
+
+
+Create a decorator that prints the *args and **kw arguments passed into it.
+Apply that decorator to the mult function and run it.
+
+
+
+# create decorator
+def debug(f):
+	@wraps(f)
+	def wrap(*args, **kw):
+		result = f(*args, **kw)
+		print(f"function name: {f.__name__}, args: [{args}], kwargs: [{kw}]")
+		return result
+	return wrap
+  
+# apply decorator
+@debug
+def mult(x, y=10):
+	return x*y
+print(mult(5, y=5))
+
+
+
+
+
+
+
+
+
+It takes two arguments using sys.argv to process them. The first argument is the path to search (i.e. /some/path) and the second is an optional argument that finds a file extension (i.e. .pdf). Use this script to search for files with the extension .txt in the test_dir.
+
+Which is the name of one of the files it finds?
+
+
+!python3.6 findit.py test_dir .txt
+
+
+test_dir/file_9.txt
+
+
+You can use the command !/usr/bin/python3.6 findit.py test_dir .txt to find the text files. Note the full path to the Python executable is a safe way to reference a script that will be run by different users.
+
+
+
+
+
+
+
+
+
+Write two lines to a file input.txt.
+Use the subprocess module to run the reverseit.py script with input.txt as an argument.
+Print out the results.
+
+
+
+import subprocess
+
+# Write a file
+with open("input.txt", "w") as input_file:
+  input_file.write("Reverse this string\n")
+  input_file.write("Reverse this too!")
+
+# runs pythona script that reverse strings in a file line by line
+run_script = subprocess.Popen(
+    ["/usr/bin/python3", 'reverseit.py', 'input.txt'], stdout=subprocess.PIPE)
+
+# print out the script output
+for line in run_script.stdout.readlines():
+  print(line)
+
+
+
+
+
+
+
+
+
+
+
+
+Use random.choice to select from cities in the values list.
+Print the result to stdout using click's echo function.
+
+
+import click
+import random
+
+# Create random values to choose from
+values = ["Nashville", "Austin", "Denver", "Cleveland"]
+
+# Select a random choice
+result = random.choice(values)
+
+# Print the random choice using click echo
+click.echo(f"My choice is: {result}")
+
+
+
+
+
+
+
+
+
+
+
+Run the cluster.py click application to retrieve a help message using the help flag.
+Run the cluster.py click application with num option of 2.
+Assign the output of the first subprocess to help_out and print stdout.
+Assign the output of the second subprocess to cluster2 and print stdout.
+
+
+
+import subprocess
+
+# run help for click tool
+help_out = subprocess.run(["/usr/bin/python3.6", "./cluster.py", "--help"],
+                     stdout=subprocess.PIPE)
+
+# run cluster
+cluster2 = subprocess.run(["/usr/bin/python3.6", "./cluster.py", "--num", "2"],
+                     stdout=subprocess.PIPE)
+
+# print help
+print(help_out.stdout)
+
+# print cluster output
+print(cluster2.stdout)
+
+
+
+
+
+
+
+
+Use click.open_file() to open a file for writing.
+Use a loop to iterate over words.
+Write the content in the words variable out to this file.
+Read it back in to verify it was successful.
+
+
+
+# Setup
+words = ["Asset", "Bubble", "10", "Year"]
+filename = "words.txt"
+
+# Write with click.open()
+with click.open_file(filename, 'w') as f:
+
+# Loop over words with a for loop
+    for word in words:
+        f.write(f'{word}\n')
+
+# Read it back
+with open(filename) as output_file:
+    print(output_file.read())
+
+
+
+
+
+
+
+Define the click command using the two decorators: @click.command() and @click.option().
+Use the CliRunner from click to run a command line click application.
+Pass in --num 2 via the runner.invoke() command.
+Assert that the result returns exit status of 0.
+
+
+
+#define the click command
+@click.command()
+@click.option("--num", default=2, help="Number of clusters")
+def run_cluster(num):
+    result = main(num)
+    click.echo(f'Cluster assignments: {result} for total clusters [{num}]')
+
+# Create the click test runner
+runner = CliRunner()
+
+# Run the click app and assert it runs without error
+result = runner.invoke(run_cluster, ['--num', '2'])
+assert result.exit_code == 0
+print(result.output)
+
+
+
+
+Introduction to Bash scritpting
+From Command-Line to Bash Script
+Variables in Bash Scripting
+Control Statements in Bash Scripting
+Functions and Automation
+
+
+
+
+Command Line Automation
+Ipython & Python Interpreter
+Shell commands with subprocess
+walking the file system
+Command line functions

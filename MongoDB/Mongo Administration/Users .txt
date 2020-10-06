@@ -1,0 +1,18 @@
+--------------------------------------------------------
+- Course: Complete Guide to MongoDB
+- Author: Ahmed Ibrahem
+- Script: MongoDB Administration
+--------------------------------------------------------
+1- Create User
+db.createUser({user: "reporting",pwd: "12345678",roles: [{ role: "read", db: "training" }]})
+
+Note: - different roles
+       - read
+	   - readWrite
+	   - dbAdmin
+	   - dbOwner
+	   
+2- drop user
+db.dropUser("reporting")	
+
+Note: - to get list of users and assigned roles use the command db.getUsers()

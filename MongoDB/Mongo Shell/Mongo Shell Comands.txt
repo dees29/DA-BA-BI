@@ -1,0 +1,25 @@
+--------------------------------------------------------
+- Course: MongoDB Complete Guide
+- Author: Ahmed Ibrahem
+- Script: MapReduce Example
+--------------------------------------------------------
+1- make sure mongoDB instance is up and running 
+2- to start mongo shell go to the installation directory of MongoDB then type the following:
+ mongo.exe --> windows
+ mongo.sh --> linux
+3- Mongo Shell Commands:
+  - --help   // list all available commands
+  - --nodb   // connect to mongo shell without connecting to specific database
+  - show collections // show all available collection in database
+  - show users // show all available users in database
+  - show roles // show all available roles in database 
+  - show databases //show all available databases in database
+  
+4- create connection
+// host of mongoDB Instance , port of MongoDB Instance, and database name you want to connect to it
+db = connect("<host><:port>/<dbname>")
+
+conn = new Mongo()
+db = conn.getDB("dbname")
+
+ 

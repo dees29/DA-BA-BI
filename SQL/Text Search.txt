@@ -1,0 +1,106 @@
+--------------------------------------------------------
+- Course: Complete Guide to MongoDB
+- Author: Ahmed Ibrahem
+- Script: Search Commands
+--------------------------------------------------------
+------ Text Search -----------------------------------------------------------------------------
+Example Data:
+db.stores.insert(
+   [
+     { _id: 1, name: "Java Hut", description: "Coffee and cakes" },
+     { _id: 2, name: "Burger Buns", description: "Gourmet hamburgers" },
+     { _id: 3, name: "Coffee Shop", description: "Just coffee" },
+     { _id: 4, name: "Clothes Clothes Clothes", description: "Discount clothing" },
+     { _id: 5, name: "Java Shopping", description: "Indonesian goods" }
+   ]
+)
+
+Create Text Search Index:
+db.stores.createIndex( { name: "text", description: "text" } )
+db.collection.createIndex( { "$**": "text" } )
+
+
+Text Search syntax:
+#Search for any text contains any of the following words
+db.stores.find( { $text: { $search: "java coffee shop" } } )
+
+#search for exact words
+db.stores.find( { $text: { $search: "java \"coffee shop\"" } } )
+
+#exclude specific words
+db.stores.find( { $text: { $search: "java shop -coffee" } } )
+
+#sort the output 
+db.stores.find(
+   { $text: { $search: "java coffee shop" } },
+   { score: { $meta: "textScore" } }).sort( { score: { $meta: "textScore" } } )
+   
+---- query and take action ------------------------------------------------------------------------
+#general Syntax
+{
+  findAndModify: <collection-name>,
+  query: <document>,
+  sort: <document>,
+  remove: <boolean>,
+  update: <document>,
+  new: <boolean>,
+  fields: <document>, 
+  upsert: <boolean>,
+  bypassDocumentValidation: <boolean>, // bypass validation rules created for document insertio and update operations
+  writeConcern: <document>,
+  collation: <document> //Collation allows users to specify language-specific rules for string comparison, such as rules for //lettercase and accent marks.
+}
+
+#Upsert example
+db.runCommand(
+   {
+     findAndModify: "Employees",
+     query: { name: "john" },
+     sort: { Annual_Salary: -1 },
+     new:true,
+     update: { $inc: { Annual_Salary: 1000 } },
+     upsert: true
+   }
+ )
+#add new option and field option
+db.runCommand(
+   {
+     findAndModify: "Employees",
+     query: { name: "john" },
+     sort: { Annual_Salary: -1 },
+     new:true,
+     fields:{name:1,department:1,Annual_Salary:-1},
+     update: { $inc: { Annual_Salary: 1000 } },
+     upsert: true
+   }
+ )
+#insert new document with upsert
+db.runCommand(
+   {
+     findAndModify: "Employees",
+     query: { name: "ted" },
+     sort: { Annual_Salary: -1 },
+     new:true,
+     fields:{name:1,Annual_Salary:-1,_id:0},
+     update: { $inc: { Annual_Salary: 1000 } },
+     upsert: true
+   }
+ )
+Note: Make sure the you use unique index before using upsert operation , because that migh results in duplicate values
+
+# specify the time in MS to not allow the process to hang 
+db.runCommand(
+   {
+     findAndModify: "Employees",
+     query: { name: "ted" },
+     sort: { Annual_Salary: -1 },
+     new:true,
+     fields:{name:1,Annual_Salary:-1,_id:0},
+     update: { $inc: { Annual_Salary: 1000 } },
+     maxTimeMS:1000,
+     upsert: true
+   }
+ )
+# add the writeConcern
+w:1 //means application will wait from mongodb server for acknowledgment that operation done successfully 
+w:0 //means application will not wait from mongodb server for acknowledgment that operation done successfully 
