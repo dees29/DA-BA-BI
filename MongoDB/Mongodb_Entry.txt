@@ -11,7 +11,6 @@ db.inventory.insertOne(
 
 db.inventory.find({item:"canvas"})
 
-
 db.inventory.insertMany([{item:"journal", qty:25, tags:["blank","red"], size:{h:14, w:21, wom="cm"}},
 {item:"mat", qty:85, tags:["gray"], size:{h:27.9, w:35.5, wom="cm"}},
 {item:"mousepad", qty:25, tags:["gel","blue"], size:{h:19, w:285, wom="cm"}}

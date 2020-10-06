@@ -31,7 +31,7 @@ engine.execute('DROP TABLE IF EXISTS public.Company ;')
 
 Company.to_sql('Company', engine)
 
-sql1 = 'select * from "Company"'
+sql1 = 'SELECT * FROM "Company"'
 df = pd.read_sql_query((sql1), engine)
 print(df)
 
